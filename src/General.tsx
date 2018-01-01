@@ -97,7 +97,8 @@ export function Clone(obj) {
 }
 
 export function GetErrorMessagesUnderElement(element) {
-	return element.querySelectorAll(":invalid").ToList().map(node=>node.validationMessage || `Invalid value.`);
+	//return element.querySelectorAll(":invalid").ToList().map(node=>node.validationMessage || `Invalid value.`);
+	return Array.from(element.querySelectorAll(":invalid")).map(node=>(node as any).validationMessage || `Invalid value.`);
 }
 
 export var emptyArray = [];
