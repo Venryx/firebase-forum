@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+		//"rootDir": ".", // technically, there's an "index.ts" file in root; we ignore because it's only needed for typescript type-resolving
+		"rootDir": "src",
+		//"baseUrl": "src", // keep commented; this way, we remember to always use relative paths (needed for in-node-modules typescript type-resolving)
+		//"outDir": "dist",
+		/*"module": "system", // needed only for outFile prop, which is needed only for dist.d.ts file
+		"outFile": "dist/dist.js",*/
+
+		// general
+		"sourceMap": true,
+		"watch": true,
+		"moduleResolution": "node",
+		//"maxNodeModulesJsDepth": 1,
+
+		// compiler options
+		"target": "es2015",
+		//"allowJs": true,
+		"jsx": "react",
+		"noImplicitAny": false,
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"declaration": true,
+		"declarationDir": "."
+	},
+	"files": ["src/index.ts"],
+	"include": [
+		"Typings/**/*.d.ts",
+		"src/**/*.ts",
+		"src/**/*.tsx"
+	],
+	"exclude": [
+		"dist",
+		"node_modules"
+	],
+	"compileOnSave": true
+}
