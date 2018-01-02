@@ -1,5 +1,5 @@
-import u from "updeep";
-import {GetUserID} from "Store/firebase/users";
+import { DeepSet } from "../../../../js-vextensions/Main/dist/index";
+import { MaybeLog } from "../Utils/Logging";
 
 export class CommandUserInfo {
 	id: string;
@@ -110,7 +110,8 @@ export function MergeDBUpdates(baseUpdatesMap, updatesToMergeMap) {
 
 			//if (updateToMerge.data) {
 			// assume that the update-to-merge has priority, so have it completely overwrite the data at its path
-			update.data = u.updateIn(updateToMerge_relativePath.replace(/\//g, "."), u.constant(updateToMerge.data), update.data);
+			//update.data = u.updateIn(updateToMerge_relativePath.replace(/\//g, "."), u.constant(updateToMerge.data), update.data);
+			DeepSet(update.data, updateToMerge_relativePath, updateToMerge.data);
 			/*} else {
 				update.data = null;
 			}*/

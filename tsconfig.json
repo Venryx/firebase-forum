@@ -25,7 +25,7 @@
 	},
 	"files": ["src/index.ts"],
 	"include": [
-		"Typings/**/*.d.ts",
+		"Typings.d.ts",
 		"src/**/*.ts",
 		"src/**/*.tsx"
 	],

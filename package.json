@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/Venryx/firebase-forum",
   "peerDependencies": {
+    "js-vextensions": "^0.0.1",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-vextensions": "^0.0.1",
@@ -40,6 +41,7 @@
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
+    "js-vextensions": "^0.0.1",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-redux": "^5.0.6",
