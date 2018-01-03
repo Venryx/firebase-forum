@@ -1,4 +1,4 @@
-export default class Action<Payload> {
+export class Action<Payload> {
 	constructor(payload: Payload) {
 		this.type = this.constructor.name;
 		this.payload = payload;

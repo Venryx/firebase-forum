@@ -4,7 +4,7 @@ import {Subforum} from "../../Store/firebase/forum/@Subforum";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
 
 //@UserEdit
-export default class DeleteSubforum extends Command<{subforumID: number}> {
+export class DeleteSubforum extends Command<{subforumID: number}> {
 	oldData: Subforum;
 	section_oldSubforumOrder: number[];
 	async Prepare() {

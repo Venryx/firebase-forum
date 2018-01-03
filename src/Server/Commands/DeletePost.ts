@@ -6,7 +6,7 @@ import {Post} from "../../Store/firebase/forum/@Post";
 import { GetAsync } from "../../Utils/Database/DatabaseHelpers";
 
 //@UserEdit
-export default class DeletePost extends Command<{postID: number}> {
+export class DeletePost extends Command<{postID: number}> {
 	oldData: Post;
 	thread_oldPosts: number[];
 	//timeSinceCreation: number;

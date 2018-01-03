@@ -4,7 +4,7 @@ import {Section} from "../../Store/firebase/forum/@Section";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
 
 //@UserEdit
-export default class AddSection extends Command<{section: Section}> {
+export class AddSection extends Command<{section: Section}> {
 	sectionID: number;
 	oldSectionOrder: number[];
 	async Prepare() {

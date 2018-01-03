@@ -4,11 +4,11 @@ import {Row} from "react-vcomponents";
 import {TextInput} from "react-vcomponents";
 import {GetInnerComp} from "react-vextensions";
 import {Pre} from "react-vcomponents";
-import ThreadDetailsUI from "./Thread/ThreadDetailsUI";
+import {ThreadDetailsUI} from "./Thread/ThreadDetailsUI";
 import {Thread} from "../../Store/firebase/forum/@Thread";
-import AddThread from "../../Server/Commands/AddThread";
-import SectionDetailsUI from "./SectionDetailsUI";
-import AddSection from "../../Server/Commands/AddSection";
+import {AddThread} from "../../Server/Commands/AddThread";
+import {SectionDetailsUI} from "./SectionDetailsUI";
+import {AddSection} from "../../Server/Commands/AddSection";
 import {ShowMessageBox, BoxController} from "react-vmessagebox";
 import {Section} from "../../Store/firebase/forum/@Section";
 

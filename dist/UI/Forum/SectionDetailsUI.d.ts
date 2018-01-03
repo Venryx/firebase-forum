@@ -9,7 +9,7 @@ export declare type SectionDetailsUI_Props = {
 } & Partial<{
     creator: User;
 }>;
-export default class SectionDetailsUI extends BaseComponent<SectionDetailsUI_Props, {
+export declare class SectionDetailsUI extends BaseComponent<SectionDetailsUI_Props, {
     newData: Section;
 }> {
     ComponentWillMountOrReceiveProps(props: any, forMount: any): void;

@@ -16,7 +16,7 @@ AddSchema({
 }, "UpdateSubforumDetails_payload");
 
 //@UserEdit
-export default class UpdateSubforumDetails extends Command<{subforumID: number, subforumUpdates: Partial<Subforum>}> {
+export class UpdateSubforumDetails extends Command<{subforumID: number, subforumUpdates: Partial<Subforum>}> {
 	Validate_Early() {
 		AssertValidate("UpdateSubforumDetails_payload", this.payload, `Payload invalid`);
 	}

@@ -11,7 +11,7 @@ export declare type Link_Props = {
     replace?: boolean;
     actions?: (dispatch: Function) => void;
 } & React.HTMLProps<HTMLAnchorElement>;
-export default class Link extends BaseComponent<Link_Props, {}> {
+export declare class Link extends BaseComponent<Link_Props, {}> {
     handleClick(event: any): void;
     render(): JSX.Element;
 }

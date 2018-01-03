@@ -10,14 +10,14 @@ import {columnWidths} from "./SubforumUI";
 import {Post} from "../../Store/firebase/forum/@Post";
 import {Manager} from "../../Manager";
 import {VURL} from "js-vextensions";
-import Link from "../@Shared/Link";
+import {Link} from "../@Shared/Link";
 
 export type ThreadEntryUI_Props = {index: number, last: boolean, thread: Thread} & Partial<{creator: User, posts: Post[]}>;
 @Connect((state, {thread})=> ({
 	creator: thread && Manager.GetUser(thread.creator),
 	posts: thread && GetThreadPosts(thread),
 }))
-export default class ThreadEntryUI extends BaseComponent<ThreadEntryUI_Props, {}> {
+export class ThreadEntryUI extends BaseComponent<ThreadEntryUI_Props, {}> {
 	render() {
 		let {index, last, thread, creator, posts} = this.props;
 		let toURL = new VURL(null, ["forum", "threads", thread._id+""]);

@@ -2,5 +2,10 @@ import "js-vextensions";
 
 export * from "./Manager";
 export * from "./General";
-export {ForumReducer} from "./Store/forum";
+export * from "./Store/forum";
+export * from "./Store/firebase/forum";
+export * from "./Store/firebase/forum/@Post";
+export * from "./Store/firebase/forum/@Section";
+export * from "./Store/firebase/forum/@Subforum";
+export * from "./Store/firebase/forum/@Thread";
 export * from "./UI/Forum";

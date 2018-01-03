@@ -15,7 +15,7 @@ AddSchema({
 }, "UpdateThreadDetails_payload");
 
 //@UserEdit
-export default class UpdateThreadDetails extends Command<{threadID: number, threadUpdates: Partial<Thread>}> {
+export class UpdateThreadDetails extends Command<{threadID: number, threadUpdates: Partial<Thread>}> {
 	Validate_Early() {
 		AssertValidate("UpdateThreadDetails_payload", this.payload, `Payload invalid`);
 	}

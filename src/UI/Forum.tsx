@@ -1,7 +1,7 @@
 import React from "react";
 import {BaseComponent} from "react-vextensions";
 import {Row} from "react-vcomponents";
-import ScrollView from "react-vscrollview";
+import {ScrollView} from "react-vscrollview";
 import {Column} from "react-vcomponents";
 import {Section} from "../Store/firebase/forum/@Section";
 import {Subforum} from "../Store/firebase/forum/@Subforum";
@@ -16,7 +16,7 @@ import {GetSelectedSubforum, GetSelectedThread, ACTSubforumSelect} from "../Stor
 import {Manager} from "../Manager";
 import {IsUserAdmin} from "../General";
 import {Thread} from "../Store/firebase/forum/@Thread";
-import Link from "./@Shared/Link";
+import {Link} from "./@Shared/Link";
 
 export const columnWidths = [.7, .3];
 
@@ -26,7 +26,7 @@ export const columnWidths = [.7, .3];
 	selectedSubforum: GetSelectedSubforum(),
 	selectedThread: GetSelectedThread(),
 }))
-export default class ForumUI extends BaseComponent<{} & Partial<{sections: Section[], selectedSubforum: Subforum, selectedThread: Thread}>, {}> {
+export class ForumUI extends BaseComponent<{} & Partial<{sections: Section[], selectedSubforum: Subforum, selectedThread: Thread}>, {}> {
 	render() {
 		let {sections, selectedSubforum, selectedThread} = this.props;
 

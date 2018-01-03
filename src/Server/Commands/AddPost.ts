@@ -4,7 +4,7 @@ import {Post} from "../../Store/firebase/forum/@Post";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
 
 //@UserEdit
-export default class AddPost extends Command<{threadID: number, post: Post}> {
+export class AddPost extends Command<{threadID: number, post: Post}> {
 	Validate_Early() {
 		let {threadID, post} = this.payload;
 	}

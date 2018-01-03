@@ -7,7 +7,7 @@ import {TextInput} from "react-vcomponents";
 import {Select} from "react-vcomponents";
 import {RowLR} from "react-vcomponents";
 import {CheckBox} from "react-vcomponents";
-import ScrollView from "react-vscrollview";
+import {ScrollView} from "react-vscrollview";
 import {Button} from "react-vcomponents";
 import {Spinner} from "react-vcomponents";
 import {Thread} from "../../../Store/firebase/forum/@Thread";
@@ -15,7 +15,7 @@ import {GetErrorMessagesUnderElement} from "js-vextensions";
 
 export type ThreadDetailsUI_Props = {baseData: Thread, forNew: boolean, enabled?: boolean, style?, onChange?: (newData: Thread)=>void}
 	& Partial<{creator: User}>;
-export default class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {newData: Thread}> {
+export class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {newData: Thread}> {
 	ComponentWillMountOrReceiveProps(props, forMount) {
 		if (forMount || props.baseData != this.props.baseData) { // if base-data changed
 			this.SetState({newData: Clone(props.baseData)});

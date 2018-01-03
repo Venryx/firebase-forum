@@ -1,4 +1,4 @@
-import Action from "../Utils/Action";
+import {Action} from "../Utils/Action";
 import {combineReducers} from "redux";
 import { GetSubforum, GetThread } from "./firebase/forum";
 import {Thread} from "./firebase/forum/@Thread";

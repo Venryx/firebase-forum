@@ -1,6 +1,6 @@
 import { Command } from "../Command";
 import { Post } from "../../Store/firebase/forum/@Post";
-export default class DeleteThread extends Command<{
+export declare class DeleteThread extends Command<{
     threadID: number;
 }> {
     posts: Post[];

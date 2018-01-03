@@ -6,7 +6,7 @@ import {Row} from "react-vcomponents";
 import {TextInput} from "react-vcomponents";
 import {Select} from "react-vcomponents";
 import {CheckBox} from "react-vcomponents";
-import ScrollView from "react-vscrollview";
+import {ScrollView} from "react-vscrollview";
 import {Button} from "react-vcomponents";
 import {Spinner} from "react-vcomponents";
 import {Section} from "../../Store/firebase/forum/@Section";
@@ -14,7 +14,7 @@ import { GetErrorMessagesUnderElement } from "js-vextensions";
 
 export type SectionDetailsUI_Props = {baseData: Section, forNew: boolean, enabled?: boolean, style?, onChange?: (newData: Section)=>void}
 	& Partial<{creator: User}>;
-export default class SectionDetailsUI extends BaseComponent<SectionDetailsUI_Props, {newData: Section}> {
+export class SectionDetailsUI extends BaseComponent<SectionDetailsUI_Props, {newData: Section}> {
 	ComponentWillMountOrReceiveProps(props, forMount) {
 		if (forMount || props.baseData != this.props.baseData) { // if base-data changed
 			this.SetState({newData: Clone(props.baseData)});

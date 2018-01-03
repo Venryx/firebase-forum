@@ -9,7 +9,7 @@ export declare type ThreadDetailsUI_Props = {
 } & Partial<{
     creator: User;
 }>;
-export default class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {
+export declare class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {
     newData: Thread;
 }> {
     ComponentWillMountOrReceiveProps(props: any, forMount: any): void;

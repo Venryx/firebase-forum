@@ -9,6 +9,6 @@ export declare type ThreadEntryUI_Props = {
     creator: User;
     posts: Post[];
 }>;
-export default class ThreadEntryUI extends BaseComponent<ThreadEntryUI_Props, {}> {
+export declare class ThreadEntryUI extends BaseComponent<ThreadEntryUI_Props, {}> {
     render(): JSX.Element;
 }

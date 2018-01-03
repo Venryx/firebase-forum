@@ -6,7 +6,7 @@ import {Connect} from "../../Utils/Database/FirebaseConnect";
 import {Manager} from "../../Manager";
 
 /*@Radium
-export default class Link extends BaseComponent<{to, target?: string, replace?: boolean, style?, onClick?}, {}> {
+export class Link extends BaseComponent<{to, target?: string, replace?: boolean, style?, onClick?}, {}> {
 	render() {
 		let {to, style, onClick, children} = this.props;
 		return <LinkInner to={to} style={style} onClick={onClick}>{children}</LinkInner>;
@@ -48,7 +48,7 @@ export type Link_Props = {
 		to,
 	};
 })
-export default class Link extends BaseComponent<Link_Props, {}> {
+export class Link extends BaseComponent<Link_Props, {}> {
 	handleClick(event) {
 		let {onClick, to, target, replace: replaceURL, actions} = this.props;
 		if (onClick) onClick(event);

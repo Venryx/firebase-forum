@@ -65,6 +65,6 @@
     "react-md-editor": "^0.2.2",
     "react-redux-firebase": "^1.2.0",
     "react-vmessagebox": "0.0.1",
-    "react-vscrollview": "0.0.1"
+    "react-vscrollview": "0.0.2"
   }
 }

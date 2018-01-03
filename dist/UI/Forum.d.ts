@@ -3,7 +3,7 @@ import { Section } from "../Store/firebase/forum/@Section";
 import { Subforum } from "../Store/firebase/forum/@Subforum";
 import { Thread } from "../Store/firebase/forum/@Thread";
 export declare const columnWidths: number[];
-export default class ForumUI extends BaseComponent<{} & Partial<{
+export declare class ForumUI extends BaseComponent<{} & Partial<{
     sections: Section[];
     selectedSubforum: Subforum;
     selectedThread: Thread;

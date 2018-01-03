@@ -1,6 +1,6 @@
 import { Command } from "../Command";
 import { Subforum } from "../../Store/firebase/forum/@Subforum";
-export default class UpdateSubforumDetails extends Command<{
+export declare class UpdateSubforumDetails extends Command<{
     subforumID: number;
     subforumUpdates: Partial<Subforum>;
 }> {

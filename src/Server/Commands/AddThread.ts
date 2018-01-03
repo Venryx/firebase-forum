@@ -1,12 +1,12 @@
 import {Assert} from "js-vextensions";
 import {Command, MergeDBUpdates} from "../Command";
 import {Thread} from "../../Store/firebase/forum/@Thread";
-import AddPost from "./AddPost";
+import {AddPost} from "./AddPost";
 import {Post} from "../../Store/firebase/forum/@Post";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
 
 //@UserEdit
-export default class AddThread extends Command<{thread: Thread, post: Post}> {
+export class AddThread extends Command<{thread: Thread, post: Post}> {
 	threadID: number;
 	sub_addPost: AddPost;
 	async Prepare() {

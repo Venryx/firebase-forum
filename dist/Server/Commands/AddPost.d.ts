@@ -1,6 +1,6 @@
 import { Command } from "../Command";
 import { Post } from "../../Store/firebase/forum/@Post";
-export default class AddPost extends Command<{
+export declare class AddPost extends Command<{
     threadID: number;
     post: Post;
 }> {

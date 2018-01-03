@@ -1,6 +1,6 @@
 import { Command } from "../Command";
 import { Section } from "../../Store/firebase/forum/@Section";
-export default class AddSection extends Command<{
+export declare class AddSection extends Command<{
     section: Section;
 }> {
     sectionID: number;

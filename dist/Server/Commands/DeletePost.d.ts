@@ -1,6 +1,6 @@
 import { Command } from "../Command";
 import { Post } from "../../Store/firebase/forum/@Post";
-export default class DeletePost extends Command<{
+export declare class DeletePost extends Command<{
     postID: number;
 }> {
     oldData: Post;

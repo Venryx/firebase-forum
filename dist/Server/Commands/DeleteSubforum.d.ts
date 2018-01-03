@@ -1,6 +1,6 @@
 import { Command } from "../Command";
 import { Subforum } from "../../Store/firebase/forum/@Subforum";
-export default class DeleteSubforum extends Command<{
+export declare class DeleteSubforum extends Command<{
     subforumID: number;
 }> {
     oldData: Subforum;

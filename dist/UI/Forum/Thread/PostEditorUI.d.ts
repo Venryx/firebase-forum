@@ -1,6 +1,6 @@
 import { BaseComponent } from "react-vextensions";
 import { Post } from "../../../Store/firebase/forum/@Post";
-export default class PostEditorUI extends BaseComponent<{
+export declare class PostEditorUI extends BaseComponent<{
     forNew?: boolean;
     enabled?: boolean;
     baseData: Post;

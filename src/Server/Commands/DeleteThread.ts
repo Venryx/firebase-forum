@@ -6,7 +6,7 @@ import { GetAsync } from "../../Utils/Database/DatabaseHelpers";
 import {Post} from "../../Store/firebase/forum/@Post";
 
 //@UserEdit
-export default class DeleteThread extends Command<{threadID: number}> {
+export class DeleteThread extends Command<{threadID: number}> {
 	posts: Post[];
 	async Prepare() {
 		let {threadID} = this.payload;

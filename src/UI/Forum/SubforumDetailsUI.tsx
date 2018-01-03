@@ -6,14 +6,14 @@ import {Row} from "react-vcomponents";
 import {TextInput} from "react-vcomponents";
 import {Select} from "react-vcomponents";
 import {CheckBox} from "react-vcomponents";
-import ScrollView from "react-vscrollview";
+import {ScrollView} from "react-vscrollview";
 import {Button} from "react-vcomponents";
 import {Spinner} from "react-vcomponents";
 import {Subforum, Subforum_nameFormat} from "../../Store/firebase/forum/@Subforum";
 import {GetErrorMessagesUnderElement} from "js-vextensions";
 
 export type SubforumDetailsUI_Props = {baseData: Subforum, forNew: boolean, enabled?: boolean, style?, onChange?: (newData: Subforum)=>void};
-export default class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {newData: Subforum}> {
+export class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {newData: Subforum}> {
 	ComponentWillMountOrReceiveProps(props, forMount) {
 		if (forMount || props.baseData != this.props.baseData) { // if base-data changed
 			this.SetState({newData: Clone(props.baseData)});

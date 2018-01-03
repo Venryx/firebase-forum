@@ -1,6 +1,6 @@
 import { Command } from "../Command";
 import { Thread } from "../../Store/firebase/forum/@Thread";
-export default class UpdateThreadDetails extends Command<{
+export declare class UpdateThreadDetails extends Command<{
     threadID: number;
     threadUpdates: Partial<Thread>;
 }> {

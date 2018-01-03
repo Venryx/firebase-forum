@@ -1,4 +1,4 @@
-import Action from "../Utils/Action";
+import { Action } from "../Utils/Action";
 import { Thread } from "./firebase/forum/@Thread";
 import { Subforum } from "./firebase/forum/@Subforum";
 export declare class ACTSubforumSelect extends Action<{

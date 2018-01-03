@@ -7,7 +7,7 @@ export declare type SubforumDetailsUI_Props = {
     style?;
     onChange?: (newData: Subforum) => void;
 };
-export default class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {
+export declare class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {
     newData: Subforum;
 }> {
     ComponentWillMountOrReceiveProps(props: any, forMount: any): void;

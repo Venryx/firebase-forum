@@ -8,12 +8,12 @@ import {Button} from "react-vcomponents";
 import {Component} from "react";
 import {Select} from "react-vcomponents";
 import {Post} from "../../../Store/firebase/forum/@Post";
-import Link from "../../@Shared/Link";
+import {Link} from "../../@Shared/Link";
 import {GetErrorMessagesUnderElement} from "js-vextensions";
 import {MarkdownToolbar} from "../../@Shared/MarkdownToolbar";
-import Editor from "react-md-editor";
+import {Editor} from "react-md-editor";
 
-export default class PostEditorUI extends BaseComponent
+export class PostEditorUI extends BaseComponent
 		<{forNew?: boolean, enabled?: boolean, baseData: Post, options?: any, onChange?: (newData: Post, comp: PostEditorUI)=>void},
 		{newData: Post}> {
 	static defaultProps = {enabled: true};

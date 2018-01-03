@@ -4,7 +4,7 @@ import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
 import {Subforum} from "../../Store/firebase/forum/@Subforum";
 
 //@UserEdit
-export default class AddSubforum extends Command<{sectionID: number, subforum: Subforum}> {
+export class AddSubforum extends Command<{sectionID: number, subforum: Subforum}> {
 	subforumID: number;
 	oldSubforumOrder: number[];
 	async Prepare() {
