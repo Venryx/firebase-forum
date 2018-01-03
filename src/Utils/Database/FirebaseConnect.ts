@@ -1,13 +1,12 @@
 import {Assert} from "js-vextensions";
-import {RootState} from "../../Store/index";
 import {connect} from "react-redux";
 import {ShallowChanged, GetInnerComp} from "react-vextensions";
 import {watchEvents, unWatchEvents} from "react-redux-firebase/dist/actions/query";
 import {getEventsFromInput} from "react-redux-firebase/dist/utils";
 import { TryCall, Timer } from "js-vextensions";
-import { SplitStringBySlash_Cached } from "Frame/Database/StringSplitCache";
-import {GetUser, GetUserPermissionGroups} from "../../Store/firebase/users";
-import {GetUserID} from "Store/firebase/users";
+import {RootState} from "../../General";
+import {SplitStringBySlash_Cached} from "./StringSplitCache";
+import {Manager} from "../../Manager";
 
 // Place a selector in Connect() whenever it uses data that:
 // 1) might change during the component's lifetime, and:
@@ -43,7 +42,7 @@ export function Connect<T, P>(funcOrFuncGetter) {
 
 	let mapStateToProps_wrapper = function(state: RootState, props: P) {
 		let s = this;
-		g.inConnectFunc = true;
+		window["inConnectFunc_ff"] = true;
 		
 		ClearRequestedPaths();
 		ClearAccessedPaths();
@@ -72,7 +71,7 @@ export function Connect<T, P>(funcOrFuncGetter) {
 
 		//let result = storeDataChanged ? mapStateToProps_inner(state, props) : s.lastResult;
 		if (!storeDataChanged && !propsChanged) {
-			g.inConnectFunc = false;
+			window["inConnectFunc_ff"] = false;
 			return s.lastResult;
 		}
 		//let result = mapStateToProps_inner.call(s, state, props);
@@ -83,8 +82,8 @@ export function Connect<T, P>(funcOrFuncGetter) {
 		let result = wrapperFunc.call(s, state, props);
 
 		// also access some other paths here, so that when they change, they trigger ui updates for everything
-		result._user = GetUser(GetUserID());
-		result._permissions = GetUserPermissionGroups(GetUserID());
+		result._user = Manager.GetUser(Manager.GetUserID());
+		result._permissions = Manager.GetUserPermissionGroups(Manager.GetUserID());
 
 		let oldRequestedPaths: string[] = s.lastRequestedPaths || [];
 		let requestedPaths: string[] = GetRequestedPaths();
@@ -112,7 +111,7 @@ export function Connect<T, P>(funcOrFuncGetter) {
 		s.lastProps = props;
 		s.lastResult = result;
 
-		g.inConnectFunc = false;
+		window["inConnectFunc_ff"] = false;
 
 		return result;
 	};

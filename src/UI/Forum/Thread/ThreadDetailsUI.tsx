@@ -11,7 +11,7 @@ import ScrollView from "react-vscrollview";
 import {Button} from "react-vcomponents";
 import {Spinner} from "react-vcomponents";
 import {Thread} from "../../../Store/firebase/forum/@Thread";
-import {Clone, GetErrorMessagesUnderElement} from "../../../General";
+import {GetErrorMessagesUnderElement} from "js-vextensions";
 
 export type ThreadDetailsUI_Props = {baseData: Thread, forNew: boolean, enabled?: boolean, style?, onChange?: (newData: Thread)=>void}
 	& Partial<{creator: User}>;

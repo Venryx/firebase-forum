@@ -2,11 +2,11 @@ import {RequestPath, Connect, ClearRequestedPaths, GetRequestedPaths} from "./Fi
 import {Assert, GetTreeNodesInObjTree, DeepSet} from "js-vextensions";
 import {helpers, firebaseConnect} from "react-redux-firebase";
 //import {DBPath as DBPath_} from "../../../config/DBVersion";
-import {FirebaseApplication, DataSnapshot} from "firebase";
 import {BaseComponent, ShallowChanged} from "react-vextensions";
 import {watchEvents, unWatchEvents} from "react-redux-firebase/dist/actions/query";
 import {getEventsFromInput} from "react-redux-firebase/dist/utils";
-import {SplitStringBySlash_Cached} from "Frame/Database/StringSplitCache";
+import {SplitStringBySlash_Cached} from "./StringSplitCache";
+import { Manager } from "../../index";
 //export {DBPath};
 
 export function DBPath(path = "", inVersionRoot = true) {
@@ -15,13 +15,13 @@ export function DBPath(path = "", inVersionRoot = true) {
 	/*let versionPrefix = path.match(/^v[0-9]+/);
 	if (versionPrefix == null) // if no version prefix already, add one (referencing the current version)*/
 	if (inVersionRoot)
-		path = `v${dbVersion}-${env_short}/${path}`;
+		path = `${Manager.rootStorePath}/${path}`;
 	return path;
 }
 export function DBPathSegments(pathSegments: (string | number)[], inVersionRoot = true) {
 	let result = pathSegments;
 	if (inVersionRoot) {
-		result = ([`v${dbVersion}-${env_short}`] as any).concat(result);
+		result = Manager.rootStorePath.split("/").concat(result as any);
 	}
 	return result;
 }
@@ -38,11 +38,12 @@ Object.prototype._AddFunction_Inline = function DBRef(path = "", inVersionRoot =
 	return this.ref(finalPath);
 }
 
-export type FirebaseApp = FirebaseApplication & {
+export type FirebaseApp = Firebase & {
 	// added by react-redux-firebase
 	_,
 	helpers: {
-		ref(path: string): firebase.DatabaseReference,
+		//ref(path: string): firebase.DatabaseReference,
+		ref(path: string): FirebaseQuery,
 		set,
 		uniqueSet,
 		push,
@@ -57,10 +58,12 @@ export type FirebaseApp = FirebaseApplication & {
 		resetPassword,
 		watchEvent,
 		unWatchEvent,
-		storage(): firebase.FirebaseStorage,
+		//storage(): firebase.FirebaseStorage,
+		storage(): FirebaseStatic,
 
 		// custom
-		DBRef(path?: string, inVersionRoot?: boolean): firebase.DatabaseReference,
+		//DBRef(path?: string, inVersionRoot?: boolean), //: firebase.DatabaseReference,
+		DBRef(path?: string, inVersionRoot?: boolean): FirebaseQuery,
 	},
 };
 
@@ -122,6 +125,7 @@ export function ProcessDBData(data, standardizeForm: boolean, addHelpers: boolea
 	}
 	return treeNodes[0].Value; // get possibly-modified wrapper.data
 }
+
 let helperProps = ["_key", "_id"];
 /** Note: this mutates the original object. */
 export function RemoveHelpers(data) {
@@ -131,6 +135,18 @@ export function RemoveHelpers(data) {
 			delete treeNode.obj[treeNode.prop];
 	}
 	return data;
+}
+export function GetUpdates(oldData, newData, useNullInsteadOfUndefined = true) {
+	let result = {};
+	for (let key of oldData.VKeys(true).concat(newData.VKeys(true))) {
+		if (newData[key] !== oldData[key]) {
+			result[key] = newData[key];
+			if (newData[key] === undefined && useNullInsteadOfUndefined) {
+				result[key] = null;
+			}
+		}
+	}
+	return RemoveHelpers(result);
 }
 
 class DBPathInfo {
@@ -146,6 +162,8 @@ export class GetData_Options {
 	queries?: any;
 }
 
+declare var __DEV__;
+
 G({GetData});
 /** Begins request to get data at the given path in the Firebase database.
  * 
@@ -157,7 +175,7 @@ export function GetData(options: GetData_Options, pathSegment1: string | number,
 export function GetData(...pathSegments: (string | number)[]);
 export function GetData(options: GetData_Options, ...pathSegments: (string | number)[]);
 export function GetData(...args) {
-	let pathSegments: (string | number)[], options: GetData_Options;
+	/*let pathSegments: (string | number)[], options: GetData_Options;
 	if (typeof args[0] == "string") pathSegments = args;
 	else [options, ...pathSegments] = args;
 	options = E(new GetData_Options(), options);
@@ -170,7 +188,7 @@ export function GetData(...args) {
 	pathSegments = DBPathSegments(pathSegments, options.inVersionRoot);
 
 	/*Assert(!path.endsWith("/"), "Path cannot end with a slash. (This may mean a path parameter is missing)");
-	Assert(!path.Contains("//"), "Path cannot contain a double-slash. (This may mean a path parameter is missing)");*/
+	Assert(!path.Contains("//"), "Path cannot contain a double-slash. (This may mean a path parameter is missing)");*#/
 
 	let path = pathSegments.join("/");
 	/*if (options.queries && options.queries.VKeys().length) {
@@ -180,7 +198,7 @@ export function GetData(...args) {
 		}
 		pathSegments[pathSegments.length - 1] = pathSegments.Last() + queriesStr;
 		path += queriesStr.replace(/[#=]/g, "_");
-	}*/
+	}*#/
 
 	if (options.makeRequest) {
 		let queriesStr = "";
@@ -200,7 +218,9 @@ export function GetData(...args) {
 		if (!requestCompleted) return undefined; // undefined means, current-data for path is null/non-existent, but we haven't completed the current request yet
 		else return null; // null means, we've completed the request, and there is no data at that path
 	}
-	return result;
+	return result;*/
+
+	return Manager.GetData.apply(this, arguments);
 }
 
 export class GetDataAsync_Options {
@@ -216,7 +236,7 @@ export async function GetDataAsync(options: GetDataAsync_Options, pathSegment1: 
 export async function GetDataAsync(...pathSegments: (string | number)[]);
 export async function GetDataAsync(options: GetDataAsync_Options, ...pathSegments: (string | number)[]);
 export async function GetDataAsync(...args) {
-	let pathSegments: (string | number)[], options: GetDataAsync_Options;
+	/*let pathSegments: (string | number)[], options: GetDataAsync_Options;
 	if (typeof args[0] == "string") pathSegments = args;
 	else [options, ...pathSegments] = args;
 	options = E(new GetDataAsync_Options(), options);
@@ -226,7 +246,7 @@ export async function GetDataAsync(...args) {
 		//firebase.child(DBPath(path, inVersionRoot)).once("value",
 		let path = pathSegments.join("/");
 		firebase.DBRef(path, options.inVersionRoot).once("value",
-			(snapshot: DataSnapshot)=> {
+			(snapshot: FirebaseDataSnapshot)=> {
 				let result = snapshot.val();
 				if (result)
 					result = ProcessDBData(result, true, options.addHelpers, pathSegments.Last()+"");
@@ -235,7 +255,9 @@ export async function GetDataAsync(...args) {
 			(ex: Error)=> {
 				reject(ex);
 			});
-	});
+	});*/
+
+	return Manager.GetDataAsync.apply(this, arguments);
 }
 
 /**
@@ -246,7 +268,7 @@ export async function GetDataAsync(...args) {
  */
 G({GetAsync});
 export async function GetAsync<T>(dbGetterFunc: ()=>T, statsLogger?: ({requestedPaths: string})=>void): Promise<T> {
-	Assert(!g.inConnectFunc, "Cannot run GetAsync() from within a Connect() function.");
+	Assert(!window["inConnectFunc"], "Cannot run GetAsync() from within a Connect() function.");
 	//Assert(!g.inGetAsyncFunc, "Cannot run GetAsync() from within a GetAsync() function.");
 	let firebase = store.firebase;
 

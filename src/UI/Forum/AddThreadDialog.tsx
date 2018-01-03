@@ -10,19 +10,19 @@ import AddThread from "../../Server/Commands/AddThread";
 import {ShowMessageBox, BoxController} from "react-vmessagebox";
 import {Post} from "../../Store/firebase/forum/@Post";
 import {ACTThreadSelect} from "../../Store/forum";
-import {store} from "../../Manager";
+import {Manager} from "../../Manager";
 
 export const firstPostPlaceholderText = "*Press the Edit button below to write the text for your thread's first post.*";
 
 export function ShowAddThreadDialog(userID: string, subforumID: number) {
 	let newThread = new Thread({
 		title: "",
-		creator: GetUserID(),
+		creator: Manager.GetUserID(),
 		subforum: subforumID,
 	});
 	let newPost = new Post({
 		text: firstPostPlaceholderText,
-		creator: GetUserID(),
+		creator: Manager.GetUserID(),
 	});
 	
 	let detailsUI: ThreadDetailsUI;

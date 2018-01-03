@@ -1,11 +1,11 @@
-import { logTypes } from "../Manager";
+import {Manager} from "../Manager";
 
 export class LogTypes {
 	commands = false;
 }
 
 export function ShouldLog(shouldLogFunc: (logTypes: LogTypes)=>boolean) {
-	return shouldLogFunc(logTypes || {} as any);
+	return shouldLogFunc(Manager.logTypes || {} as any);
 }
 export function MaybeLog(shouldLogFunc: (logTypes: LogTypes)=>boolean, logMessageGetter: ()=>string) {
 	if (!ShouldLog(shouldLogFunc)) return;

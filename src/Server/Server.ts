@@ -42,7 +42,7 @@ export function WaitTillSchemaAddedThenRun(schemaName: string, callback: ()=>voi
 	schemaAddListeners[schemaName] = (schemaAddListeners[schemaName] || []).concat(callback);
 }
 
-type AJV_Extended = AJV.Ajv & {
+export type AJV_Extended = AJV.Ajv & {
 	//AddSchema(schema, name: string): void;
 	FullErrorsText(): string;
 };

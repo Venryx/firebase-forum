@@ -15,26 +15,27 @@ import {Connect} from "../../Utils/Database/FirebaseConnect";
 import {GetSubforumThreads} from "../../Store/firebase/forum";
 import ThreadEntryUI from "./ThreadEntryUI";
 import {ACTSubforumSelect} from "../../Store/forum";
-import {store} from "../../Manager";
+import {Manager, PermissionGroupSet} from "../../Manager";
 import UpdateSubforumDetails from "../../Server/Commands/UpdateSubforumDetails";
-import { GetAsync } from "../../Utils/Database/DatabaseHelpers";
+import {GetAsync, GetUpdates} from "../../Utils/Database/DatabaseHelpers";
 import {ShowMessageBox} from "react-vmessagebox";
 import {colors} from "../GlobalStyles";
+import {IsUserMod} from "../../General";
 
 export const columnWidths = [.7, .2, .1];
 
-type Props = {subforum: Subforum, subNavBarWidth?: number} & Partial<{permissions: PermissionGroupSet, threads: Thread[]}>;
-@Connect((state, {subforum}: Props)=> {
+export type SubforumUI_Props = {subforum: Subforum, subNavBarWidth?: number} & Partial<{permissions: PermissionGroupSet, threads: Thread[]}>;
+@Connect((state, {subforum}: SubforumUI_Props)=> {
 	return {
-		permissions: GetUserPermissionGroups(GetUserID()),
+		permissions: Manager.GetUserPermissionGroups(Manager.GetUserID()),
 		threads: GetSubforumThreads(subforum),
 	};
 })
-export class SubforumUI extends BaseComponent<Props, {}> {
+export class SubforumUI extends BaseComponent<SubforumUI_Props, {}> {
 	static defaultProps = {subNavBarWidth: 0};
 	render() {
 		let {subforum, subNavBarWidth, threads, permissions} = this.props;
-		let userID = GetUserID();
+		let userID = Manager.GetUserID();
 		
 		if (subforum == null || threads == null) {
 			return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: 25}}>Loading threads...</div>;
@@ -50,7 +51,7 @@ export class SubforumUI extends BaseComponent<Props, {}> {
 							<Row style={{height: 40, padding: 10}}>
 								<span style={{position: "absolute", left: "50%", transform: "translateX(-50%)", fontSize: 18}}>{subforum.name}</span>
 								<Button text="Add thread" ml="auto" onClick={()=> {
-									if (userID == null) return ShowSignInPopup();
+									if (userID == null) return Manager.ShowSignInPopup();
 									ShowAddThreadDialog(userID, subforum._id);
 								}}/>
 							</Row>
@@ -105,7 +106,7 @@ class DetailsDropdown extends BaseComponent<{subforum: Subforum}, {dataError: st
 	render() {
 		let {subforum} = this.props;
 		let {dataError} = this.state;
-		let isMod = IsUserMod(GetUserID());
+		let isMod = IsUserMod(Manager.GetUserID());
 		return (
 			<DropDown>
 				<DropDownTrigger>

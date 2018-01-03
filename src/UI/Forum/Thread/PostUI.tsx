@@ -10,10 +10,15 @@ import { Connect } from "../../../Utils/Database/FirebaseConnect";
 import {ShowMessageBox} from "react-vmessagebox";
 import DeletePost from "../../../Server/Commands/DeletePost";
 import {UpdatePost} from "../../../Server/Commands/UpdatePost";
+import {Manager} from "../../../Manager";
+import { GetUpdates } from "../../../Utils/Database/DatabaseHelpers";
+import {IsUserCreatorOrMod} from "../../../General";
+
+let VReactMarkdown_Remarkable = Manager.MarkdownRenderer as any;
 
 export type PostUI_Props = {index: number, thread: Thread, post: Post} & Partial<{creator: User}>;
 @Connect((state, {post}: PostUI_Props)=> ({
-	creator: GetUser(post.creator),
+	creator: Manager.GetUser(post.creator),
 }))
 export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataError: string}> {
 	postEditorUI: PostEditorUI;
@@ -42,7 +47,7 @@ export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataE
 			)
 		}
 
-		let creatorOrMod = IsUserCreatorOrMod(GetUserID(), post);
+		let creatorOrMod = IsUserCreatorOrMod(Manager.GetUserID(), post);
 		return (
 			<Row sel mt={index != 0 ? 20 : 0} style={{flexShrink: 0, background: "rgba(0,0,0,.7)", borderRadius: 10, alignItems: "initial", cursor: "auto"}}>
 				<Column style={{width: 125}}>
@@ -59,7 +64,7 @@ export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataE
 						<VReactMarkdown_Remarkable source={post.text != null ? post.text : "*This post has been deleted.*"}/>
 					</Row>
 					<Row mt="auto">
-						<span style={{color: "rgba(255,255,255,.5)"}}>{creator ? creator.displayName : "..."}, at {Moment(post.createdAt).format("YYYY-MM-DD HH:mm:ss")}</span>
+						<span style={{color: "rgba(255,255,255,.5)"}}>{creator ? creator.displayName : "..."}, at {Manager.FormatTime(post.createdAt, "YYYY-MM-DD HH:mm:ss")}</span>
 						{creatorOrMod &&
 							<Button ml={5} text="Edit" onClick={()=> {
 								this.SetState({editing: true});
@@ -75,7 +80,7 @@ export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataE
 								});
 							}}/>}
 						{post.editedAt && <Span ml="auto" style={{color: "rgba(255,255,255,.5)"}}>
-							{post.text != null ? "edited" : "deleted"} at {Moment(post.editedAt).format("YYYY-MM-DD HH:mm:ss")}
+							{post.text != null ? "edited" : "deleted"} at {Manager.FormatTime(post.editedAt, "YYYY-MM-DD HH:mm:ss")}
 						</Span>}
 					</Row>
 				</Column>

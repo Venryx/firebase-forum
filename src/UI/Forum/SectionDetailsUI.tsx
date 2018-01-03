@@ -10,7 +10,7 @@ import ScrollView from "react-vscrollview";
 import {Button} from "react-vcomponents";
 import {Spinner} from "react-vcomponents";
 import {Section} from "../../Store/firebase/forum/@Section";
-import {Clone, GetErrorMessagesUnderElement} from "../../General";
+import { GetErrorMessagesUnderElement } from "js-vextensions";
 
 export type SectionDetailsUI_Props = {baseData: Section, forNew: boolean, enabled?: boolean, style?, onChange?: (newData: Section)=>void}
 	& Partial<{creator: User}>;

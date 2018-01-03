@@ -1,5 +1,6 @@
-import { DeepSet } from "../../../../js-vextensions/Main/dist/index";
+import { DeepSet } from "js-vextensions";
 import { MaybeLog } from "../Utils/Logging";
+import {Manager} from "../Manager";
 
 export class CommandUserInfo {
 	id: string;
@@ -21,7 +22,7 @@ function OnCurrentCommandFinished() {
 
 export abstract class Command<Payload> {
 	constructor(payload: Payload) {
-		this.userInfo = {id: GetUserID()}; // temp
+		this.userInfo = {id: Manager.GetUserID()}; // temp
 		this.type = this.constructor.name;
 		this.payload = payload;
 		//this.Extend(payload);

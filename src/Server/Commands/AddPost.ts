@@ -1,14 +1,9 @@
 import {Assert} from "js-vextensions";
-import {GetDataAsync} from "../../Frame/Database/DatabaseHelpers";
 import {Command} from "../Command";
-import {MapNode, ThesisForm, ChildEntry, AccessLevel} from "../../Store/firebase/nodes/@MapNode";
-import {E} from "../../Frame/General/Globals_Free";
-import {GetValues_ForSchema} from "../../Frame/General/Enums";
-import {MapNodeType} from "../../Store/firebase/nodes/@MapNodeType";
-import { UserEdit, MapEdit } from "Server/CommandMacros";
-import {Post} from "Store/firebase/forum/@Post";
+import {Post} from "../../Store/firebase/forum/@Post";
+import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
 
-@UserEdit
+//@UserEdit
 export default class AddPost extends Command<{threadID: number, post: Post}> {
 	Validate_Early() {
 		let {threadID, post} = this.payload;

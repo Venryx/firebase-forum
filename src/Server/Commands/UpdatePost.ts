@@ -1,13 +1,7 @@
 import {Assert} from "js-vextensions";
-import {GetDataAsync} from "../../Frame/Database/DatabaseHelpers";
 import {Command} from "../Command";
-import {MapNode, ThesisForm, ChildEntry, AccessLevel} from "../../Store/firebase/nodes/@MapNode";
-import {E} from "../../Frame/General/Globals_Free";
-import {GetValues_ForSchema} from "../../Frame/General/Enums";
-import {Map_nameFormat, Map} from "../../Store/firebase/maps/@Map";
-import {UserEdit} from "../CommandMacros";
-import {MapEdit} from "Server/CommandMacros";
-import {Post} from "Store/firebase/forum/@Post";
+import {Post} from "../../Store/firebase/forum/@Post";
+import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
 
 AddSchema({
 	properties: {
@@ -21,7 +15,7 @@ AddSchema({
 	required: ["postID", "postUpdates"],
 }, "UpdatePost_payload");
 
-@UserEdit
+//@UserEdit
 export class UpdatePost extends Command<{postID: number, postUpdates: Partial<Post>}> {
 	Validate_Early() {
 		AssertValidate("UpdatePost_payload", this.payload, `Payload invalid`);

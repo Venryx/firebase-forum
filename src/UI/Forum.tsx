@@ -13,11 +13,15 @@ import {ThreadUI} from "./Forum/ThreadUI";
 import {Connect} from "../Utils/Database/FirebaseConnect";
 import {GetSections, GetSectionSubforums, GetSubforumThreads} from "../Store/firebase/forum";
 import {GetSelectedSubforum, GetSelectedThread, ACTSubforumSelect} from "../Store/forum";
+import {Manager} from "../Manager";
+import {IsUserAdmin} from "../General";
+import {Thread} from "../Store/firebase/forum/@Thread";
+import Link from "./@Shared/Link";
 
 export const columnWidths = [.7, .3];
 
 @Connect(state=> ({
-	_: GetUserPermissionGroups(GetUserID()),
+	_: Manager.GetUserPermissionGroups(Manager.GetUserID()),
 	sections: GetSections(),
 	selectedSubforum: GetSelectedSubforum(),
 	selectedThread: GetSelectedThread(),
@@ -33,14 +37,14 @@ export default class ForumUI extends BaseComponent<{} & Partial<{sections: Secti
 			return <SubforumUI subforum={selectedSubforum}/>;
 		}
 
-		let userID = GetUserID();
+		let userID = Manager.GetUserID();
 		let isAdmin = IsUserAdmin(userID);
 		return (
 			<Column style={{width: 960, margin: "20px auto 20px auto", flex: 1, filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)"}}>
 				{isAdmin && <Column className="clickThrough" style={{height: 40, background: "rgba(0,0,0,.7)", borderRadius: 10}}>
 					<Row style={{height: 40, padding: 10}}>
 						<Button text="Add section" ml="auto" onClick={()=> {
-							if (userID == null) return ShowSignInPopup();
+							if (userID == null) return Manager.ShowSignInPopup();
 							ShowAddSectionDialog(userID);
 						}}/>
 					</Row>
@@ -63,7 +67,7 @@ type SectionUI_Props = {section: Section} & Partial<{subforums: Subforum[]}>;
 class SectionUI extends BaseComponent<SectionUI_Props, {}> {
 	render() {
 		let {section, subforums} = this.props;
-		let userID = GetUserID();
+		let userID = Manager.GetUserID();
 		let isAdmin = IsUserAdmin(userID);
 		return (
 			<Column style={{width: 960, margin: "20px auto 20px auto"}}>
@@ -72,7 +76,7 @@ class SectionUI extends BaseComponent<SectionUI_Props, {}> {
 						<span style={{position: "absolute", left: "50%", transform: "translateX(-50%)", fontSize: 18}}>{section.name}</span>
 						{isAdmin &&
 							<Button text="Add subforum" ml="auto" onClick={()=> {
-								if (userID == null) return ShowSignInPopup();
+								if (userID == null) return Manager.ShowSignInPopup();
 								ShowAddSubforumDialog(userID, section._id);
 							}}/>}
 					</Row>

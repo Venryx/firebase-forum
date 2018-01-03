@@ -10,7 +10,7 @@ import ScrollView from "react-vscrollview";
 import {Button} from "react-vcomponents";
 import {Spinner} from "react-vcomponents";
 import {Subforum, Subforum_nameFormat} from "../../Store/firebase/forum/@Subforum";
-import {Clone, GetErrorMessagesUnderElement} from "../../General";
+import {GetErrorMessagesUnderElement} from "js-vextensions";
 
 export type SubforumDetailsUI_Props = {baseData: Subforum, forNew: boolean, enabled?: boolean, style?, onChange?: (newData: Subforum)=>void};
 export default class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {newData: Subforum}> {

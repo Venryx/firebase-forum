@@ -1,6 +1,8 @@
 import Action from "../Utils/Action";
 import {combineReducers} from "redux";
 import { GetSubforum, GetThread } from "./firebase/forum";
+import {Thread} from "./firebase/forum/@Thread";
+import {Subforum} from "./firebase/forum/@Subforum";
 
 export class ACTSubforumSelect extends Action<{id: number}> {}
 export class ACTThreadSelect extends Action<{id: number}> {}
@@ -24,15 +26,15 @@ export const ForumReducer = combineReducers({
 export function GetSelectedSubforumID(): number {
 	return State("selectedSubforumID");
 }
-export function GetSelectedSubforum() {
+export function GetSelectedSubforum(): Subforum {
 	let selectedID = GetSelectedSubforumID();
-	return GetSubforum(selectedID) as any;
+	return GetSubforum(selectedID);
 }
 
 export function GetSelectedThreadID(): number {
 	return State("selectedThreadID");
 }
-export function GetSelectedThread() {
+export function GetSelectedThread(): Thread {
 	let selectedID = GetSelectedThreadID();
 	return GetThread(selectedID);
 }

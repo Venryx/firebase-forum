@@ -1,5 +1,4 @@
 import {Command} from "../Command";
-import {UserEdit} from "../CommandMacros";
 import {Thread} from "../../Store/firebase/forum/@Thread";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
 
@@ -15,7 +14,7 @@ AddSchema({
 	required: ["threadID", "threadUpdates"],
 }, "UpdateThreadDetails_payload");
 
-@UserEdit
+//@UserEdit
 export default class UpdateThreadDetails extends Command<{threadID: number, threadUpdates: Partial<Thread>}> {
 	Validate_Early() {
 		AssertValidate("UpdateThreadDetails_payload", this.payload, `Payload invalid`);

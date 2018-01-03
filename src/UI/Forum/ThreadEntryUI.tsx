@@ -7,10 +7,14 @@ import {GetThreadPosts} from "../../Store/firebase/forum";
 import {Connect} from "../../Utils/Database/FirebaseConnect";
 import {ACTThreadSelect} from "../../Store/forum";
 import {columnWidths} from "./SubforumUI";
+import {Post} from "../../Store/firebase/forum/@Post";
+import {Manager} from "../../Manager";
+import {VURL} from "js-vextensions";
+import Link from "../@Shared/Link";
 
 export type ThreadEntryUI_Props = {index: number, last: boolean, thread: Thread} & Partial<{creator: User, posts: Post[]}>;
 @Connect((state, {thread})=> ({
-	creator: thread && GetUser(thread.creator),
+	creator: thread && Manager.GetUser(thread.creator),
 	posts: thread && GetThreadPosts(thread),
 }))
 export default class ThreadEntryUI extends BaseComponent<ThreadEntryUI_Props, {}> {

@@ -1,14 +1,7 @@
-import {store, rootStorePathSegments} from "./Manager";
-export function E<E1,E2,E3,E4,E5,E6,E7,E8>(e1?:E1,e2?:E2,e3?:E3,e4?:E4,e5?:E5,e6?:E6,e7?:E7,e8?:E8):E1&E2&E3&E4&E5&E6&E7&E8 {
-	var result = {} as any;
-	for (var extend of arguments)
-		result.Extend(extend);
-	return result;
-	//return StyleSheet.create(result);
-}
-
-export function ToJSON(obj) { return JSON.stringify(obj); }
-export function FromJSON(json) { return JSON.parse(json); }
+import {DeepGet} from "js-vextensions";
+import {Manager} from "./Manager";
+import {Post} from "./Store/firebase/forum/@Post";
+import {Thread} from "./Store/firebase/forum/@Thread";
 
 export function RemoveDuplicates(items: any) {
 	var result = [];
@@ -20,26 +13,8 @@ export function RemoveDuplicates(items: any) {
 	return result;
 }
 
-export function Assert(condition, messageOrMessageFunc?: string | Function) {
-	if (condition) return;
-
-	var message = (messageOrMessageFunc as any) instanceof Function ? (messageOrMessageFunc as any)() : messageOrMessageFunc;
-
-	//console.log(`Assert failed) ${message}\n\nStackTrace) ${GetStackTraceStr()}`);
-	console.error("Assert failed) " + message);
-	debugger;
-	throw new Error("Assert failed) " + message);
-}
-export function AssertWarn(condition, messageOrMessageFunc?: string | Function) {
-	if (condition) return;
-
-	var message = messageOrMessageFunc instanceof Function ? messageOrMessageFunc() : messageOrMessageFunc;
-
-	console.warn(`Assert-warn failed) ${message}\n\nStackTrace)`); // ${GetStackTraceStr()}`);
-}
-
 // for substantially better perf, we now only accept string-or-number arrays
-export type RootState = {};
+export type RootState = any;
 declare global {
 	function State<T>(): RootState;
 	function State<T>(pathGetterFunc: (state: RootState)=>T);
@@ -61,7 +36,7 @@ function State<T>(...args) {
 			`Each string path-segment must be a plain prop-name. (ie. contain no "/" separators) @segments(${pathSegments})`);
 	}*/
 	
-	let selectedData = DeepGet(store.getState(), rootStorePathSegments.concat(pathSegments as any));
+	let selectedData = DeepGet(store.getState(), Manager.rootStorePath + "/" + pathSegments.join("/"));
 	return selectedData;
 }
 function ConvertPathGetterFuncToPropChain(pathGetterFunc: Function) {
@@ -73,32 +48,40 @@ function ConvertPathGetterFuncToPropChain(pathGetterFunc: Function) {
 	return result;
 }
 
-//export function DeepGet(obj, path, resultIfNullOrUndefined = null, resultIfUndefined_override = undefined) {
-export function DeepGet<T>(obj, pathOrPathNodes: string | (string | number)[], resultIfNull: T = null, sepChar = "/"): T {
-	//let pathNodes = path.SplitByAny("\\.", "\\/");
-	let pathNodes = pathOrPathNodes instanceof Array ? pathOrPathNodes : pathOrPathNodes.split(sepChar);
-	let result = obj;
-	for (let pathNode of pathNodes) {
-		if (result == null) break;
-		result = result[pathNode];
-	}
-	/*if (result === undefined)
-		return arguments.length == 4 ? resultIfUndefined_override : resultIfNullOrUndefined;
-	if (result == null)
-		return resultIfNullOrUndefined;*/
-	if (result == null)
-		return resultIfNull;
-	return result;
-}
-
-//declare global { function Clone(obj): any; } G({Clone});
-export function Clone(obj) {
-	return FromJSON(ToJSON(obj));
-}
-
-export function GetErrorMessagesUnderElement(element) {
-	//return element.querySelectorAll(":invalid").ToList().map(node=>node.validationMessage || `Invalid value.`);
-	return Array.from(element.querySelectorAll(":invalid")).map(node=>(node as any).validationMessage || `Invalid value.`);
-}
-
 export var emptyArray = [];
+
+export enum AccessLevel {
+	Basic = 10,
+	Verified = 20, // for accounts we're pretty sure are legitimate (an actual person's only account)
+	Mod = 30,
+	Admin = 40,
+}
+
+/*export function GetUserPermissionGroups(userID: string): PermissionGroupSet {
+	if (userID == null) return null;
+	return GetData("userExtras", userID, "permissionGroups");
+}*/
+export function GetUserAccessLevel(userID: string) {
+	let groups = Manager.GetUserPermissionGroups(userID);
+	if (groups == null) return AccessLevel.Basic;
+	
+	if (groups.admin) return AccessLevel.Admin;
+	if (groups.mod) return AccessLevel.Mod;
+	if (groups.verified) return AccessLevel.Verified;
+	//if (groups.basic) return AccessLevel.Basic;
+	Assert(false);
+}
+export function IsUserBasic(userID: string) { return (Manager.GetUserPermissionGroups(userID) || {} as any).basic; }
+export function IsUserVerified(userID: string) { return (Manager.GetUserPermissionGroups(userID) || {} as any).verified; }
+export function IsUserMod(userID: string) { return (Manager.GetUserPermissionGroups(userID) || {} as any).mod; }
+export function IsUserAdmin(userID: string) { return (Manager.GetUserPermissionGroups(userID) || {} as any).admin; }
+
+export function IsUserBasicOrAnon(userID: string) {
+	let permissionGroups = Manager.GetUserPermissionGroups(userID);
+	return permissionGroups == null || permissionGroups.basic;
+}
+export function IsUserCreatorOrMod(userID: string, entity: Post | Thread) {
+	let permissionGroups = Manager.GetUserPermissionGroups(userID);
+	if (permissionGroups == null) return false;
+	return (entity.creator == userID && permissionGroups.basic) || permissionGroups.mod;
+}

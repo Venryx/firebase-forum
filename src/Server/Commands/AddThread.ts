@@ -1,18 +1,11 @@
 import {Assert} from "js-vextensions";
-import {GetDataAsync} from "../../Frame/Database/DatabaseHelpers";
 import {Command, MergeDBUpdates} from "../Command";
-import {MapNode, ThesisForm} from "../../Store/firebase/nodes/@MapNode";
-import {E} from "../../Frame/General/Globals_Free";
-import {Term} from "../../Store/firebase/terms/@Term";
-import {Map} from "../../Store/firebase/maps/@Map";
-import AddNode from "./AddNode";
-import {MapNodeType} from "../../Store/firebase/nodes/@MapNodeType";
-import {UserEdit} from "Server/CommandMacros";
 import {Thread} from "../../Store/firebase/forum/@Thread";
-import {Post} from "Store/firebase/forum/@Post";
 import AddPost from "./AddPost";
+import {Post} from "../../Store/firebase/forum/@Post";
+import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
 
-@UserEdit
+//@UserEdit
 export default class AddThread extends Command<{thread: Thread, post: Post}> {
 	threadID: number;
 	sub_addPost: AddPost;

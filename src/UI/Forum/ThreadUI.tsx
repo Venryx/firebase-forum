@@ -20,7 +20,10 @@ import AddPost from "../../Server/Commands/AddPost";
 import DeleteThread from "../../Server/Commands/DeleteThread";
 import {ACTThreadSelect} from "../../Store/forum";
 import {ShowMessageBox} from "react-vmessagebox";
-import {store} from "../../Manager";
+import {Manager, PermissionGroupSet} from "../../Manager";
+import {colors} from "../GlobalStyles";
+import {IsUserCreatorOrMod} from "../../General";
+import {GetUpdates} from "../../Utils/Database/DatabaseHelpers";
 
 export type ThreadUI_Props = {thread: Thread, subNavBarWidth?: number} & Partial<{permissions: PermissionGroupSet, posts: Post[]}>;
 @Connect((state, {thread}: ThreadUI_Props)=> ({
@@ -30,7 +33,7 @@ export class ThreadUI extends BaseComponent<ThreadUI_Props, {}> {
 	static defaultProps = {subNavBarWidth: 0};
 	render() {
 		let {thread, posts} = this.props;
-		let userID = GetUserID();
+		let userID = Manager.GetUserID();
 		
 		if (thread == null || posts == null || posts.length == 0) {
 			return <div style={{display: "flex", alignItems: "center", justifyContent: "center", flex: 1, fontSize: 25}}>Loading posts...</div>;
@@ -47,7 +50,7 @@ export class ThreadUI extends BaseComponent<ThreadUI_Props, {}> {
 						{/*<Column className="clickThrough" style={{height: 80, background: "rgba(0,0,0,.7)", borderRadius: "10px 10px 0 0"}}>
 							<Row style={{height: 40, padding: 10}}>
 								<Button text="Add thread" ml="auto" onClick={()=> {
-									if (userID == null) return ShowSignInPopup();
+									if (userID == null) return Manager.ShowSignInPopup();
 									ShowAddThreadDialog(userID, thread._id);
 								}}/>
 							</Row>
@@ -82,7 +85,7 @@ class ReplyBox extends BaseComponent<{thread: Thread}, {dataError: string}> {
 					}}/>
 				<Row mt={5}>
 					<Button text="Post reply" enabled={dataError == null} onLeftClick={async ()=> {
-						if (GetUserID() == null) return ShowSignInPopup();
+						if (Manager.GetUserID() == null) return Manager.ShowSignInPopup();
 						
 						let post = this.postEditorUI.GetNewData();
 						await new AddPost({threadID: thread._id, post: post}).Run();
@@ -129,7 +132,7 @@ class DetailsDropdown extends BaseComponent<DetailsDropdownProps, {dataError: st
 		let {thread, posts} = this.props;
 		let {dataError} = this.state;
 		
-		let creatorOrMod = IsUserCreatorOrMod(GetUserID(), thread);
+		let creatorOrMod = IsUserCreatorOrMod(Manager.GetUserID(), thread);
 		return (
 			<DropDown>
 				<DropDownTrigger>
@@ -153,7 +156,7 @@ class DetailsDropdown extends BaseComponent<DetailsDropdownProps, {dataError: st
 							<Column mt={10}>
 								<Row style={{fontWeight: "bold"}}>Advanced:</Row>
 								<Row mt={5}>
-									<Button text="Delete" enabled={posts.filter(a=>a.creator != GetUserID() && a.text).length <= 1} onLeftClick={async ()=> {
+									<Button text="Delete" enabled={posts.filter(a=>a.creator != Manager.GetUserID() && a.text).length <= 1} onLeftClick={async ()=> {
 										/*let posts = await GetAsync(()=>GetThreadPosts(thread));
 										if (posts.length > 1) {
 											return void ShowMessageBox({title: `Still has posts`,
