@@ -1,4 +1,5 @@
 import "js-vextensions";
+import "codemirror/addon/scroll/simplescrollbars";
 
 export * from "./Manager";
 export * from "./General";

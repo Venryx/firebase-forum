@@ -15,13 +15,13 @@ export function DBPath(path = "", inVersionRoot = true) {
 	/*let versionPrefix = path.match(/^v[0-9]+/);
 	if (versionPrefix == null) // if no version prefix already, add one (referencing the current version)*/
 	if (inVersionRoot)
-		path = `${Manager.rootStorePath}/${path}`;
+		path = `${Manager.storePath_dbData}/${path}`;
 	return path;
 }
 export function DBPathSegments(pathSegments: (string | number)[], inVersionRoot = true) {
 	let result = pathSegments;
 	if (inVersionRoot) {
-		result = Manager.rootStorePath.split("/").concat(result as any);
+		result = Manager.storePath_dbData.split("/").concat(result as any);
 	}
 	return result;
 }
@@ -219,7 +219,7 @@ export function GetData(...args) {
 	}
 	return result;*/
 
-	return Manager.GetData(options, ...Manager.rootStorePath.split("/").concat(pathSegments as any));
+	return Manager.GetData(options, ...Manager.storePath_dbData.split("/").concat(pathSegments as any));
 }
 
 export class GetDataAsync_Options {
@@ -255,7 +255,7 @@ export async function GetDataAsync(...args) {
 			});
 	});*/
 
-	return Manager.GetDataAsync(options, ...Manager.rootStorePath.split("/").concat(pathSegments as any));
+	return Manager.GetDataAsync(options, ...Manager.storePath_dbData.split("/").concat(pathSegments as any));
 }
 
 /**

@@ -14,7 +14,7 @@ import {Manager} from "../../../Manager";
 import { GetUpdates } from "../../../Utils/Database/DatabaseHelpers";
 import {IsUserCreatorOrMod} from "../../../General";
 
-let VReactMarkdown_Remarkable = Manager.MarkdownRenderer as any;
+//let VReactMarkdown_Remarkable = Manager.MarkdownRenderer as any;
 
 export type PostUI_Props = {index: number, thread: Thread, post: Post} & Partial<{creator: User}>;
 @Connect((state, {post}: PostUI_Props)=> ({
@@ -61,7 +61,7 @@ export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataE
 				<Column p={10} style={{flex: 1}}>
 					<Row style={{width: "100%"}}>
 						{/*post.text*/}
-						<VReactMarkdown_Remarkable source={post.text != null ? post.text : "*This post has been deleted.*"}/>
+						<Manager.MarkdownRenderer source={post.text != null ? post.text : "*This post has been deleted.*"}/>
 					</Row>
 					<Row mt="auto">
 						<span style={{color: "rgba(255,255,255,.5)"}}>{creator ? creator.displayName : "..."}, at {Manager.FormatTime(post.createdAt, "YYYY-MM-DD HH:mm:ss")}</span>

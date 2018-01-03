@@ -4,9 +4,9 @@ import {ShallowChanged, GetInnerComp} from "react-vextensions";
 import {watchEvents, unWatchEvents} from "react-redux-firebase/dist/actions/query";
 import {getEventsFromInput} from "react-redux-firebase/dist/utils";
 import { TryCall, Timer } from "js-vextensions";
-import {RootState} from "../../General";
 import {SplitStringBySlash_Cached} from "./StringSplitCache";
 import {Manager} from "../../Manager";
+import {RootState} from "../../General";
 
 // Place a selector in Connect() whenever it uses data that:
 // 1) might change during the component's lifetime, and:

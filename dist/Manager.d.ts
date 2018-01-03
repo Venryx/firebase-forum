@@ -7,7 +7,8 @@ export declare class PermissionGroupSet {
 }
 export declare class Manager {
     static store: any;
-    static rootStorePath: string;
+    static storePath_mainData: string;
+    static storePath_dbData: string;
     static rootReducer: Function;
     static State_overrides: any;
     static GetNewURL: Function;
@@ -15,6 +16,7 @@ export declare class Manager {
     static router_replace: (newURL: string) => any;
     static router_push: (newURL: string) => any;
     static logTypes: LogTypes;
+    static State: (...props) => any;
     static GetData: () => any;
     static GetDataAsync: () => any;
     static GetAsync: (dbGetterFunc, statsLogger) => Promise<any>;
@@ -22,5 +24,5 @@ export declare class Manager {
     static GetUserID: () => string;
     static GetUser: (id: string) => any;
     static GetUserPermissionGroups: (userID: string) => PermissionGroupSet;
-    static MarkdownRenderer: (...props: any[]) => JSX.Element;
+    static MarkdownRenderer: any;
 }

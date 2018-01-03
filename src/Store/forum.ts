@@ -3,6 +3,8 @@ import {combineReducers} from "redux";
 import { GetSubforum, GetThread } from "./firebase/forum";
 import {Thread} from "./firebase/forum/@Thread";
 import {Subforum} from "./firebase/forum/@Subforum";
+import { Manager } from "../index";
+import { State } from "../General";
 
 export class ACTSubforumSelect extends Action<{id: number}> {}
 export class ACTThreadSelect extends Action<{id: number}> {}

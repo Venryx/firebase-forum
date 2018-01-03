@@ -2,11 +2,7 @@ import { Post } from "./Store/firebase/forum/@Post";
 import { Thread } from "./Store/firebase/forum/@Thread";
 export declare function RemoveDuplicates(items: any): any[];
 export declare type RootState = any;
-declare global  {
-    function State<T>(): RootState;
-    function State<T>(pathGetterFunc: (state: RootState) => T): any;
-    function State<T>(...pathSegments: (string | number)[]): any;
-}
+export declare function State<T>(...args: any[]): any;
 export declare var emptyArray: any[];
 export declare enum AccessLevel {
     Basic = 10,

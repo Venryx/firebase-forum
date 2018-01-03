@@ -15,17 +15,17 @@ export function RemoveDuplicates(items: any) {
 
 // for substantially better perf, we now only accept string-or-number arrays
 export type RootState = any;
-declare global {
+/*declare global {
 	function State<T>(): RootState;
 	function State<T>(pathGetterFunc: (state: RootState)=>T);
 	function State<T>(...pathSegments: (string | number)[]);
 	//function State<T>(options: State_Options, ...pathSegments: (string | number)[]);
-}
-function State<T>(...args) {
+}*/
+export function State<T>(...args) {
 	let pathSegments: (string | number)[]; //, options = new State_Options();
 	//if (args.length == 0) return State_overrides.state || store.getState();
 	if (args.length == 0) return store.getState();
-	else if (typeof args[0] == "function") pathSegments = ConvertPathGetterFuncToPropChain(args[0]);
+	//else if (typeof args[0] == "function") pathSegments = ConvertPathGetterFuncToPropChain(args[0]);
 	else if (typeof args[0] == "string") pathSegments = args;
 	//else [options, ...pathSegments] = args;
 	else [...pathSegments] = args;
@@ -36,17 +36,19 @@ function State<T>(...args) {
 			`Each string path-segment must be a plain prop-name. (ie. contain no "/" separators) @segments(${pathSegments})`);
 	}*/
 	
-	let selectedData = DeepGet(store.getState(), Manager.rootStorePath + "/" + pathSegments.join("/"));
-	return selectedData;
+	/*let selectedData = DeepGet(store.getState(), Manager.storePath_mainData + "/" + pathSegments.join("/"));
+	return selectedData;*/
+
+	return Manager.State(...Manager.storePath_mainData.split("/").concat(pathSegments as any));
 }
-function ConvertPathGetterFuncToPropChain(pathGetterFunc: Function) {
+/*function ConvertPathGetterFuncToPropChain(pathGetterFunc: Function) {
 	let pathStr = pathGetterFunc.toString().match(/return a\.(.+?);/)[1] as string;
 	Assert(!pathStr.includes("["), `State-getter-func cannot contain bracket-based property-access.\n\n${""
 		}For variable inclusion, use multiple segments as in "State("main", "mapViews", mapID)".`);
 	//let result = pathStr.replace(/\./g, "/");
 	let result = pathStr.split(".");
 	return result;
-}
+}*/
 
 export var emptyArray = [];
 

@@ -4,6 +4,7 @@ import {BaseComponent} from "react-vextensions";
 import {VURL, GetCurrentURLString} from "js-vextensions";
 import {Connect} from "../../Utils/Database/FirebaseConnect";
 import {Manager} from "../../Manager";
+import {State} from "../../General";
 
 /*@Radium
 export class Link extends BaseComponent<{to, target?: string, replace?: boolean, style?, onClick?}, {}> {
