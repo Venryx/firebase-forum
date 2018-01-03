@@ -25,7 +25,7 @@ export class UpdateSubforumDetails extends Command<{subforumID: number, subforum
 	newData: Subforum;
 	async Prepare() {
 		let {subforumID, subforumUpdates} = this.payload;
-		this.oldData = await GetDataAsync({addHelpers: false}, "forum", "subforums", subforumID) as Subforum;
+		this.oldData = await GetDataAsync({addHelpers: false}, "subforums", subforumID) as Subforum;
 		this.newData = {...this.oldData, ...subforumUpdates};
 	}
 	async Validate() {
@@ -35,7 +35,7 @@ export class UpdateSubforumDetails extends Command<{subforumID: number, subforum
 	GetDBUpdates() {
 		let {subforumID, subforumUpdates} = this.payload;
 		let updates = {};
-		updates[`forum/subforums/${subforumID}`] = this.newData;
+		updates[`subforums/${subforumID}`] = this.newData;
 		return updates;
 	}
 }

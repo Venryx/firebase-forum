@@ -20,8 +20,10 @@ export class Manager {
 	
 	static logTypes = new LogTypes();
 
+	//static FirebaseConnect: (func: Function)=>any; // must set "window.FirebaseConnect" manually
 	static GetData: ()=>any;
 	static GetDataAsync: ()=>any;
+	static GetAsync: (dbGetterFunc, statsLogger)=>Promise<any>;
 	static ShowSignInPopup: ()=>void;
 	static GetUserID: ()=>string;
 	static GetUser: (id: string)=>any;

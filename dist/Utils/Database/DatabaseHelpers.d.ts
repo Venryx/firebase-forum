@@ -32,7 +32,6 @@ export declare function ProcessDBData(data: any, standardizeForm: boolean, addHe
 export declare function RemoveHelpers(data: any): any;
 export declare function GetUpdates(oldData: any, newData: any, useNullInsteadOfUndefined?: boolean): any;
 export declare class GetData_Options {
-    inVersionRoot?: boolean;
     makeRequest?: boolean;
     useUndefinedForInProgress?: boolean;
     queries?: any;
@@ -44,10 +43,14 @@ export declare class GetData_Options {
 export declare function GetData(...pathSegments: (string | number)[]): any;
 export declare function GetData(options: GetData_Options, ...pathSegments: (string | number)[]): any;
 export declare class GetDataAsync_Options {
-    inVersionRoot?: boolean;
     addHelpers?: boolean;
 }
 export declare function GetDataAsync(...pathSegments: (string | number)[]): any;
 export declare function GetDataAsync(options: GetDataAsync_Options, ...pathSegments: (string | number)[]): any;
+/**
+ * Usage: await GetAsync(()=>GetNode(123))
+ * It has the same processing as in Connect(), except callable using async/await.
+ * It basically makes a pretend component -- connecting to firebase, and resolving the promise once:
+ * It re-calls the db-getter func (after the last generation's requested-path-data was all received), and finds that no new paths are requested.
+ */
 export declare function GetAsync<T>(dbGetterFunc: () => T, statsLogger?: ({requestedPaths: string}) => void): Promise<T>;
-export declare function WaitTillPathDataIsReceived(path: string): Promise<any>;

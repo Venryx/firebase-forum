@@ -24,7 +24,7 @@ export class UpdateThreadDetails extends Command<{threadID: number, threadUpdate
 	newData: Thread;
 	async Prepare() {
 		let {threadID, threadUpdates} = this.payload;
-		this.oldData = await GetDataAsync({addHelpers: false}, "forum", "threads", threadID) as Thread;
+		this.oldData = await GetDataAsync({addHelpers: false}, "threads", threadID) as Thread;
 		this.newData = {...this.oldData, ...threadUpdates};
 	}
 	async Validate() {
@@ -34,7 +34,7 @@ export class UpdateThreadDetails extends Command<{threadID: number, threadUpdate
 	GetDBUpdates() {
 		let {threadID, threadUpdates} = this.payload;
 		let updates = {};
-		updates[`forum/threads/${threadID}`] = this.newData;
+		updates[`threads/${threadID}`] = this.newData;
 		return updates;
 	}
 }

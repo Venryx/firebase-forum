@@ -22,9 +22,9 @@ export class DeleteThread extends Command<{threadID: number}> {
 	GetDBUpdates() {
 		let {threadID} = this.payload;
 		let updates = {};
-		updates[`forum/threads/${threadID}`] = null;
+		updates[`threads/${threadID}`] = null;
 		for (let post of this.posts) {
-			updates[`forum/posts/${post._id}`] = null;
+			updates[`posts/${post._id}`] = null;
 		}
 		return updates;
 	}

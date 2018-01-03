@@ -25,7 +25,7 @@ export class UpdatePost extends Command<{postID: number, postUpdates: Partial<Po
 	newData: Post;
 	async Prepare() {
 		let {postID, postUpdates} = this.payload;
-		this.oldData = await GetDataAsync({addHelpers: false}, "forum", "posts", postID) as Post;
+		this.oldData = await GetDataAsync({addHelpers: false}, "posts", postID) as Post;
 		this.newData = {...this.oldData, ...postUpdates};
 		this.newData.editedAt = Date.now();
 	}
@@ -36,7 +36,7 @@ export class UpdatePost extends Command<{postID: number, postUpdates: Partial<Po
 	GetDBUpdates() {
 		let {postID} = this.payload;
 		let updates = {};
-		updates[`forum/posts/${postID}`] = this.newData;
+		updates[`posts/${postID}`] = this.newData;
 		return updates;
 	}
 }

@@ -9,16 +9,16 @@ export class DeleteSubforum extends Command<{subforumID: number}> {
 	section_oldSubforumOrder: number[];
 	async Prepare() {
 		let {subforumID} = this.payload;
-		this.oldData = await GetDataAsync({addHelpers: false}, "forum", "subforums", subforumID) as Subforum;
-		this.section_oldSubforumOrder = await GetDataAsync("forum", "sections", this.oldData.section, "subforumOrder") as number[];
+		this.oldData = await GetDataAsync({addHelpers: false}, "subforums", subforumID) as Subforum;
+		this.section_oldSubforumOrder = await GetDataAsync("sections", this.oldData.section, "subforumOrder") as number[];
 	}
 	async Validate() {}
 
 	GetDBUpdates() {
 		let {subforumID} = this.payload;
 		let updates = {};
-		updates[`forum/subforums/${subforumID}`] = null;
-		updates[`forum/sections/${this.oldData.section}/subforumOrder`] = this.section_oldSubforumOrder.Except(subforumID);
+		updates[`subforums/${subforumID}`] = null;
+		updates[`sections/${this.oldData.section}/subforumOrder`] = this.section_oldSubforumOrder.Except(subforumID);
 		return updates;
 	}
 }

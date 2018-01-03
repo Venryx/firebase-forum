@@ -12,7 +12,7 @@ export class AddThread extends Command<{thread: Thread, post: Post}> {
 	async Prepare() {
 		let {thread, post} = this.payload;
 
-		let lastThreadID = await GetDataAsync("forum", "general", "lastThreadID") as number;
+		let lastThreadID = await GetDataAsync("general", "lastThreadID") as number;
 		this.threadID = lastThreadID + 1;
 		thread.createdAt = Date.now();
 		//thread.editedAt = thread.createdAt;
@@ -34,8 +34,8 @@ export class AddThread extends Command<{thread: Thread, post: Post}> {
 	GetDBUpdates() {
 		let {thread} = this.payload;
 		let updates = {
-			"forum/general/lastThreadID": this.threadID,
-			[`forum/threads/${this.threadID}`]: thread,
+			"general/lastThreadID": this.threadID,
+			[`threads/${this.threadID}`]: thread,
 		} as any;
 		updates = MergeDBUpdates(updates, this.sub_addPost.GetDBUpdates());
 		return updates;

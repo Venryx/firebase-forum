@@ -1,4 +1,4 @@
-import {RequestPath, Connect, ClearRequestedPaths, GetRequestedPaths} from "./FirebaseConnect";
+import {Connect} from "./FirebaseConnect";
 import {Assert, GetTreeNodesInObjTree, DeepSet} from "js-vextensions";
 import {helpers, firebaseConnect} from "react-redux-firebase";
 //import {DBPath as DBPath_} from "../../../config/DBVersion";
@@ -156,7 +156,6 @@ class DBPathInfo {
 let pathInfos = {} as {[path: string]: DBPathInfo};
 
 export class GetData_Options {
-	inVersionRoot? = true;
 	makeRequest? = true;
 	useUndefinedForInProgress? = false;
 	queries?: any;
@@ -175,12 +174,12 @@ export function GetData(options: GetData_Options, pathSegment1: string | number,
 export function GetData(...pathSegments: (string | number)[]);
 export function GetData(options: GetData_Options, ...pathSegments: (string | number)[]);
 export function GetData(...args) {
-	/*let pathSegments: (string | number)[], options: GetData_Options;
+	let pathSegments: (string | number)[], options: GetData_Options;
 	if (typeof args[0] == "string") pathSegments = args;
 	else [options, ...pathSegments] = args;
 	options = E(new GetData_Options(), options);
 
-	if (__DEV__) {
+	/*if (__DEV__) {
 		Assert(pathSegments.All(segment=>typeof segment == "number" || !segment.Contains("/")),
 			`Each string path-segment must be a plain prop-name. (ie. contain no "/" separators) @segments(${pathSegments})`);
 	}
@@ -220,11 +219,10 @@ export function GetData(...args) {
 	}
 	return result;*/
 
-	return Manager.GetData.apply(this, arguments);
+	return Manager.GetData(options, ...Manager.rootStorePath.split("/").concat(pathSegments as any));
 }
 
 export class GetDataAsync_Options {
-	inVersionRoot? = true;
 	addHelpers? = true;
 }
 
@@ -236,12 +234,12 @@ export async function GetDataAsync(options: GetDataAsync_Options, pathSegment1: 
 export async function GetDataAsync(...pathSegments: (string | number)[]);
 export async function GetDataAsync(options: GetDataAsync_Options, ...pathSegments: (string | number)[]);
 export async function GetDataAsync(...args) {
-	/*let pathSegments: (string | number)[], options: GetDataAsync_Options;
+	let pathSegments: (string | number)[], options: GetDataAsync_Options;
 	if (typeof args[0] == "string") pathSegments = args;
 	else [options, ...pathSegments] = args;
 	options = E(new GetDataAsync_Options(), options);
 
-	let firebase = store.firebase.helpers;
+	/*let firebase = store.firebase.helpers;
 	return await new Promise((resolve, reject) => {
 		//firebase.child(DBPath(path, inVersionRoot)).once("value",
 		let path = pathSegments.join("/");
@@ -257,7 +255,7 @@ export async function GetDataAsync(...args) {
 			});
 	});*/
 
-	return Manager.GetDataAsync.apply(this, arguments);
+	return Manager.GetDataAsync(options, ...Manager.rootStorePath.split("/").concat(pathSegments as any));
 }
 
 /**
@@ -266,7 +264,7 @@ export async function GetDataAsync(...args) {
  * It basically makes a pretend component -- connecting to firebase, and resolving the promise once:
  * It re-calls the db-getter func (after the last generation's requested-path-data was all received), and finds that no new paths are requested.
  */
-G({GetAsync});
+/*G({GetAsync});
 export async function GetAsync<T>(dbGetterFunc: ()=>T, statsLogger?: ({requestedPaths: string})=>void): Promise<T> {
 	Assert(!window["inConnectFunc"], "Cannot run GetAsync() from within a Connect() function.");
 	//Assert(!g.inGetAsyncFunc, "Cannot run GetAsync() from within a GetAsync() function.");
@@ -304,7 +302,7 @@ export async function GetAsync<T>(dbGetterFunc: ()=>T, statsLogger?: ({requested
 	let listener = ()=> {
 		listener(); // unsubscribe
 	};
-	store.subscribe(listener);*/
+	store.subscribe(listener);*#/
 
 	if (statsLogger) {
 		statsLogger({requestedPaths: requestedPathsSoFar});
@@ -331,6 +329,9 @@ export function WaitTillPathDataIsReceived(path: string): Promise<any> {
 		};
 		let unsubscribe = store.subscribe(listener);
 	});
+}*/
+export async function GetAsync<T>(dbGetterFunc: ()=>T, statsLogger?: ({requestedPaths: string})=>void): Promise<T> {
+	return await Manager.GetAsync(dbGetterFunc, statsLogger);
 }
 
 /*;(function() {

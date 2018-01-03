@@ -20,7 +20,7 @@ export type ThreadEntryUI_Props = {index: number, last: boolean, thread: Thread}
 export class ThreadEntryUI extends BaseComponent<ThreadEntryUI_Props, {}> {
 	render() {
 		let {index, last, thread, creator, posts} = this.props;
-		let toURL = new VURL(null, ["forum", "threads", thread._id+""]);
+		let toURL = new VURL(null, ["threads", thread._id+""]);
 		return (
 			<Column p="7px 10px" style={E(
 				{background: index % 2 == 0 ? "rgba(30,30,30,.7)" : "rgba(0,0,0,.7)"},

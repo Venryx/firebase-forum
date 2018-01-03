@@ -32,7 +32,7 @@ import {Manager} from "../../Manager";
 }*/
 
 // if you're sending in a connect-func rather than a connect-func-wrapper, then you need to make it have at least one argument (to mark it as such)
-export function Connect<T, P>(innerMapStateToPropsFunc: (state: RootState, props: P)=>any);
+/*export function Connect<T, P>(innerMapStateToPropsFunc: (state: RootState, props: P)=>any);
 export function Connect<T, P>(mapStateToProps_inner_getter: ()=>(state: RootState, props: P)=>any);
 export function Connect<T, P>(funcOrFuncGetter) {
 	let mapStateToProps_inner: (state: RootState, props: P)=>any, mapStateToProps_inner_getter: ()=>(state: RootState, props: P)=>any;
@@ -161,12 +161,12 @@ function DispatchDBAction(action) {
 }
 
 let requestedPaths = {} as {[key: string]: boolean};
-/** This only adds paths to a "request list". Connect() is in charge of making the actual db requests. */
+/** This only adds paths to a "request list". Connect() is in charge of making the actual db requests. *#/
 export function RequestPath(path: string) {
 	//Log("Requesting Stage1: " + path);
 	requestedPaths[path] = true;
 }
-/** This only adds paths to a "request list". Connect() is in charge of making the actual db requests. */
+/** This only adds paths to a "request list". Connect() is in charge of making the actual db requests. *#/
 export function RequestPaths(paths: string[]) {
 	for (let path of paths)
 		RequestPath(path);
@@ -187,11 +187,18 @@ export function OnAccessPath(path: string) {
 /*export function OnAccessPaths(paths: string[]) {
 	for (let path of paths)
 		OnAccessPath(path);
-}*/
+}*#/
 export function ClearAccessedPaths() {
 	accessedStorePaths = {};
 }
 export function GetAccessedPaths() {
 	//Log("GetAccessedPaths:" + accessedStorePaths.VKeys());
 	return accessedStorePaths.VKeys();
+}*/
+
+export function Connect<T, P>(innerMapStateToPropsFunc: (state: RootState, props: P)=>any);
+export function Connect<T, P>(mapStateToProps_inner_getter: ()=>(state: RootState, props: P)=>any);
+export function Connect<T, P>(funcOrFuncGetter) {
+	//return Manager.FirebaseConnect(funcOrFuncGetter);
+	return window["FirebaseConnect"](funcOrFuncGetter);
 }

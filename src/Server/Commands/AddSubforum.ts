@@ -11,11 +11,11 @@ export class AddSubforum extends Command<{sectionID: number, subforum: Subforum}
 		let {sectionID, subforum} = this.payload;
 		let firebase = store.firebase.helpers;
 
-		let lastSubforumID = await GetDataAsync("forum", "general", "lastSubforumID") as number;
+		let lastSubforumID = await GetDataAsync("general", "lastSubforumID") as number;
 		this.subforumID = lastSubforumID + 1;
 		subforum.section = sectionID;
 
-		this.oldSubforumOrder = await GetDataAsync("forum", "sections", sectionID, "subforumOrder") || [];
+		this.oldSubforumOrder = await GetDataAsync("sections", sectionID, "subforumOrder") || [];
 
 		this.returnData = this.subforumID;
 	}
@@ -27,9 +27,9 @@ export class AddSubforum extends Command<{sectionID: number, subforum: Subforum}
 	GetDBUpdates() {
 		let {sectionID, subforum} = this.payload;
 		let updates = {};
-		updates["forum/general/lastSubforumID"] = this.subforumID;
-		updates[`forum/sections/${sectionID}/subforumOrder`] = this.oldSubforumOrder.concat(this.subforumID);
-		updates[`forum/subforums/${this.subforumID}`] = subforum;
+		updates["general/lastSubforumID"] = this.subforumID;
+		updates[`sections/${sectionID}/subforumOrder`] = this.oldSubforumOrder.concat(this.subforumID);
+		updates[`subforums/${this.subforumID}`] = subforum;
 		return updates;
 	}
 }

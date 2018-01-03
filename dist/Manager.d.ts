@@ -17,6 +17,7 @@ export declare class Manager {
     static logTypes: LogTypes;
     static GetData: () => any;
     static GetDataAsync: () => any;
+    static GetAsync: (dbGetterFunc, statsLogger) => Promise<any>;
     static ShowSignInPopup: () => void;
     static GetUserID: () => string;
     static GetUser: (id: string) => any;
