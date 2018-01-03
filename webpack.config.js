@@ -22,7 +22,13 @@ module.exports = {
 		//"react": "React",
 		"react": "commonjs react",
  		"react-dom": "commonjs react-dom",
-    },
+		"js-vextensions": "commonjs js-vextensions",
+		"react-vextensions": "commonjs react-vextensions",
+		"react-vcomponents": "commonjs react-vcomponents",
+		"react-redux": "commonjs react-redux",
+		"react-redux-firebase": "commonjs react-redux-firebase",
+		"redux": "commonjs redux",
+	},
     /*module: {
         noParse: ["react"]
     },*/
