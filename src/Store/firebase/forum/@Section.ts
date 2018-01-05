@@ -1,3 +1,4 @@
+import {AddSchema} from "../../../Server/Server";
 export class Section {
 	constructor(initialData: Partial<Section>) {
 		this.Extend(initialData);

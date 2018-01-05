@@ -2,15 +2,12 @@ import AJV from "ajv";
 import AJVKeywords from "ajv-keywords";
 
 export const ajv = AJVKeywords(new AJV()) as AJV_Extended;
-G({ajv}); declare global { const ajv: AJV_Extended; }
 
-G({Schema}); declare global { function Schema(schema); }
 export function Schema(schema) {
 	schema = E({additionalProperties: false}, schema);
 	return schema;
 }
 
-G({AddSchema}); declare global { function AddSchema(schema, name: string); }
 let schemaJSON = {};
 export function AddSchema(schema, name: string) {
 	schema = Schema(schema);
@@ -59,8 +56,7 @@ Details: ${ToJSON(this.errors, null, 3)}
 // validation
 // ==========
 
-G({AssertValidate}); declare global { function AssertValidate(schemaName: string, data, failureMessage: string, addDataStr?: boolean); }
-function AssertValidate(schemaName: string, data, failureMessageOrGetter: string | ((errorsText: string)=>string), addErrorsText = true, addDataStr = true) {
+export function AssertValidate(schemaName: string, data, failureMessageOrGetter: string | ((errorsText: string)=>string), addErrorsText = true, addDataStr = true) {
 	let validationResult = ajv.validate(schemaName, data);
 	if (validationResult == true) return;
 

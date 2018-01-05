@@ -2,6 +2,7 @@ import {Assert} from "js-vextensions";
 import {Command} from "../Command";
 import {Post} from "../../Store/firebase/forum/@Post";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
+import {AssertValidate} from "../Server";
 
 //@UserEdit
 export class AddPost extends Command<{threadID: number, post: Post}> {

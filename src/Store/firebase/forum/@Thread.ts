@@ -1,3 +1,4 @@
+import {AddSchema} from "../../../Server/Server";
 export class Thread {
 	constructor(initialData: Partial<Thread>) {
 		this.Extend(initialData);

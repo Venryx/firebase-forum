@@ -2,6 +2,7 @@ import {Assert} from "js-vextensions";
 import {Command} from "../Command";
 import {Post} from "../../Store/firebase/forum/@Post";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
+import {AddSchema, Schema, AssertValidate} from "../Server";
 
 AddSchema({
 	properties: {

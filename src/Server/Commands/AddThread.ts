@@ -4,6 +4,7 @@ import {Thread} from "../../Store/firebase/forum/@Thread";
 import {AddPost} from "./AddPost";
 import {Post} from "../../Store/firebase/forum/@Post";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
+import {AssertValidate} from "../Server";
 
 //@UserEdit
 export class AddThread extends Command<{thread: Thread, post: Post}> {

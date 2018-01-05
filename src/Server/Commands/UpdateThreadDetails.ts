@@ -1,6 +1,7 @@
 import {Command} from "../Command";
 import {Thread} from "../../Store/firebase/forum/@Thread";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
+import {AddSchema, Schema, AssertValidate} from "../Server";
 
 AddSchema({
 	properties: {

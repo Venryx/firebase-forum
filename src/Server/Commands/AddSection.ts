@@ -2,6 +2,7 @@ import {Assert} from "js-vextensions";
 import {Command} from "../Command";
 import {Section} from "../../Store/firebase/forum/@Section";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
+import {AssertValidate} from "../Server";
 
 //@UserEdit
 export class AddSection extends Command<{section: Section}> {

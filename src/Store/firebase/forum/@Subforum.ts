@@ -1,3 +1,4 @@
+import {AddSchema} from "../../../Server/Server";
 export class Subforum {
 	constructor(initialData: Partial<Subforum>) {
 		Object.assign(this, initialData);

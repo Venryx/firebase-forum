@@ -2,6 +2,7 @@ import {Assert} from "js-vextensions";
 import {Command} from "../Command";
 import { GetDataAsync } from "../../Utils/Database/DatabaseHelpers";
 import {Subforum} from "../../Store/firebase/forum/@Subforum";
+import {AssertValidate} from "../Server";
 
 //@UserEdit
 export class AddSubforum extends Command<{sectionID: number, subforum: Subforum}> {
