@@ -47,6 +47,7 @@
     "babel-preset-react": "^6.3.13",
     "firebase": "^3.6.5",
     "js-vextensions": "^0.0.1",
+    "json-loader": "^0.5.4",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-redux": "^5.0.6",
