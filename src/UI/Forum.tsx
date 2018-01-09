@@ -11,14 +11,16 @@ import {ShowAddSectionDialog} from "./Forum/AddSectionDialog";
 import {ShowAddSubforumDialog} from "./Forum/AddSubforumDialog";
 import {ThreadUI} from "./Forum/ThreadUI";
 import {Connect} from "../Utils/Database/FirebaseConnect";
-import {GetSections, GetSectionSubforums, GetSubforumThreads} from "../Store/firebase/forum";
-import {GetSelectedSubforum, GetSelectedThread, ACTSubforumSelect} from "../Store/forum";
+import {GetSections, GetSectionSubforums, GetSubforumThreads, GetThread} from "../Store/firebase/forum";
+import {GetSelectedSubforum, GetSelectedThread, ACTSubforumSelect, ACTThreadSelect} from "../Store/forum";
 import {Manager} from "../Manager";
 import {IsUserAdmin} from "../General";
 import {Thread} from "../Store/firebase/forum/@Thread";
 import {Link} from "./@Shared/Link";
+import { GetSubforumLastPost } from "../index";
+import {Post} from "../Store/firebase/forum/@Post";
 
-export const columnWidths = [.7, .3];
+export const columnWidths = [.55, .15, .3];
 
 @Connect(state=> ({
 	_: Manager.GetUserPermissionGroups(Manager.GetUserID()),
@@ -83,6 +85,7 @@ class SectionUI extends BaseComponent<SectionUI_Props, {}> {
 					<Row style={{height: 30, padding: 10}}>
 						<span style={{flex: columnWidths[0], fontWeight: 500, fontSize: 15}}>Subforum</span>
 						<span style={{flex: columnWidths[1], fontWeight: 500, fontSize: 15}}>Threads</span>
+						<span style={{flex: columnWidths[2], fontWeight: 500, fontSize: 15}}>Last post</span>
 					</Row>
 				</Column>
 				<Column>
@@ -96,13 +99,19 @@ class SectionUI extends BaseComponent<SectionUI_Props, {}> {
 	}
 }
 
-type SubforumEntryUIProps = {index: number, last: boolean, subforum: Subforum} & Partial<{threads: Thread[]}>;
-@Connect((state, {subforum}: SubforumEntryUIProps)=> ({
-	threads: GetSubforumThreads(subforum),
-}))
+type SubforumEntryUIProps = {index: number, last: boolean, subforum: Subforum} & Partial<{threads: Thread[], lastPost: Post, lastPostThread: Thread, lastPostCreator: User}>;
+@Connect((state, {subforum}: SubforumEntryUIProps)=> {
+	let lastPost = GetSubforumLastPost(subforum._id);
+	return {
+		threads: GetSubforumThreads(subforum._id),
+		lastPost,
+		lastPostThread: lastPost && GetThread(lastPost.thread),
+		lastPostCreator: lastPost && Manager.GetUser(lastPost.creator),
+	};
+})
 class SubforumEntryUI extends BaseComponent<SubforumEntryUIProps, {}> {
 	render() {
-		let {index, last, subforum, threads} = this.props;
+		let {index, last, subforum, threads, lastPost, lastPostThread, lastPostCreator} = this.props;
 		//let toURL = new VURL(null, [subforum._id+""]);
 		return (
 			<Column p="7px 10px" style={E(
@@ -116,6 +125,15 @@ class SubforumEntryUI extends BaseComponent<SubforumEntryUIProps, {}> {
 					}}/>*/}
 					<Link text={subforum.name} actions={d=>d(new ACTSubforumSelect({id: subforum._id}))} style={{fontSize: 18, flex: columnWidths[0]}}/>
 					<span style={{flex: columnWidths[1]}}>{threads.length}</span>
+					<Link style={{flex: columnWidths[2], fontSize: 13}} actions={d=>lastPost && d(new ACTThreadSelect({id: lastPost.thread}))}>
+						{lastPostThread && lastPostCreator &&
+							<div>
+								{lastPostThread.title}, by { lastPostCreator.displayName}<br/>
+								{!Manager.FormatTime(lastPost.createdAt, "[calendar]").includes("/")
+									? Manager.FormatTime(lastPost.createdAt, "[calendar]")
+									: Manager.FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")}
+							</div>}
+					</Link>
 				</Row>
 			</Column>
 		);

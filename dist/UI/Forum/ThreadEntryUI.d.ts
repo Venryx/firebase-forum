@@ -8,6 +8,8 @@ export declare type ThreadEntryUI_Props = {
 } & Partial<{
     creator: User;
     posts: Post[];
+    lastPost: Post;
+    lastPostCreator: User;
 }>;
 export declare class ThreadEntryUI extends BaseComponent<ThreadEntryUI_Props, {}> {
     render(): JSX.Element;

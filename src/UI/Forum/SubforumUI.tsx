@@ -22,13 +22,13 @@ import {ShowMessageBox} from "react-vmessagebox";
 import {colors} from "../GlobalStyles";
 import {IsUserMod} from "../../General";
 
-export const columnWidths = [.7, .2, .1];
+export const columnWidths = [.5, .2, .1, .2];
 
 export type SubforumUI_Props = {subforum: Subforum, subNavBarWidth?: number} & Partial<{permissions: PermissionGroupSet, threads: Thread[]}>;
 @Connect((state, {subforum}: SubforumUI_Props)=> {
 	return {
 		permissions: Manager.GetUserPermissionGroups(Manager.GetUserID()),
-		threads: GetSubforumThreads(subforum),
+		threads: GetSubforumThreads(subforum._id),
 	};
 })
 export class SubforumUI extends BaseComponent<SubforumUI_Props, {}> {
@@ -59,6 +59,7 @@ export class SubforumUI extends BaseComponent<SubforumUI_Props, {}> {
 								<span style={{flex: columnWidths[0], fontWeight: 500, fontSize: 17}}>Title</span>
 								<span style={{flex: columnWidths[1], fontWeight: 500, fontSize: 17}}>Creator</span>
 								<span style={{flex: columnWidths[2], fontWeight: 500, fontSize: 17}}>Posts</span>
+								<span style={{flex: columnWidths[3], fontWeight: 500, fontSize: 17}}>Last post</span>
 							</Row>
 						</Column>
 						<Column>
@@ -131,7 +132,7 @@ class DetailsDropdown extends BaseComponent<{subforum: Subforum}, {dataError: st
 								<Row style={{fontWeight: "bold"}}>Advanced:</Row>
 								<Row>
 									<Button mt={5} text="Delete" onLeftClick={async ()=> {
-										let threads = await GetAsync(()=>GetSubforumThreads(subforum));
+										let threads = await GetAsync(()=>GetSubforumThreads(subforum._id));
 										if (threads.length != 0) {
 											return void ShowMessageBox({title: `Still has threads`,
 												message: `Cannot delete this subforum until all its threads have been deleted.`});

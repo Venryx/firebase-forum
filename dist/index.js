@@ -509,9 +509,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.GetThread = GetThread;
 	exports.GetThreads = GetThreads;
 	exports.GetSubforumThreads = GetSubforumThreads;
+	exports.GetSubforumLastPost = GetSubforumLastPost;
 	exports.GetPost = GetPost;
 	exports.GetPosts = GetPosts;
 	exports.GetThreadPosts = GetThreadPosts;
+	exports.GetThreadLastPost = GetThreadLastPost;
 
 	var _DatabaseHelpers = __webpack_require__(9);
 
@@ -562,13 +564,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return threadMap ? threadMap.VValues(true) : [];
 	    });
 	}
-	function GetSubforumThreads(subforum) {
+	function GetSubforumThreads(subforumID) {
 	    var threads = GetThreads();
-	    return (0, _VCache.CachedTransform)("GetSubforumThreads", [subforum._id], threads, function () {
+	    return (0, _VCache.CachedTransform)("GetSubforumThreads", [subforumID], threads, function () {
 	        return threads.filter(function (thread) {
-	            return thread.subforum == subforum._id;
+	            return thread.subforum == subforumID;
 	        });
 	    });
+	}
+	function GetSubforumLastPost(subforumID) {
+	    var threads = GetSubforumThreads(subforumID);
+	    if (threads.filter(function (a) {
+	        return a == null;
+	    }).length) return null;
+	    var thread_lastPosts = threads.map(function (a) {
+	        return GetThreadLastPost(a._id);
+	    });
+	    if (thread_lastPosts.filter(function (a) {
+	        return a == null;
+	    }).length) return null;
+	    return thread_lastPosts.OrderBy(function (a) {
+	        return a.createdAt;
+	    }).LastOrX();
 	}
 	function GetPost(id) {
 	    if (id == null) return null;
@@ -590,6 +607,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return (0, _VCache.CachedTransform)("GetThreadPosts", [thread._id], posts, function () {
 	        return posts;
 	    });
+	}
+	function GetThreadLastPost(threadID) {
+	    var thread = GetThread(threadID);
+	    if (thread == null) return null;
+	    var posts = GetThreadPosts(thread);
+	    if (posts.filter(function (a) {
+	        return a == null;
+	    }).length) return null;
+	    return posts.OrderBy(function (a) {
+	        return a.createdAt;
+	    }).LastOrX();
 	}
 
 /***/ }),
@@ -3824,7 +3852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(100)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(162)(module), (function() { return this; }())))
 
 /***/ }),
 /* 20 */,
@@ -12327,6 +12355,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Link = __webpack_require__(113);
 
+	var _index = __webpack_require__(1);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12343,7 +12373,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
 	    }return c > 3 && r && Object.defineProperty(target, key, r), r;
 	};
-	var columnWidths = exports.columnWidths = [.7, .3];
+	var columnWidths = exports.columnWidths = [.55, .15, .3];
 	var ForumUI = function (_BaseComponent) {
 	    _inherits(ForumUI, _BaseComponent);
 
@@ -12411,7 +12441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return _react2.default.createElement(_reactVcomponents.Column, { style: { width: 960, margin: "20px auto 20px auto" } }, _react2.default.createElement(_reactVcomponents.Column, { className: "clickThrough", style: { height: 70, background: "rgba(0,0,0,.7)", borderRadius: "10px 10px 0 0" } }, _react2.default.createElement(_reactVcomponents.Row, { style: { height: 40, padding: 10 } }, _react2.default.createElement("span", { style: { position: "absolute", left: "50%", transform: "translateX(-50%)", fontSize: 18 } }, section.name), isAdmin && _react2.default.createElement(_reactVcomponents.Button, { text: "Add subforum", ml: "auto", onClick: function onClick() {
 	                    if (userID == null) return _Manager.Manager.ShowSignInPopup();
 	                    (0, _AddSubforumDialog.ShowAddSubforumDialog)(userID, section._id);
-	                } })), _react2.default.createElement(_reactVcomponents.Row, { style: { height: 30, padding: 10 } }, _react2.default.createElement("span", { style: { flex: columnWidths[0], fontWeight: 500, fontSize: 15 } }, "Subforum"), _react2.default.createElement("span", { style: { flex: columnWidths[1], fontWeight: 500, fontSize: 15 } }, "Threads"))), _react2.default.createElement(_reactVcomponents.Column, null, subforums.length == 0 && _react2.default.createElement("div", { style: { textAlign: "center", fontSize: 18 } }, "Loading..."), subforums.map(function (subforum, index) {
+	                } })), _react2.default.createElement(_reactVcomponents.Row, { style: { height: 30, padding: 10 } }, _react2.default.createElement("span", { style: { flex: columnWidths[0], fontWeight: 500, fontSize: 15 } }, "Subforum"), _react2.default.createElement("span", { style: { flex: columnWidths[1], fontWeight: 500, fontSize: 15 } }, "Threads"), _react2.default.createElement("span", { style: { flex: columnWidths[2], fontWeight: 500, fontSize: 15 } }, "Last post"))), _react2.default.createElement(_reactVcomponents.Column, null, subforums.length == 0 && _react2.default.createElement("div", { style: { textAlign: "center", fontSize: 18 } }, "Loading..."), subforums.map(function (subforum, index) {
 	                return _react2.default.createElement(SubforumEntryUI, { key: subforum._id, index: index, last: index == subforums.length - 1, subforum: subforum });
 	            })));
 	        }
@@ -12441,12 +12471,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                index = _props3.index,
 	                last = _props3.last,
 	                subforum = _props3.subforum,
-	                threads = _props3.threads;
+	                threads = _props3.threads,
+	                lastPost = _props3.lastPost,
+	                lastPostThread = _props3.lastPostThread,
+	                lastPostCreator = _props3.lastPostCreator;
 	            //let toURL = new VURL(null, [subforum._id+""]);
 
 	            return _react2.default.createElement(_reactVcomponents.Column, { p: "7px 10px", style: E({ background: index % 2 == 0 ? "rgba(30,30,30,.7)" : "rgba(0,0,0,.7)" }, last && { borderRadius: "0 0 10px 10px" }) }, _react2.default.createElement(_reactVcomponents.Row, null, _react2.default.createElement(_Link.Link, { text: subforum.name, actions: function actions(d) {
 	                    return d(new _forum2.ACTSubforumSelect({ id: subforum._id }));
-	                }, style: { fontSize: 18, flex: columnWidths[0] } }), _react2.default.createElement("span", { style: { flex: columnWidths[1] } }, threads.length)));
+	                }, style: { fontSize: 18, flex: columnWidths[0] } }), _react2.default.createElement("span", { style: { flex: columnWidths[1] } }, threads.length), _react2.default.createElement(_Link.Link, { style: { flex: columnWidths[2], fontSize: 13 }, actions: function actions(d) {
+	                    return lastPost && d(new _forum2.ACTThreadSelect({ id: lastPost.thread }));
+	                } }, lastPostThread && lastPostCreator && _react2.default.createElement("div", null, lastPostThread.title, ", by ", lastPostCreator.displayName, _react2.default.createElement("br", null), !_Manager.Manager.FormatTime(lastPost.createdAt, "[calendar]").includes("/") ? _Manager.Manager.FormatTime(lastPost.createdAt, "[calendar]") : _Manager.Manager.FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")))));
 	        }
 	    }]);
 
@@ -12454,8 +12489,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_reactVextensions.BaseComponent);
 	SubforumEntryUI = __decorate([(0, _FirebaseConnect.Connect)(function (state, _ref2) {
 	    var subforum = _ref2.subforum;
+
+	    var lastPost = (0, _index.GetSubforumLastPost)(subforum._id);
 	    return {
-	        threads: (0, _forum.GetSubforumThreads)(subforum)
+	        threads: (0, _forum.GetSubforumThreads)(subforum._id),
+	        lastPost: lastPost,
+	        lastPostThread: lastPost && (0, _forum.GetThread)(lastPost.thread),
+	        lastPostCreator: lastPost && _Manager.Manager.GetUser(lastPost.creator)
 	    };
 	})], SubforumEntryUI);
 
@@ -13334,25 +13374,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		);
 	});
 	;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(146)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(163)(module)))
 
 /***/ }),
-/* 100 */
-/***/ (function(module, exports) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
-
-
-/***/ }),
+/* 100 */,
 /* 101 */
 /***/ (function(module, exports) {
 
@@ -13449,7 +13474,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        step((generator = generator.apply(thisArg, _arguments || [])).next());
 	    });
 	};
-	var columnWidths = exports.columnWidths = [.7, .2, .1];
+	var columnWidths = exports.columnWidths = [.5, .2, .1, .2];
 	var SubforumUI = function (_BaseComponent) {
 	    _inherits(SubforumUI, _BaseComponent);
 
@@ -13475,7 +13500,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return _react2.default.createElement(_reactVcomponents.Column, { style: { flex: 1 } }, _react2.default.createElement(ActionBar_Left, { subforum: subforum, subNavBarWidth: subNavBarWidth }), _react2.default.createElement(ActionBar_Right, { subforum: subforum, subNavBarWidth: subNavBarWidth }), _react2.default.createElement(_reactVscrollview.ScrollView, { ref: "scrollView", scrollVBarStyle: { width: 10 }, style: { flex: 1 } }, _react2.default.createElement(_reactVcomponents.Column, { style: { width: 960, margin: "50px auto 20px auto", filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)" } }, _react2.default.createElement(_reactVcomponents.Column, { className: "clickThrough", style: { height: 80, background: "rgba(0,0,0,.7)", borderRadius: "10px 10px 0 0" } }, _react2.default.createElement(_reactVcomponents.Row, { style: { height: 40, padding: 10 } }, _react2.default.createElement("span", { style: { position: "absolute", left: "50%", transform: "translateX(-50%)", fontSize: 18 } }, subforum.name), _react2.default.createElement(_reactVcomponents.Button, { text: "Add thread", ml: "auto", onClick: function onClick() {
 	                    if (userID == null) return _Manager.Manager.ShowSignInPopup();
 	                    (0, _AddThreadDialog.ShowAddThreadDialog)(userID, subforum._id);
-	                } })), _react2.default.createElement(_reactVcomponents.Row, { style: { height: 40, padding: 10 } }, _react2.default.createElement("span", { style: { flex: columnWidths[0], fontWeight: 500, fontSize: 17 } }, "Title"), _react2.default.createElement("span", { style: { flex: columnWidths[1], fontWeight: 500, fontSize: 17 } }, "Creator"), _react2.default.createElement("span", { style: { flex: columnWidths[2], fontWeight: 500, fontSize: 17 } }, "Posts"))), _react2.default.createElement(_reactVcomponents.Column, null, threads.length == 0 && _react2.default.createElement(_reactVcomponents.Row, { p: "7px 10px", style: { background: "rgba(30,30,30,.7)", borderRadius: "0 0 10px 10px" } }, "There are currently no threads in this subforum."), threads.map(function (thread, index) {
+	                } })), _react2.default.createElement(_reactVcomponents.Row, { style: { height: 40, padding: 10 } }, _react2.default.createElement("span", { style: { flex: columnWidths[0], fontWeight: 500, fontSize: 17 } }, "Title"), _react2.default.createElement("span", { style: { flex: columnWidths[1], fontWeight: 500, fontSize: 17 } }, "Creator"), _react2.default.createElement("span", { style: { flex: columnWidths[2], fontWeight: 500, fontSize: 17 } }, "Posts"), _react2.default.createElement("span", { style: { flex: columnWidths[3], fontWeight: 500, fontSize: 17 } }, "Last post"))), _react2.default.createElement(_reactVcomponents.Column, null, threads.length == 0 && _react2.default.createElement(_reactVcomponents.Row, { p: "7px 10px", style: { background: "rgba(30,30,30,.7)", borderRadius: "0 0 10px 10px" } }, "There are currently no threads in this subforum."), threads.map(function (thread, index) {
 	                return _react2.default.createElement(_ThreadEntryUI.ThreadEntryUI, { key: index, index: index, last: index == threads.length - 1, thread: thread });
 	            })))));
 	        }
@@ -13489,7 +13514,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return {
 	        permissions: _Manager.Manager.GetUserPermissionGroups(_Manager.Manager.GetUserID()),
-	        threads: (0, _forum.GetSubforumThreads)(subforum)
+	        threads: (0, _forum.GetSubforumThreads)(subforum._id)
 	    };
 	})], SubforumUI);
 	exports.SubforumUI = SubforumUI;
@@ -13575,7 +13600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                    case 0:
 	                                        _context3.next = 2;
 	                                        return (0, _DatabaseHelpers.GetAsync)(function () {
-	                                            return (0, _forum.GetSubforumThreads)(subforum);
+	                                            return (0, _forum.GetSubforumThreads)(subforum._id);
 	                                        });
 
 	                                    case 2:
@@ -14822,12 +14847,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                last = _props.last,
 	                thread = _props.thread,
 	                creator = _props.creator,
-	                posts = _props.posts;
+	                posts = _props.posts,
+	                lastPost = _props.lastPost,
+	                lastPostCreator = _props.lastPostCreator;
 
 	            var toURL = new _jsVextensions.VURL(null, ["threads", thread._id + ""]);
 	            return _react2.default.createElement(_reactVcomponents.Column, { p: "7px 10px", style: E({ background: index % 2 == 0 ? "rgba(30,30,30,.7)" : "rgba(0,0,0,.7)" }, last && { borderRadius: "0 0 10px 10px" }) }, _react2.default.createElement(_reactVcomponents.Row, null, _react2.default.createElement(_Link.Link, { text: thread.title, actions: function actions(d) {
 	                    return d(new _forum2.ACTThreadSelect({ id: thread._id }));
-	                }, style: { fontSize: 17, flex: _SubforumUI.columnWidths[0] } }), _react2.default.createElement("span", { style: { flex: _SubforumUI.columnWidths[1] } }, creator ? creator.displayName : "..."), _react2.default.createElement("span", { style: { flex: _SubforumUI.columnWidths[2] } }, posts ? posts.length : "...")));
+	                }, style: { fontSize: 17, flex: _SubforumUI.columnWidths[0] } }), _react2.default.createElement("span", { style: { flex: _SubforumUI.columnWidths[1] } }, creator ? creator.displayName : "..."), _react2.default.createElement("span", { style: { flex: _SubforumUI.columnWidths[2] } }, posts ? posts.length : "..."), _react2.default.createElement(_Link.Link, { style: { flex: _SubforumUI.columnWidths[3], fontSize: 13 }, actions: function actions(d) {
+	                    return lastPost && d(new _forum2.ACTThreadSelect({ id: lastPost.thread }));
+	                } }, lastPostCreator && _react2.default.createElement("div", null, "By ", lastPostCreator.displayName, _react2.default.createElement("br", null), !_Manager.Manager.FormatTime(lastPost.createdAt, "[calendar]").includes("/") ? _Manager.Manager.FormatTime(lastPost.createdAt, "[calendar]") : _Manager.Manager.FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")))));
 	        }
 	    }]);
 
@@ -14835,9 +14864,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_reactVextensions.BaseComponent);
 	exports.ThreadEntryUI = ThreadEntryUI = __decorate([(0, _FirebaseConnect.Connect)(function (state, _ref) {
 	    var thread = _ref.thread;
+
+	    var lastPost = (0, _forum.GetThreadLastPost)(thread._id);
 	    return {
 	        creator: thread && _Manager.Manager.GetUser(thread.creator),
-	        posts: thread && (0, _forum.GetThreadPosts)(thread)
+	        posts: thread && (0, _forum.GetThreadPosts)(thread),
+	        lastPost: lastPost,
+	        lastPostCreator: lastPost && _Manager.Manager.GetUser(lastPost.creator)
 	    };
 	})], ThreadEntryUI);
 	exports.ThreadEntryUI = ThreadEntryUI;
@@ -28474,7 +28507,39 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 146 */
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */
+/***/ (function(module, exports) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ }),
+/* 163 */
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {

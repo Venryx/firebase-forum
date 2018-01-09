@@ -53,10 +53,17 @@ export function GetThreads(): Thread[] {
 	let threadMap = GetData("threads");
 	return CachedTransform("GetThreads", [], threadMap, ()=>threadMap ? threadMap.VValues(true) : []);
 }
-export function GetSubforumThreads(subforum: Subforum): Thread[] {
+export function GetSubforumThreads(subforumID: number): Thread[] {
 	let threads = GetThreads();
-	return CachedTransform("GetSubforumThreads", [subforum._id], threads, ()=>threads.filter(thread=>thread.subforum == subforum._id));
+	return CachedTransform("GetSubforumThreads", [subforumID], threads, ()=>threads.filter(thread=>thread.subforum == subforumID));
 }
+export function GetSubforumLastPost(subforumID: number): Post {
+	let threads = GetSubforumThreads(subforumID);
+	if (threads.filter(a=>a == null).length) return null;
+	let thread_lastPosts = threads.map(a=>GetThreadLastPost(a._id));
+	if (thread_lastPosts.filter(a=>a == null).length) return null;
+	return thread_lastPosts.OrderBy(a=>a.createdAt).LastOrX();
+}	
 
 export function GetPost(id: number): Post {
 	if (id == null) return null;
@@ -70,4 +77,11 @@ export function GetThreadPosts(thread: Thread): Post[] {
 	let posts = thread.posts.map(id=>GetPost(id));
 	if (posts.filter(a=>a == null).length) return emptyArray;
 	return CachedTransform("GetThreadPosts", [thread._id], posts, ()=>posts);
+}
+export function GetThreadLastPost(threadID: number): Post {
+	let thread = GetThread(threadID);
+	if (thread == null) return null;
+	let posts = GetThreadPosts(thread);
+	if (posts.filter(a=>a == null).length) return null;
+	return posts.OrderBy(a=>a.createdAt).LastOrX();	
 }
