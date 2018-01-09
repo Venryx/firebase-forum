@@ -33,10 +33,10 @@ export function SlicePath(path: string, removeFromEndCount: number, ...itemsToAd
 	return parts.join("/");
 }
 
-Object.prototype._AddFunction_Inline = function DBRef(path = "", inVersionRoot = true) {
+/*Object.prototype._AddFunction_Inline = function DBRef(path = "", inVersionRoot = true) {
 	let finalPath = DBPath(path, inVersionRoot);
 	return this.ref(finalPath);
-}
+}*/
 
 export type FirebaseApp = Firebase & {
 	// added by react-redux-firebase

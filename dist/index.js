@@ -682,13 +682,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    parts.splice.apply(parts, [parts.length - removeFromEndCount, removeFromEndCount].concat(itemsToAdd));
 	    return parts.join("/");
 	}
-	Object.prototype._AddFunction_Inline = function DBRef() {
-	    var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-	    var inVersionRoot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-	    var finalPath = DBPath(path, inVersionRoot);
-	    return this.ref(finalPath);
-	};
 	function ProcessDBData(data, standardizeForm, addHelpers, rootKey) {
 	    var treeNodes = (0, _jsVextensions.GetTreeNodesInObjTree)(data, true);
 	    var _iteratorNormalCompletion = true;
@@ -13895,6 +13888,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Manager = __webpack_require__(2);
 
+	var _DatabaseHelpers = __webpack_require__(9);
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -14037,7 +14032,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                //FixDBUpdates(dbUpdates);
 
 	                                _context2.next = 15;
-	                                return store.firebase.helpers.DBRef().update(dbUpdates);
+	                                return store.firebase.helpers.ref((0, _DatabaseHelpers.DBPath)("", true)).update(dbUpdates);
 
 	                            case 15:
 	                                (0, _Logging.MaybeLog)(function (a) {

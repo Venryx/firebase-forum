@@ -1,6 +1,7 @@
 import { DeepSet } from "js-vextensions";
 import { MaybeLog } from "../Utils/Logging";
 import {Manager} from "../Manager";
+import {DBPath} from "../Utils/Database/DatabaseHelpers";
 
 export class CommandUserInfo {
 	id: string;
@@ -60,7 +61,7 @@ export abstract class Command<Payload> {
 
 		let dbUpdates = this.GetDBUpdates();
 		//FixDBUpdates(dbUpdates);
-		await store.firebase.helpers.DBRef().update(dbUpdates);
+		await store.firebase.helpers.ref(DBPath("", true)).update(dbUpdates);
 
 		MaybeLog(a=>a.commands, ()=>`Finishing command. @type:${this.constructor.name} @payload(${ToJSON(this.payload)})`);
 		OnCurrentCommandFinished();
