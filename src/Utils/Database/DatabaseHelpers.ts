@@ -163,7 +163,6 @@ export class GetData_Options {
 
 declare var __DEV__;
 
-G({GetData});
 /** Begins request to get data at the given path in the Firebase database.
  * 
  * Returns undefined when the current-data for the path is null/non-existent, but a request is in-progress.
@@ -226,7 +225,6 @@ export class GetDataAsync_Options {
 	addHelpers? = true;
 }
 
-G({GetDataAsync});
 //export async function GetDataAsync(path: string, inVersionRoot = true, addHelpers = true, firebase: firebase.DatabaseReference = store.firebase.helpers.ref("")) {
 //export async function GetDataAsync(path: string, inVersionRoot = true, addHelpers = true) {
 /*export async function GetDataAsync(pathSegment1: string | number, pathSegment2: string | number, ...pathSegments: (string | number)[]);

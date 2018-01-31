@@ -865,7 +865,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.useUndefinedForInProgress = false;
 	};
 
-	G({ GetData: GetData });
 	function GetData() {
 	    var pathSegments = void 0,
 	        options = void 0;
@@ -922,7 +921,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.addHelpers = true;
 	};
 
-	G({ GetDataAsync: GetDataAsync });
 	function GetDataAsync() {
 	    for (var _len3 = arguments.length, args = Array(_len3), _key4 = 0; _key4 < _len3; _key4++) {
 	        args[_key4] = arguments[_key4];
