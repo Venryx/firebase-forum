@@ -63,7 +63,7 @@ export function GetSubforumLastPost(subforumID: number): Post {
 	let thread_lastPosts = threads.map(a=>GetThreadLastPost(a._id));
 	if (thread_lastPosts.filter(a=>a == null).length) return null;
 	return thread_lastPosts.OrderBy(a=>a.createdAt).LastOrX();
-}	
+}
 
 export function GetPost(id: number): Post {
 	if (id == null) return null;
