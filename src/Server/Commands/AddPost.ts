@@ -16,13 +16,13 @@ export class AddPost extends Command<{threadID: number, post: Post}> {
 		let {threadID, post} = this.payload;
 		let firebase = store.firebase.helpers;
 
-		let lastPostID = await GetDataAsync("general", "lastPostID") as number;
+		let lastPostID = await GetDataAsync("general", "data", ".lastPostID") as number;
 		this.postID = lastPostID + 1;
 		post.thread = threadID;
 		post.creator = this.userInfo.id;
 		post.createdAt = Date.now();
 
-		this.thread_oldPosts = await GetDataAsync("threads", threadID, "posts") || [];
+		this.thread_oldPosts = await GetDataAsync("threads", threadID, ".posts") || [];
 
 		this.returnData = this.postID;
 	}
@@ -36,11 +36,11 @@ export class AddPost extends Command<{threadID: number, post: Post}> {
 
 		let updates = {};
 		// add post
-		updates["general/lastPostID"] = this.postID;
+		updates["general/data/.lastPostID"] = this.postID;
 		updates[`posts/${this.postID}`] = post;
 
 		// add to thread
-		updates[`threads/${threadID}/posts`] = this.thread_oldPosts.concat(this.postID);
+		updates[`threads/${threadID}/.posts`] = this.thread_oldPosts.concat(this.postID);
 
 		return updates;
 	}

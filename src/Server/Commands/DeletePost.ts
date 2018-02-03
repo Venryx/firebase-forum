@@ -24,11 +24,11 @@ export class DeletePost extends Command<{postID: number}> {
 		let updates = {};
 		//if (this.timeSinceCreation < 20 * 60 * 1000) { // if younger than 20 minutes, allow complete deletion
 		if (this.thread_oldPosts.Last() == postID) { // if there are no later responses, allow complete deletion
-			updates[`threads/${this.oldData.thread}/posts`] = this.thread_oldPosts.Except(postID);
+			updates[`threads/${this.oldData.thread}/.posts`] = this.thread_oldPosts.Except(postID);
 			updates[`posts/${postID}`] = null;
 		} else {
-			updates[`posts/${postID}/text`] = null;
-			updates[`posts/${postID}/editedAt`] = Date.now();
+			updates[`posts/${postID}/.text`] = null;
+			updates[`posts/${postID}/.editedAt`] = Date.now();
 		}
 		return updates;
 	}

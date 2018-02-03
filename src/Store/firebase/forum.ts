@@ -7,7 +7,7 @@ import {Subforum} from "./forum/@Subforum";
 import { emptyArray } from "../../General";
 
 export interface ForumData {
-	general: ForumData_General;
+	general: {data: ForumData_General};
 	sections: {[key: number]: Section};
 	threads: {[key: number]: Thread};
 	posts: {[key: number]: Post};

@@ -12,10 +12,10 @@ export class AddSection extends Command<{section: Section}> {
 		let {section} = this.payload;
 		let firebase = store.firebase.helpers;
 
-		let lastSectionID = await GetDataAsync("general", "lastSectionID") as number;
+		let lastSectionID = await GetDataAsync("general", "data", ".lastSectionID") as number;
 		this.sectionID = lastSectionID + 1;
 
-		this.oldSectionOrder = await GetDataAsync("general", "sectionOrder") || [];
+		this.oldSectionOrder = await GetDataAsync("general", "data", ".sectionOrder") || [];
 
 		this.returnData = this.sectionID;
 	}
@@ -29,8 +29,8 @@ export class AddSection extends Command<{section: Section}> {
 
 		let updates = {};
 		// add section
-		updates["general/lastSectionID"] = this.sectionID;
-		updates["general/sectionOrder"] = this.oldSectionOrder.concat(this.sectionID);
+		updates["general/data/.lastSectionID"] = this.sectionID;
+		updates["general/data/.sectionOrder"] = this.oldSectionOrder.concat(this.sectionID);
 		updates[`sections/${this.sectionID}`] = section;
 
 		return updates;

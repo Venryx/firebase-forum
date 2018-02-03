@@ -13002,7 +13002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            case 3:
 	                                this.oldData = _context.sent;
 	                                _context.next = 6;
-	                                return (0, _DatabaseHelpers.GetDataAsync)("sections", this.oldData.section, "subforumOrder");
+	                                return (0, _DatabaseHelpers.GetDataAsync)("sections", this.oldData.section, ".subforumOrder");
 
 	                            case 6:
 	                                this.section_oldSubforumOrder = _context.sent;
@@ -13037,7 +13037,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var updates = {};
 	            updates["subforums/" + subforumID] = null;
-	            updates["sections/" + this.oldData.section + "/subforumOrder"] = this.section_oldSubforumOrder.Except(subforumID);
+	            updates["sections/" + this.oldData.section + "/.subforumOrder"] = this.section_oldSubforumOrder.Except(subforumID);
 	            return updates;
 	        }
 	    }]);
@@ -13208,9 +13208,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            case 12:
 	                                dbUpdates = this.GetDBUpdates();
 	                                //FixDBUpdates(dbUpdates);
+	                                //await store.firebase.helpers.ref(DBPath("", true)).update(dbUpdates);
 
 	                                _context2.next = 15;
-	                                return store.firebase.helpers.ref((0, _DatabaseHelpers.DBPath)("", true)).update(dbUpdates);
+	                                return _Manager.Manager.ApplyDBUpdates((0, _DatabaseHelpers.DBPath)(""), dbUpdates);
 
 	                            case 15:
 	                                (0, _Logging.MaybeLog)(function (a) {
@@ -13688,7 +13689,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            case 0:
 	                                _payload = this.payload, thread = _payload.thread, post = _payload.post;
 	                                _context.next = 3;
-	                                return (0, _DatabaseHelpers.GetDataAsync)("general", "lastThreadID");
+	                                return (0, _DatabaseHelpers.GetDataAsync)("general", "data", ".lastThreadID");
 
 	                            case 3:
 	                                lastThreadID = _context.sent;
@@ -13742,7 +13743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var thread = this.payload.thread;
 
 	            var updates = _defineProperty({
-	                "general/lastThreadID": this.threadID
+	                "general/data/.lastThreadID": this.threadID
 	            }, "threads/" + this.threadID, thread);
 	            updates = (0, _Command2.MergeDBUpdates)(updates, this.sub_addPost.GetDBUpdates());
 	            return updates;
@@ -13832,7 +13833,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                _payload2 = this.payload, threadID = _payload2.threadID, post = _payload2.post;
 	                                firebase = store.firebase.helpers;
 	                                _context.next = 4;
-	                                return (0, _DatabaseHelpers.GetDataAsync)("general", "lastPostID");
+	                                return (0, _DatabaseHelpers.GetDataAsync)("general", "data", ".lastPostID");
 
 	                            case 4:
 	                                lastPostID = _context.sent;
@@ -13842,7 +13843,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                post.creator = this.userInfo.id;
 	                                post.createdAt = Date.now();
 	                                _context.next = 11;
-	                                return (0, _DatabaseHelpers.GetDataAsync)("threads", threadID, "posts");
+	                                return (0, _DatabaseHelpers.GetDataAsync)("threads", threadID, ".posts");
 
 	                            case 11:
 	                                _context.t0 = _context.sent;
@@ -13897,10 +13898,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var updates = {};
 	            // add post
-	            updates["general/lastPostID"] = this.postID;
+	            updates["general/data/.lastPostID"] = this.postID;
 	            updates["posts/" + this.postID] = post;
 	            // add to thread
-	            updates["threads/" + threadID + "/posts"] = this.thread_oldPosts.concat(this.postID);
+	            updates["threads/" + threadID + "/.posts"] = this.thread_oldPosts.concat(this.postID);
 	            return updates;
 	        }
 	    }]);
@@ -14587,14 +14588,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                section = this.payload.section;
 	                                firebase = store.firebase.helpers;
 	                                _context.next = 4;
-	                                return (0, _DatabaseHelpers.GetDataAsync)("general", "lastSectionID");
+	                                return (0, _DatabaseHelpers.GetDataAsync)("general", "data", ".lastSectionID");
 
 	                            case 4:
 	                                lastSectionID = _context.sent;
 
 	                                this.sectionID = lastSectionID + 1;
 	                                _context.next = 8;
-	                                return (0, _DatabaseHelpers.GetDataAsync)("general", "sectionOrder");
+	                                return (0, _DatabaseHelpers.GetDataAsync)("general", "data", ".sectionOrder");
 
 	                            case 8:
 	                                _context.t0 = _context.sent;
@@ -14647,8 +14648,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var updates = {};
 	            // add section
-	            updates["general/lastSectionID"] = this.sectionID;
-	            updates["general/sectionOrder"] = this.oldSectionOrder.concat(this.sectionID);
+	            updates["general/data/.lastSectionID"] = this.sectionID;
+	            updates["general/data/.sectionOrder"] = this.oldSectionOrder.concat(this.sectionID);
 	            updates["sections/" + this.sectionID] = section;
 	            return updates;
 	        }
@@ -14784,7 +14785,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                _payload = this.payload, sectionID = _payload.sectionID, subforum = _payload.subforum;
 	                                firebase = store.firebase.helpers;
 	                                _context.next = 4;
-	                                return (0, _DatabaseHelpers.GetDataAsync)("general", "lastSubforumID");
+	                                return (0, _DatabaseHelpers.GetDataAsync)("general", "data", ".lastSubforumID");
 
 	                            case 4:
 	                                lastSubforumID = _context.sent;
@@ -14792,7 +14793,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                this.subforumID = lastSubforumID + 1;
 	                                subforum.section = sectionID;
 	                                _context.next = 9;
-	                                return (0, _DatabaseHelpers.GetDataAsync)("sections", sectionID, "subforumOrder");
+	                                return (0, _DatabaseHelpers.GetDataAsync)("sections", sectionID, ".subforumOrder");
 
 	                            case 9:
 	                                _context.t0 = _context.sent;
@@ -14846,8 +14847,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                subforum = _payload2.subforum;
 
 	            var updates = {};
-	            updates["general/lastSubforumID"] = this.subforumID;
-	            updates["sections/" + sectionID + "/subforumOrder"] = this.oldSubforumOrder.concat(this.subforumID);
+	            updates["general/data/.lastSubforumID"] = this.subforumID;
+	            updates["sections/" + sectionID + "/.subforumOrder"] = this.oldSubforumOrder.concat(this.subforumID);
 	            updates["subforums/" + this.subforumID] = subforum;
 	            return updates;
 	        }
@@ -27060,11 +27061,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var updates = {};
 	            //if (this.timeSinceCreation < 20 * 60 * 1000) { // if younger than 20 minutes, allow complete deletion
 	            if (this.thread_oldPosts.Last() == postID) {
-	                updates["threads/" + this.oldData.thread + "/posts"] = this.thread_oldPosts.Except(postID);
+	                updates["threads/" + this.oldData.thread + "/.posts"] = this.thread_oldPosts.Except(postID);
 	                updates["posts/" + postID] = null;
 	            } else {
-	                updates["posts/" + postID + "/text"] = null;
-	                updates["posts/" + postID + "/editedAt"] = Date.now();
+	                updates["posts/" + postID + "/.text"] = null;
+	                updates["posts/" + postID + "/.editedAt"] = Date.now();
 	            }
 	            return updates;
 	        }

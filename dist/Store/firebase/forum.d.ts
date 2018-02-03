@@ -3,7 +3,9 @@ import { Thread } from "./forum/@Thread";
 import { Post } from "./forum/@Post";
 import { Subforum } from "./forum/@Subforum";
 export interface ForumData {
-    general: ForumData_General;
+    general: {
+        data: ForumData_General;
+    };
     sections: {
         [key: number]: Section;
     };

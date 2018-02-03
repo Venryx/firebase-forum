@@ -24,5 +24,6 @@ export declare class Manager {
     static GetUserID: () => string;
     static GetUser: (id: string) => any;
     static GetUserPermissionGroups: (userID: string) => PermissionGroupSet;
+    static ApplyDBUpdates: (rootPath: string, dbUpdates) => void;
     static MarkdownRenderer: any;
 }
