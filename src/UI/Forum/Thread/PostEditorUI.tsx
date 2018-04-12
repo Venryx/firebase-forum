@@ -10,8 +10,7 @@ import {Select} from "react-vcomponents";
 import {Post} from "../../../Store/firebase/forum/@Post";
 import {Link} from "../../@Shared/Link";
 import {GetErrorMessagesUnderElement} from "js-vextensions";
-import {MarkdownToolbar} from "../../@Shared/MarkdownToolbar";
-import Editor from "react-md-editor";
+import {MarkdownEditor, MarkdownToolbar} from "react-vmarkdown";
 
 export class PostEditorUI extends BaseComponent
 		<{forNew?: boolean, enabled?: boolean, baseData: Post, options?: any, onChange?: (newData: Post, comp: PostEditorUI)=>void},
@@ -38,7 +37,7 @@ export class PostEditorUI extends BaseComponent
 						<MarkdownToolbar editor={()=>this.refs.editor}>
 							<Link to="https://guides.github.com/features/mastering-markdown" style={{marginLeft: 10}}>How to add links, images, etc.</Link>
 						</MarkdownToolbar>}
-					<Editor ref="editor" value={newData.text || ""} onChange={val=>Change(newData.text = val)}
+					<MarkdownEditor ref="editor" value={newData.text || ""} onChange={val=>Change(newData.text = val)}
 						options={E({
 							scrollbarStyle: "overlay",
 							lineWrapping: true,
