@@ -1,4 +1,5 @@
 import { LogTypes } from "./Utils/Logging";
+import {Action} from "./Utils/Action";
 
 export class PermissionGroupSet {
 	basic: boolean;
@@ -11,9 +12,7 @@ export class Manager {
 	static store;
 	static storePath_mainData: string;
 	static storePath_dbData: string;
-	static rootReducer: Function;
-	static State_overrides;
-	static GetNewURL: Function;
+	static GetNewURL: (actionsToDispatch: Action<any>[])=>any;
 	static FormatTime: (time: number, formatStr: string)=>string;
 
 	static router_replace: (newURL: string)=>any;

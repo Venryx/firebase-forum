@@ -32,15 +32,7 @@ export type Link_Props = {
 		}
 		actions(dispatch);
 
-		let newState = State();
-		for (let action of actionsToDispatch) {
-			newState = Manager.rootReducer(newState, action);
-		}
-		Manager.State_overrides.state = newState;
-		Manager.State_overrides.countAsAccess = false;
-		let newURL = Manager.GetNewURL();
-		Manager.State_overrides.countAsAccess = null;
-		Manager.State_overrides.state = null;
+		let newURL = Manager.GetNewURL(actionsToDispatch);
 
 		to = newURL.toString();
 	}
