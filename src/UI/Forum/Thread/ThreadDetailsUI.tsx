@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, FindDOM} from "react-vextensions";
+import {BaseComponent} from "react-vextensions";
 import {Pre} from "react-vcomponents";
 import {Column} from "react-vcomponents";
 import {Row} from "react-vcomponents";
@@ -46,7 +46,7 @@ export class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {newDa
 		);
 	}
 	GetValidationError() {
-		return GetErrorMessagesUnderElement(FindDOM(this))[0];
+		return GetErrorMessagesUnderElement(GetDOM(this))[0];
 	}
 
 	GetNewData() {

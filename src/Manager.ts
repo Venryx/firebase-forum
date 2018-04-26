@@ -22,8 +22,8 @@ export class Manager {
 
 	//static FirebaseConnect: (func: Function)=>any; // must set "window.FirebaseConnect" manually
 	static State: (...props)=>any;
-	static GetData: ()=>any;
-	static GetDataAsync: ()=>any;
+	static GetData: (..._)=>any;
+	static GetDataAsync: (..._)=>any;
 	static GetAsync: (dbGetterFunc, statsLogger)=>Promise<any>;
 	static ShowSignInPopup: ()=>void;
 	static GetUserID: ()=>string;

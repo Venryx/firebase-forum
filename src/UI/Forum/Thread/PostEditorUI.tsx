@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, FindDOM} from "react-vextensions";
+import {BaseComponent, GetDOM} from "react-vextensions";
 import {Column} from "react-vcomponents";
 import {Row} from "react-vcomponents";
 import {Div, Pre} from "react-vcomponents";
@@ -51,7 +51,7 @@ export class PostEditorUI extends BaseComponent
 	}
 
 	GetValidationError() {
-		return GetErrorMessagesUnderElement(FindDOM(this))[0];
+		return GetErrorMessagesUnderElement(GetDOM(this))[0];
 	}
 	GetNewData() {
 		let {newData} = this.state;

@@ -16,8 +16,8 @@ export declare class Manager {
     static router_push: (newURL: string) => any;
     static logTypes: LogTypes;
     static State: (...props) => any;
-    static GetData: () => any;
-    static GetDataAsync: () => any;
+    static GetData: (..._) => any;
+    static GetDataAsync: (..._) => any;
     static GetAsync: (dbGetterFunc, statsLogger) => Promise<any>;
     static ShowSignInPopup: () => void;
     static GetUserID: () => string;

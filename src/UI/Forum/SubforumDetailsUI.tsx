@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, FindDOM} from "react-vextensions";
+import {BaseComponent, GetDOM} from "react-vextensions";
 import {Pre, RowLR} from "react-vcomponents";
 import {Column} from "react-vcomponents";
 import {Row} from "react-vcomponents";
@@ -45,7 +45,7 @@ export class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {n
 		);
 	}
 	GetValidationError() {
-		return GetErrorMessagesUnderElement(FindDOM(this))[0];
+		return GetErrorMessagesUnderElement(GetDOM(this))[0];
 	}
 
 	GetNewData() {
