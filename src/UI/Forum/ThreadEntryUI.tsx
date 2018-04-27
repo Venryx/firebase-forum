@@ -10,7 +10,8 @@ import {columnWidths} from "./SubforumUI";
 import {Post} from "../../Store/firebase/forum/@Post";
 import {Manager} from "../../Manager";
 import {VURL} from "js-vextensions";
-import {Link} from "../@Shared/Link";
+
+let Link = Manager.Link;
 
 export type ThreadEntryUI_Props = {index: number, last: boolean, thread: Thread} & Partial<{creator: User, posts: Post[], lastPost: Post, lastPostCreator: User}>;
 @Connect((state, {thread})=> {
@@ -32,10 +33,10 @@ export class ThreadEntryUI extends BaseComponent<ThreadEntryUI_Props, {}> {
 				last && {borderRadius: "0 0 10px 10px"}
 			)}>
 				<Row>
-					<Link text={thread.title} actions={d=>d(new ACTThreadSelect({id: thread._id}))} style={{fontSize: 17, flex: columnWidths[0]}}/>
+					<Manager.Link text={thread.title} actions={d=>d(new ACTThreadSelect({id: thread._id}))} style={{fontSize: 17, flex: columnWidths[0]}}/>
 					<span style={{flex: columnWidths[1]}}>{creator ? creator.displayName : "..."}</span>
 					<span style={{flex: columnWidths[2]}}>{posts ? posts.length : "..."}</span>
-					<Link style={{flex: columnWidths[3], fontSize: 13}} actions={d=>lastPost && d(new ACTThreadSelect({id: lastPost.thread}))}>
+					<Manager.Link style={{flex: columnWidths[3], fontSize: 13}} actions={d=>lastPost && d(new ACTThreadSelect({id: lastPost.thread}))}>
 						{lastPostCreator &&
 							<div>
 								By { lastPostCreator.displayName}<br/>
@@ -43,7 +44,7 @@ export class ThreadEntryUI extends BaseComponent<ThreadEntryUI_Props, {}> {
 									? Manager.FormatTime(lastPost.createdAt, "[calendar]")
 									: Manager.FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")}
 							</div>}
-					</Link>
+					</Manager.Link>
 				</Row>
 			</Column>
 		);

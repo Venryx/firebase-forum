@@ -8,9 +8,9 @@ import {Button} from "react-vcomponents";
 import {Component} from "react";
 import {Select} from "react-vcomponents";
 import {Post} from "../../../Store/firebase/forum/@Post";
-import {Link} from "../../@Shared/Link";
 import {GetErrorMessagesUnderElement} from "js-vextensions";
 import {MarkdownEditor, MarkdownToolbar} from "react-vmarkdown";
+import {Manager} from "../../../Manager";
 
 export class PostEditorUI extends BaseComponent
 		<{forNew?: boolean, enabled?: boolean, baseData: Post, options?: any, onChange?: (newData: Post, comp: PostEditorUI)=>void},
@@ -35,7 +35,7 @@ export class PostEditorUI extends BaseComponent
 				<Column>
 					{enabled &&
 						<MarkdownToolbar editor={()=>this.refs.editor}>
-							<Link to="https://guides.github.com/features/mastering-markdown" style={{marginLeft: 10}}>How to add links, images, etc.</Link>
+							<Manager.Link to="https://guides.github.com/features/mastering-markdown" style={{marginLeft: 10}}>How to add links, images, etc.</Manager.Link>
 						</MarkdownToolbar>}
 					<MarkdownEditor ref="editor" value={newData.text || ""} onChange={val=>Change(newData.text = val)}
 						options={E({

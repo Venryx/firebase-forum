@@ -1,16 +1,28 @@
+/// <reference types="react" />
 import { LogTypes } from "./Utils/Logging";
-import { Action } from "./Utils/Action";
+import { BaseComponent } from "react-vextensions";
 export declare class PermissionGroupSet {
     basic: boolean;
     verified: boolean;
     mod: boolean;
     admin: boolean;
 }
+export declare type Link_Props = {
+    onClick?;
+    style?;
+    text?: string;
+    to?: string;
+    target?: string;
+    replace?: boolean;
+    actions?: (dispatch: Function) => void;
+} & React.HTMLProps<HTMLAnchorElement>;
 export declare class Manager {
     static store: any;
     static storePath_mainData: string;
     static storePath_dbData: string;
-    static GetNewURL: (actionsToDispatch: Action<any>[]) => any;
+    static Link: new () => (BaseComponent<Link_Props, {}> & {
+        render: () => JSX.Element | null;
+    });
     static FormatTime: (time: number, formatStr: string) => string;
     static router_replace: (newURL: string) => any;
     static router_push: (newURL: string) => any;

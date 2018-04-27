@@ -1,5 +1,6 @@
 import { LogTypes } from "./Utils/Logging";
 import {Action} from "./Utils/Action";
+import {BaseComponent} from "react-vextensions";
 
 export class PermissionGroupSet {
 	basic: boolean;
@@ -8,11 +9,18 @@ export class PermissionGroupSet {
 	admin: boolean;
 }
 
+export type Link_Props = {
+	onClick?, style?,
+	text?: string, to?: string, target?: string, replace?: boolean, // url-based
+	actions?: (dispatch: Function)=>void, //updateURLOnActions?: boolean, // action-based
+} & React.HTMLProps<HTMLAnchorElement>;
+
 export class Manager {
 	static store;
 	static storePath_mainData: string;
 	static storePath_dbData: string;
-	static GetNewURL: (actionsToDispatch: Action<any>[])=>any;
+	static Link: new ()=>(BaseComponent<Link_Props, {}>
+		& {render: ()=>JSX.Element | null}); // temp fix for typing issue ("render" returning Element | null | false, in one version)
 	static FormatTime: (time: number, formatStr: string)=>string;
 
 	static router_replace: (newURL: string)=>any;

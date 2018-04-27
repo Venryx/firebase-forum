@@ -16,7 +16,6 @@ import {GetSelectedSubforum, GetSelectedThread, ACTSubforumSelect, ACTThreadSele
 import {Manager} from "../Manager";
 import {IsUserAdmin} from "../General";
 import {Thread} from "../Store/firebase/forum/@Thread";
-import {Link} from "./@Shared/Link";
 import { GetSubforumLastPost } from "../index";
 import {Post} from "../Store/firebase/forum/@Post";
 
@@ -119,13 +118,13 @@ class SubforumEntryUI extends BaseComponent<SubforumEntryUIProps, {}> {
 				last && {borderRadius: "0 0 10px 10px"}
 			)}>
 				<Row>
-					{/*<Link text={subforum.name} to={toURL.toString({domain: false})} style={{fontSize: 18, flex: columnWidths[0]}} onClick={e=> {
+					{/*<Manager.Link text={subforum.name} to={toURL.toString({domain: false})} style={{fontSize: 18, flex: columnWidths[0]}} onClick={e=> {
 						e.preventDefault();
 						store.dispatch(new ACTSubforumSelect({id: subforum._id}));
 					}}/>*/}
-					<Link text={subforum.name} actions={d=>d(new ACTSubforumSelect({id: subforum._id}))} style={{fontSize: 18, flex: columnWidths[0]}}/>
+					<Manager.Link text={subforum.name} actions={d=>d(new ACTSubforumSelect({id: subforum._id}))} style={{fontSize: 18, flex: columnWidths[0]}}/>
 					<span style={{flex: columnWidths[1]}}>{threads.length}</span>
-					<Link style={{flex: columnWidths[2], fontSize: 13}} actions={d=>lastPost && d(new ACTThreadSelect({id: lastPost.thread}))}>
+					<Manager.Link style={{flex: columnWidths[2], fontSize: 13}} actions={d=>lastPost && d(new ACTThreadSelect({id: lastPost.thread}))}>
 						{lastPostThread && lastPostCreator &&
 							<div>
 								{lastPostThread.title}, by { lastPostCreator.displayName}<br/>
@@ -133,7 +132,7 @@ class SubforumEntryUI extends BaseComponent<SubforumEntryUIProps, {}> {
 									? Manager.FormatTime(lastPost.createdAt, "[calendar]")
 									: Manager.FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")}
 							</div>}
-					</Link>
+					</Manager.Link>
 				</Row>
 			</Column>
 		);
