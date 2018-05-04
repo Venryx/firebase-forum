@@ -73,7 +73,7 @@ class SectionUI extends BaseComponent<SectionUI_Props, {}> {
 		return (
 			<Column style={{width: 960, margin: "20px auto 20px auto"}}>
 				<Column className="clickThrough" style={{height: 70, background: "rgba(0,0,0,.7)", borderRadius: "10px 10px 0 0"}}>
-					<Row style={{height: 40, padding: 10}}>
+					<Row style={{position: "relative", height: 40, padding: 10}}>
 						<span style={{position: "absolute", left: "50%", transform: "translateX(-50%)", fontSize: 18}}>{section.name}</span>
 						{isAdmin &&
 							<Button text="Add subforum" ml="auto" onClick={()=> {

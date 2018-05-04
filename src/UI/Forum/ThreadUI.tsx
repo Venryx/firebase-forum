@@ -42,7 +42,7 @@ export class ThreadUI extends BaseComponent<ThreadUI_Props, {}> {
 		let firstPostWritten = posts.length > 1 || posts[0].text != firstPostPlaceholderText;
 
 		return (
-			<Column style={{flex: 1}}>
+			<Column style={{position: "relative", flex: 1}}>
 				<ActionBar_Left thread={thread}/>
 				<ActionBar_Right thread={thread}/>
 				<ScrollView ref="scrollView" scrollVBarStyle={{width: 10}} style={{flex: 1}/*styles.fillParent_abs*/}>
