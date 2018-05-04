@@ -36,16 +36,16 @@ export class ThreadUI extends BaseComponent<ThreadUI_Props, {}> {
 		let userID = Manager.GetUserID();
 		
 		if (thread == null || posts == null || posts.length == 0) {
-			return <div style={{display: "flex", alignItems: "center", justifyContent: "center", flex: 1, fontSize: 25}}>Loading posts...</div>;
+			return <div style={ES({display: "flex", alignItems: "center", justifyContent: "center", flex: 1, fontSize: 25})}>Loading posts...</div>;
 		}
 
 		let firstPostWritten = posts.length > 1 || posts[0].text != firstPostPlaceholderText;
 
 		return (
-			<Column style={{position: "relative", flex: 1}}>
+			<Column style={ES({position: "relative", flex: 1})}>
 				<ActionBar_Left thread={thread}/>
 				<ActionBar_Right thread={thread}/>
-				<ScrollView ref="scrollView" scrollVBarStyle={{width: 10}} style={{flex: 1}/*styles.fillParent_abs*/}>
+				<ScrollView ref="scrollView" scrollVBarStyle={{width: 10}} style={ES({flex: 1}/*styles.fillParent_abs*/)}>
 					<Column style={{width: 960, margin: "50px auto 20px auto", filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)"}}>
 						{/*<Column className="clickThrough" style={{height: 80, background: "rgba(0,0,0,.7)", borderRadius: "10px 10px 0 0"}}>
 							<Row style={{height: 40, padding: 10}}>

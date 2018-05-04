@@ -10,3 +10,6 @@ export declare var styles: {
 export declare var colors: {
     navBarBoxShadow: string;
 };
+declare global  {
+    function ES(...styles: any[]): any;
+}

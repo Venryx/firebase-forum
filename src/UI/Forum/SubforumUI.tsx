@@ -42,10 +42,10 @@ export class SubforumUI extends BaseComponent<SubforumUI_Props, {}> {
 		}
 
 		return (
-			<Column style={{position: "relative", flex: 1}}>
+			<Column style={ES({position: "relative", flex: 1})}>
 				<ActionBar_Left subforum={subforum} subNavBarWidth={subNavBarWidth}/>
 				<ActionBar_Right subforum={subforum} subNavBarWidth={subNavBarWidth}/>
-				<ScrollView ref="scrollView" scrollVBarStyle={{width: 10}} style={{flex: 1}}>
+				<ScrollView ref="scrollView" scrollVBarStyle={{width: 10}} style={ES({flex: 1})}>
 					<Column style={{width: 960, margin: "50px auto 20px auto", filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)"}}>
 						<Column className="clickThrough" style={{height: 80, background: "rgba(0,0,0,.7)", borderRadius: "10px 10px 0 0"}}>
 							<Row style={{position: "relative", height: 40, padding: 10}}>

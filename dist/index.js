@@ -12384,10 +12384,10 @@ var ForumUI = function (_BaseComponent) {
             }
             var userID = _Manager.Manager.GetUserID();
             var isAdmin = (0, _General.IsUserAdmin)(userID);
-            return _react2.default.createElement(_reactVcomponents.Column, { style: { width: 960, margin: "20px auto 20px auto", flex: 1, filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)" } }, isAdmin && _react2.default.createElement(_reactVcomponents.Column, { className: "clickThrough", style: { height: 40, background: "rgba(0,0,0,.7)", borderRadius: 10 } }, _react2.default.createElement(_reactVcomponents.Row, { style: { height: 40, padding: 10 } }, _react2.default.createElement(_reactVcomponents.Button, { text: "Add section", ml: "auto", onClick: function onClick() {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: ES({ width: 960, margin: "20px auto 20px auto", flex: 1, filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)" }) }, isAdmin && _react2.default.createElement(_reactVcomponents.Column, { className: "clickThrough", style: { height: 40, background: "rgba(0,0,0,.7)", borderRadius: 10 } }, _react2.default.createElement(_reactVcomponents.Row, { style: { height: 40, padding: 10 } }, _react2.default.createElement(_reactVcomponents.Button, { text: "Add section", ml: "auto", onClick: function onClick() {
                     if (userID == null) return _Manager.Manager.ShowSignInPopup();
                     (0, _AddSectionDialog.ShowAddSectionDialog)(userID);
-                } }))), _react2.default.createElement(_reactVscrollview.ScrollView, { style: { flex: 1 }, contentStyle: { flex: 1 } }, sections.length == 0 && _react2.default.createElement("div", { style: { textAlign: "center", fontSize: 18 } }, "Loading..."), sections.map(function (section, index) {
+                } }))), _react2.default.createElement(_reactVscrollview.ScrollView, { style: ES({ flex: 1 }), contentStyle: ES({ flex: 1 }) }, sections.length == 0 && _react2.default.createElement("div", { style: { textAlign: "center", fontSize: 18 } }, "Loading..."), sections.map(function (section, index) {
                 return _react2.default.createElement(SectionUI, { key: index, section: section });
             })));
         }
@@ -12623,7 +12623,7 @@ var SubforumUI = function (_BaseComponent) {
             if (subforum == null || threads == null) {
                 return _react2.default.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: 25 } }, "Loading threads...");
             }
-            return _react2.default.createElement(_reactVcomponents.Column, { style: { position: "relative", flex: 1 } }, _react2.default.createElement(ActionBar_Left, { subforum: subforum, subNavBarWidth: subNavBarWidth }), _react2.default.createElement(ActionBar_Right, { subforum: subforum, subNavBarWidth: subNavBarWidth }), _react2.default.createElement(_reactVscrollview.ScrollView, { ref: "scrollView", scrollVBarStyle: { width: 10 }, style: { flex: 1 } }, _react2.default.createElement(_reactVcomponents.Column, { style: { width: 960, margin: "50px auto 20px auto", filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)" } }, _react2.default.createElement(_reactVcomponents.Column, { className: "clickThrough", style: { height: 80, background: "rgba(0,0,0,.7)", borderRadius: "10px 10px 0 0" } }, _react2.default.createElement(_reactVcomponents.Row, { style: { position: "relative", height: 40, padding: 10 } }, _react2.default.createElement("span", { style: { position: "absolute", left: "50%", transform: "translateX(-50%)", fontSize: 18 } }, subforum.name), _react2.default.createElement(_reactVcomponents.Button, { text: "Add thread", ml: "auto", onClick: function onClick() {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: ES({ position: "relative", flex: 1 }) }, _react2.default.createElement(ActionBar_Left, { subforum: subforum, subNavBarWidth: subNavBarWidth }), _react2.default.createElement(ActionBar_Right, { subforum: subforum, subNavBarWidth: subNavBarWidth }), _react2.default.createElement(_reactVscrollview.ScrollView, { ref: "scrollView", scrollVBarStyle: { width: 10 }, style: ES({ flex: 1 }) }, _react2.default.createElement(_reactVcomponents.Column, { style: { width: 960, margin: "50px auto 20px auto", filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)" } }, _react2.default.createElement(_reactVcomponents.Column, { className: "clickThrough", style: { height: 80, background: "rgba(0,0,0,.7)", borderRadius: "10px 10px 0 0" } }, _react2.default.createElement(_reactVcomponents.Row, { style: { position: "relative", height: 40, padding: 10 } }, _react2.default.createElement("span", { style: { position: "absolute", left: "50%", transform: "translateX(-50%)", fontSize: 18 } }, subforum.name), _react2.default.createElement(_reactVcomponents.Button, { text: "Add thread", ml: "auto", onClick: function onClick() {
                     if (userID == null) return _Manager.Manager.ShowSignInPopup();
                     (0, _AddThreadDialog.ShowAddThreadDialog)(userID, subforum._id);
                 } })), _react2.default.createElement(_reactVcomponents.Row, { style: { height: 40, padding: 10 } }, _react2.default.createElement("span", { style: { flex: columnWidths[0], fontWeight: 500, fontSize: 17 } }, "Title"), _react2.default.createElement("span", { style: { flex: columnWidths[1], fontWeight: 500, fontSize: 17 } }, "Creator"), _react2.default.createElement("span", { style: { flex: columnWidths[2], fontWeight: 500, fontSize: 17 } }, "Posts"), _react2.default.createElement("span", { style: { flex: columnWidths[3], fontWeight: 500, fontSize: 17 } }, "Last post"))), _react2.default.createElement(_reactVcomponents.Column, null, threads.length == 0 && _react2.default.createElement(_reactVcomponents.Row, { p: "7px 10px", style: { background: "rgba(30,30,30,.7)", borderRadius: "0 0 10px 10px" } }, "There are currently no threads in this subforum."), threads.map(function (thread, index) {
@@ -14173,9 +14173,17 @@ var colors = exports.colors = {
     //navBarBoxShadow: "rgba(100,100,100,1) 0px 0px 3px",
     navBarBoxShadow: "rgba(100, 100, 100, .3) 0px 0px 3px, rgba(70,70,70,.5) 0px 0px 150px"
 };
-/*AddGlobalStyle(`
-.VMenu > div:first-child { border-top: initial !important; }
-`);*/
+G({ ES: ES });
+// same as E(...), except applies extra things for style-objects
+function ES() {
+    var result = E.apply(undefined, arguments);
+    // for firefox; prevents {flex: 1} from setting {minWidth: "auto"}
+    if (result.flex) {
+        if (result.minWidth == null) result.minWidth = 0;
+        if (result.minHeight == null) result.minHeight = 0;
+    }
+    return result;
+}
 
 /***/ }),
 /* 114 */
@@ -14782,10 +14790,10 @@ var ThreadUI = function (_BaseComponent) {
 
             var userID = _Manager.Manager.GetUserID();
             if (thread == null || posts == null || posts.length == 0) {
-                return _react2.default.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", flex: 1, fontSize: 25 } }, "Loading posts...");
+                return _react2.default.createElement("div", { style: ES({ display: "flex", alignItems: "center", justifyContent: "center", flex: 1, fontSize: 25 }) }, "Loading posts...");
             }
             var firstPostWritten = posts.length > 1 || posts[0].text != _AddThreadDialog.firstPostPlaceholderText;
-            return _react2.default.createElement(_reactVcomponents.Column, { style: { position: "relative", flex: 1 } }, _react2.default.createElement(ActionBar_Left, { thread: thread }), _react2.default.createElement(ActionBar_Right, { thread: thread }), _react2.default.createElement(_reactVscrollview.ScrollView, { ref: "scrollView", scrollVBarStyle: { width: 10 }, style: { flex: 1 /*styles.fillParent_abs*/ } }, _react2.default.createElement(_reactVcomponents.Column, { style: { width: 960, margin: "50px auto 20px auto", filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)" } }, _react2.default.createElement(_reactVcomponents.Column, null, posts.map(function (post, index) {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: ES({ position: "relative", flex: 1 }) }, _react2.default.createElement(ActionBar_Left, { thread: thread }), _react2.default.createElement(ActionBar_Right, { thread: thread }), _react2.default.createElement(_reactVscrollview.ScrollView, { ref: "scrollView", scrollVBarStyle: { width: 10 }, style: ES({ flex: 1 /*styles.fillParent_abs*/ }) }, _react2.default.createElement(_reactVcomponents.Column, { style: { width: 960, margin: "50px auto 20px auto", filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)" } }, _react2.default.createElement(_reactVcomponents.Column, null, posts.map(function (post, index) {
                 return _react2.default.createElement(_PostUI.PostUI, { key: index, index: index, thread: thread, post: post });
             }), firstPostWritten && _react2.default.createElement(ReplyBox, { thread: thread })))));
         }
@@ -15165,7 +15173,7 @@ var PostUI = function (_BaseComponent) {
                     } })));
             }
             var creatorOrMod = (0, _General.IsUserCreatorOrMod)(_Manager.Manager.GetUserID(), post);
-            return _react2.default.createElement(_reactVcomponents.Row, { sel: true, mt: index != 0 ? 20 : 0, style: { flexShrink: 0, background: "rgba(0,0,0,.7)", borderRadius: 10, alignItems: "initial", cursor: "auto" } }, _react2.default.createElement(_reactVcomponents.Column, { style: { width: 125 } }, _react2.default.createElement(_reactVcomponents.Div, { p: "5px 5px 0 5px", style: { textAlign: "center" } }, creator ? creator.displayName : "..."), _react2.default.createElement(_reactVcomponents.Row, { p: "3px 10px 10px 10px" }, _react2.default.createElement("img", { src: creator ? creator.avatarUrl : "", style: { margin: "auto", maxWidth: 105, maxHeight: 105 } }))), _react2.default.createElement(_reactVcomponents.Column, { p: 10, style: { flex: 1 } }, _react2.default.createElement(_reactVcomponents.Row, { style: { width: "100%" } }, _react2.default.createElement(_Manager.Manager.MarkdownRenderer, { source: post.text != null ? post.text : "*This post has been deleted.*" })), _react2.default.createElement(_reactVcomponents.Row, { mt: "auto" }, _react2.default.createElement("span", { style: { color: "rgba(255,255,255,.5)" } }, creator ? creator.displayName : "...", ", at ", _Manager.Manager.FormatTime(post.createdAt, "YYYY-MM-DD HH:mm:ss")), creatorOrMod && _react2.default.createElement(_reactVcomponents.Button, { ml: 5, text: "Edit", onClick: function onClick() {
+            return _react2.default.createElement(_reactVcomponents.Row, { sel: true, mt: index != 0 ? 20 : 0, style: { flexShrink: 0, background: "rgba(0,0,0,.7)", borderRadius: 10, alignItems: "initial", cursor: "auto" } }, _react2.default.createElement(_reactVcomponents.Column, { style: { width: 125 } }, _react2.default.createElement(_reactVcomponents.Div, { p: "5px 5px 0 5px", style: { textAlign: "center" } }, creator ? creator.displayName : "..."), _react2.default.createElement(_reactVcomponents.Row, { p: "3px 10px 10px 10px" }, _react2.default.createElement("img", { src: creator ? creator.avatarUrl : "", style: { margin: "auto", maxWidth: 105, maxHeight: 105 } }))), _react2.default.createElement(_reactVcomponents.Column, { p: 10, style: ES({ flex: 1 }) }, _react2.default.createElement(_reactVcomponents.Row, { style: { width: "100%" } }, _react2.default.createElement(_Manager.Manager.MarkdownRenderer, { source: post.text != null ? post.text : "*This post has been deleted.*" })), _react2.default.createElement(_reactVcomponents.Row, { mt: "auto" }, _react2.default.createElement("span", { style: { color: "rgba(255,255,255,.5)" } }, creator ? creator.displayName : "...", ", at ", _Manager.Manager.FormatTime(post.createdAt, "YYYY-MM-DD HH:mm:ss")), creatorOrMod && _react2.default.createElement(_reactVcomponents.Button, { ml: 5, text: "Edit", onClick: function onClick() {
                     _this2.SetState({ editing: true });
                 } }), creatorOrMod && index != 0 && (post.text != null || post._id == thread.posts.Last()) && _react2.default.createElement(_reactVcomponents.Button, { ml: 5, text: "Delete", onClick: function onClick() {
                     (0, _reactVmessagebox.ShowMessageBox)({

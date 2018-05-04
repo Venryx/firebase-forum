@@ -58,7 +58,7 @@ export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataE
 						<img src={creator ? creator.avatarUrl : ""} style={{margin: "auto", maxWidth: 105, maxHeight: 105}}/>
 					</Row>
 				</Column>
-				<Column p={10} style={{flex: 1}}>
+				<Column p={10} style={ES({flex: 1})}>
 					<Row style={{width: "100%"}}>
 						{/*post.text*/}
 						<Manager.MarkdownRenderer source={post.text != null ? post.text : "*This post has been deleted.*"}/>

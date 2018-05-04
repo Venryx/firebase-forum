@@ -13,3 +13,17 @@ export var colors = {
 /*AddGlobalStyle(`
 .VMenu > div:first-child { border-top: initial !important; }
 `);*/
+
+declare global { function ES(...styles): any; } G({ES});
+// same as E(...), except applies extra things for style-objects
+function ES(...styles) {
+	let result = E(...styles);
+
+	// for firefox; prevents {flex: 1} from setting {minWidth: "auto"}
+	if (result.flex) {
+		if (result.minWidth == null) result.minWidth = 0;
+		if (result.minHeight == null) result.minHeight = 0;
+	}
+
+	return result;
+}
