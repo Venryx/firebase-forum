@@ -33,7 +33,6 @@ export class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {newDa
 
 		let splitAt = 170, width = 600;
 		return (
-			<div> {/* needed so GetInnerComp() works */}
 			<Column style={style}>
 				<RowLR mt={5} splitAt={splitAt} style={{width}}>
 					<Pre>Title: </Pre>
@@ -42,7 +41,6 @@ export class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {newDa
 						value={newData.title} onChange={val=>Change(newData.title = val)}/>
 				</RowLR>
 			</Column>
-			</div>
 		);
 	}
 	GetValidationError() {

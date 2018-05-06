@@ -12882,9 +12882,9 @@ var SubforumDetailsUI = exports.SubforumDetailsUI = function (_BaseComponent) {
             };
             var splitAt = 170,
                 width = 600;
-            return _react2.default.createElement("div", null, " ", _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { mt: 5, splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Name: "), _react2.default.createElement(_reactVcomponents.TextInput, { pattern: _Subforum.Subforum_nameFormat, required: true, enabled: enabled, style: { width: "100%" }, value: newData.name, onChange: function onChange(val) {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { mt: 5, splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Name: "), _react2.default.createElement(_reactVcomponents.TextInput, { pattern: _Subforum.Subforum_nameFormat, required: true, enabled: enabled, style: { width: "100%" }, value: newData.name, onChange: function onChange(val) {
                     return Change(newData.name = val);
-                } }))));
+                } })));
         }
     }, {
         key: "GetValidationError",
@@ -13470,9 +13470,9 @@ function ShowAddThreadDialog(userID, subforumID) {
     };
     var boxController = (0, _reactVmessagebox.ShowMessageBox)({
         title: "Add thread", cancelButton: true,
-        messageUI: function messageUI() {
+        message: function message() {
             boxController.options.okButtonClickable = error == null;
-            return _react2.default.createElement(_reactVcomponents.Column, { style: { padding: "10px 0", width: 600 } }, _react2.default.createElement(_ThreadDetailsUI.ThreadDetailsUI, { ref: function ref(c) {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: { width: 600 } }, _react2.default.createElement(_ThreadDetailsUI.ThreadDetailsUI, { ref: function ref(c) {
                     return detailsUI = (0, _reactVextensions.GetInnerComp)(c);
                 }, baseData: newThread, forNew: true, onChange: function onChange(val) {
                     return Change(newThread = val, error = detailsUI.GetValidationError());
@@ -13572,9 +13572,9 @@ var ThreadDetailsUI = exports.ThreadDetailsUI = function (_BaseComponent) {
             };
             var splitAt = 170,
                 width = 600;
-            return _react2.default.createElement("div", null, " ", _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { mt: 5, splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Title: "), _react2.default.createElement(_reactVcomponents.TextInput, { required: true, enabled: enabled, style: { width: "100%" }, value: newData.title, onChange: function onChange(val) {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { mt: 5, splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Title: "), _react2.default.createElement(_reactVcomponents.TextInput, { required: true, enabled: enabled, style: { width: "100%" }, value: newData.title, onChange: function onChange(val) {
                     return Change(newData.title = val);
-                } }))));
+                } })));
         }
     }, {
         key: "GetValidationError",
@@ -14226,9 +14226,9 @@ function ShowAddSectionDialog(userID) {
     };
     var boxController = (0, _reactVmessagebox.ShowMessageBox)({
         title: "Add section", cancelButton: true,
-        messageUI: function messageUI() {
+        message: function message() {
             boxController.options.okButtonClickable = error == null;
-            return _react2.default.createElement(_reactVcomponents.Column, { style: { padding: "10px 0", width: 600 } }, _react2.default.createElement(_SectionDetailsUI.SectionDetailsUI, { ref: function ref(c) {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: { width: 600 } }, _react2.default.createElement(_SectionDetailsUI.SectionDetailsUI, { ref: function ref(c) {
                     return detailsUI = (0, _reactVextensions.GetInnerComp)(c);
                 }, baseData: newSection, forNew: true, onChange: function onChange(val) {
                     return Change(newSection = val, error = detailsUI.GetValidationError());
@@ -14308,9 +14308,9 @@ var SectionDetailsUI = exports.SectionDetailsUI = function (_BaseComponent) {
             };
             var splitAt = 170,
                 width = 600;
-            return _react2.default.createElement("div", null, " ", _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { mt: 5, splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Name: "), _react2.default.createElement(_reactVcomponents.TextInput, { required: true, enabled: enabled, style: { width: "100%" }, value: newData.name, onChange: function onChange(val) {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { mt: 5, splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Name: "), _react2.default.createElement(_reactVcomponents.TextInput, { required: true, enabled: enabled, style: { width: "100%" }, value: newData.name, onChange: function onChange(val) {
                     return Change(newData.name = val);
-                } }))));
+                } })));
         }
     }, {
         key: "GetValidationError",
@@ -14513,9 +14513,9 @@ function ShowAddSubforumDialog(userID, sectionID) {
     };
     var boxController = (0, _reactVmessagebox.ShowMessageBox)({
         title: "Add subforum", cancelButton: true,
-        messageUI: function messageUI() {
+        message: function message() {
             boxController.options.okButtonClickable = error == null;
-            return _react2.default.createElement(_reactVcomponents.Column, { style: { padding: "10px 0", width: 600 } }, _react2.default.createElement(_SubforumDetailsUI.SubforumDetailsUI, { ref: function ref(c) {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: { width: 600 } }, _react2.default.createElement(_SubforumDetailsUI.SubforumDetailsUI, { ref: function ref(c) {
                     return detailsUI = (0, _reactVextensions.GetInnerComp)(c);
                 }, baseData: newSubforum, forNew: true, onChange: function onChange(val) {
                     return Change(newSubforum = val, error = detailsUI.GetValidationError());
@@ -15278,7 +15278,7 @@ var PostEditorUI = exports.PostEditorUI = function (_BaseComponent) {
                 if (onChange) onChange(_this2.GetNewData(), _this2);
                 _this2.Update();
             };
-            return _react2.default.createElement("div", { style: { width: "100%" } }, " ", _react2.default.createElement(_reactVcomponents.Column, null, _react2.default.createElement(_reactVcomponents.Column, null, enabled && _react2.default.createElement(_reactVmarkdown.MarkdownToolbar, { editor: function editor() {
+            return _react2.default.createElement(_reactVcomponents.Column, null, _react2.default.createElement(_reactVcomponents.Column, null, enabled && _react2.default.createElement(_reactVmarkdown.MarkdownToolbar, { editor: function editor() {
                     return _this2.refs.editor;
                 } }, _react2.default.createElement(_Manager.Manager.Link, { to: "https://guides.github.com/features/mastering-markdown", style: { marginLeft: 10 } }, "How to add links, images, etc.")), _react2.default.createElement(_reactVmarkdown.MarkdownEditor, { ref: "editor", value: newData.text || "", onChange: function onChange(val) {
                     return Change(newData.text = val);
@@ -15287,7 +15287,7 @@ var PostEditorUI = exports.PostEditorUI = function (_BaseComponent) {
                     lineWrapping: true,
                     readOnly: !enabled,
                     placeholder: "Write your reply..."
-                }, options) }))));
+                }, options) })));
         }
     }, {
         key: "GetValidationError",

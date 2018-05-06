@@ -31,7 +31,6 @@ export class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {n
 
 		let splitAt = 170, width = 600;
 		return (
-			<div> {/* needed so GetInnerComp() works */}
 			<Column style={style}>
 				<RowLR mt={5} splitAt={splitAt} style={{width}}>
 					<Pre>Name: </Pre>
@@ -41,7 +40,6 @@ export class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {n
 						value={newData.name} onChange={val=>Change(newData.name = val)}/>
 				</RowLR>
 			</Column>
-			</div>
 		);
 	}
 	GetValidationError() {

@@ -22,10 +22,10 @@ export function ShowAddSubforumDialog(userID: string, sectionID: number) {
 	let Change = (..._)=>boxController.UpdateUI();
 	let boxController: BoxController = ShowMessageBox({
 		title: `Add subforum`, cancelButton: true,
-		messageUI: ()=> {
+		message: ()=> {
 			boxController.options.okButtonClickable = error == null;
 			return (
-				<Column style={{padding: `10px 0`, width: 600}}>
+				<Column style={{width: 600}}>
 					<SubforumDetailsUI ref={c=>detailsUI = GetInnerComp(c) as any} baseData={newSubforum} forNew={true}
 						onChange={val=>Change(newSubforum = val, error = detailsUI.GetValidationError())}/>
 					{error && error != "Please fill out this field." && <Row mt={5} style={{color: "rgba(200,70,70,1)"}}>{error}</Row>}

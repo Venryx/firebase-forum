@@ -30,7 +30,6 @@ export class PostEditorUI extends BaseComponent
 		};
 
 		return (
-			<div style={{width: "100%"}}> {/* needed so GetInnerComp() works */}
 			<Column>
 				<Column>
 					{enabled &&
@@ -46,7 +45,6 @@ export class PostEditorUI extends BaseComponent
 						}, options)}/>
 				</Column>
 			</Column>
-			</div>
 		);
 	}
 
