@@ -12882,7 +12882,7 @@ var SubforumDetailsUI = exports.SubforumDetailsUI = function (_BaseComponent) {
             };
             var splitAt = 170,
                 width = 600;
-            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { mt: 5, splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Name: "), _react2.default.createElement(_reactVcomponents.TextInput, { pattern: _Subforum.Subforum_nameFormat, required: true, enabled: enabled, style: { width: "100%" }, value: newData.name, onChange: function onChange(val) {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Name: "), _react2.default.createElement(_reactVcomponents.TextInput, { pattern: _Subforum.Subforum_nameFormat, required: true, enabled: enabled, style: { width: "100%" }, value: newData.name, onChange: function onChange(val) {
                     return Change(newData.name = val);
                 } })));
         }
@@ -13572,7 +13572,7 @@ var ThreadDetailsUI = exports.ThreadDetailsUI = function (_BaseComponent) {
             };
             var splitAt = 170,
                 width = 600;
-            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { mt: 5, splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Title: "), _react2.default.createElement(_reactVcomponents.TextInput, { required: true, enabled: enabled, style: { width: "100%" }, value: newData.title, onChange: function onChange(val) {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Title: "), _react2.default.createElement(_reactVcomponents.TextInput, { required: true, enabled: enabled, style: { width: "100%" }, value: newData.title, onChange: function onChange(val) {
                     return Change(newData.title = val);
                 } })));
         }
@@ -14308,7 +14308,7 @@ var SectionDetailsUI = exports.SectionDetailsUI = function (_BaseComponent) {
             };
             var splitAt = 170,
                 width = 600;
-            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { mt: 5, splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Name: "), _react2.default.createElement(_reactVcomponents.TextInput, { required: true, enabled: enabled, style: { width: "100%" }, value: newData.name, onChange: function onChange(val) {
+            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Name: "), _react2.default.createElement(_reactVcomponents.TextInput, { required: true, enabled: enabled, style: { width: "100%" }, value: newData.name, onChange: function onChange(val) {
                     return Change(newData.name = val);
                 } })));
         }

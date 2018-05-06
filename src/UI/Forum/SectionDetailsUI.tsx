@@ -33,7 +33,7 @@ export class SectionDetailsUI extends BaseComponent<SectionDetailsUI_Props, {new
 		let splitAt = 170, width = 600;
 		return (
 			<Column style={style}>
-				<RowLR mt={5} splitAt={splitAt} style={{width}}>
+				<RowLR splitAt={splitAt} style={{width}}>
 					<Pre>Name: </Pre>
 					<TextInput required
 						enabled={enabled} style={{width: "100%"}}

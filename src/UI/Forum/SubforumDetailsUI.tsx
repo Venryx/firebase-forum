@@ -32,7 +32,7 @@ export class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {n
 		let splitAt = 170, width = 600;
 		return (
 			<Column style={style}>
-				<RowLR mt={5} splitAt={splitAt} style={{width}}>
+				<RowLR splitAt={splitAt} style={{width}}>
 					<Pre>Name: </Pre>
 					<TextInput
 						pattern={Subforum_nameFormat} required

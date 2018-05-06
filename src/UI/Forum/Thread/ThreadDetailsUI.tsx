@@ -34,7 +34,7 @@ export class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {newDa
 		let splitAt = 170, width = 600;
 		return (
 			<Column style={style}>
-				<RowLR mt={5} splitAt={splitAt} style={{width}}>
+				<RowLR splitAt={splitAt} style={{width}}>
 					<Pre>Title: </Pre>
 					<TextInput required
 						enabled={enabled} style={{width: "100%"}}
