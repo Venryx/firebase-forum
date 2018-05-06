@@ -26,7 +26,7 @@ export function ShowAddSectionDialog(userID: string) {
 			boxController.options.okButtonClickable = error == null;
 			return (
 				<Column style={{width: 600}}>
-					<SectionDetailsUI ref={c=>detailsUI = GetInnerComp(c) as any} baseData={newSection} forNew={true}
+					<SectionDetailsUI ref={c=>detailsUI = c} baseData={newSection} forNew={true}
 						onChange={val=>Change(newSection = val, error = detailsUI.GetValidationError())}/>
 					{error && error != "Please fill out this field." && <Row mt={5} style={{color: "rgba(200,70,70,1)"}}>{error}</Row>}
 				</Column>

@@ -29,7 +29,7 @@ export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataE
 		if (editing) {
 			return (
 				<Column sel mt={index != 0 ? 20 : 0} style={{flexShrink: 0, background: "rgba(0,0,0,.7)", borderRadius: 10, padding: 10, alignItems: "flex-start", cursor: "auto"}}>
-					<PostEditorUI ref={c=>this.postEditorUI = GetInnerComp(c) as any} baseData={post}
+					<PostEditorUI ref={c=>this.postEditorUI = c} baseData={post}
 						onChange={(newData, comp)=> {
 							this.SetState({dataError: comp.GetValidationError()});
 						}}/>

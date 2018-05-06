@@ -26,7 +26,7 @@ export function ShowAddSubforumDialog(userID: string, sectionID: number) {
 			boxController.options.okButtonClickable = error == null;
 			return (
 				<Column style={{width: 600}}>
-					<SubforumDetailsUI ref={c=>detailsUI = GetInnerComp(c) as any} baseData={newSubforum} forNew={true}
+					<SubforumDetailsUI ref={c=>detailsUI = c} baseData={newSubforum} forNew={true}
 						onChange={val=>Change(newSubforum = val, error = detailsUI.GetValidationError())}/>
 					{error && error != "Please fill out this field." && <Row mt={5} style={{color: "rgba(200,70,70,1)"}}>{error}</Row>}
 				</Column>

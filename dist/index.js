@@ -12694,7 +12694,7 @@ var DetailsDropdown = function (_BaseComponent3) {
 
             var isMod = (0, _General.IsUserMod)(_Manager.Manager.GetUserID());
             return _react2.default.createElement(_reactVcomponents.DropDown, null, _react2.default.createElement(_reactVcomponents.DropDownTrigger, null, _react2.default.createElement(_reactVcomponents.Button, { ml: 5, text: "Details" })), _react2.default.createElement(_reactVcomponents.DropDownContent, { style: { left: 0 } }, _react2.default.createElement(_reactVcomponents.Column, null, _react2.default.createElement(_SubforumDetailsUI.SubforumDetailsUI, { ref: function ref(c) {
-                    return _this4.detailsUI = (0, _reactVextensions.GetInnerComp)(c);
+                    return _this4.detailsUI = c;
                 }, baseData: subforum, forNew: false, enabled: isMod, onChange: function onChange(newData) {
                     _this4.SetState({ dataError: _this4.detailsUI.GetValidationError() });
                 } }), isMod && _react2.default.createElement(_reactVcomponents.Row, null, _react2.default.createElement(_reactVcomponents.Button, { mt: 5, text: "Save", enabled: dataError == null, onLeftClick: function onLeftClick() {
@@ -13408,8 +13408,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactVcomponents = __webpack_require__(99);
 
-var _reactVextensions = __webpack_require__(98);
-
 var _ThreadDetailsUI = __webpack_require__(106);
 
 var _Thread = __webpack_require__(95);
@@ -13473,7 +13471,7 @@ function ShowAddThreadDialog(userID, subforumID) {
         message: function message() {
             boxController.options.okButtonClickable = error == null;
             return _react2.default.createElement(_reactVcomponents.Column, { style: { width: 600 } }, _react2.default.createElement(_ThreadDetailsUI.ThreadDetailsUI, { ref: function ref(c) {
-                    return detailsUI = (0, _reactVextensions.GetInnerComp)(c);
+                    return detailsUI = c;
                 }, baseData: newThread, forNew: true, onChange: function onChange(val) {
                     return Change(newThread = val, error = detailsUI.GetValidationError());
                 } }), error && error != "Please fill out this field." && _react2.default.createElement(_reactVcomponents.Row, { mt: 5, style: { color: "rgba(200,70,70,1)" } }, error));
@@ -14203,8 +14201,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactVcomponents = __webpack_require__(99);
 
-var _reactVextensions = __webpack_require__(98);
-
 var _SectionDetailsUI = __webpack_require__(115);
 
 var _AddSection = __webpack_require__(116);
@@ -14229,7 +14225,7 @@ function ShowAddSectionDialog(userID) {
         message: function message() {
             boxController.options.okButtonClickable = error == null;
             return _react2.default.createElement(_reactVcomponents.Column, { style: { width: 600 } }, _react2.default.createElement(_SectionDetailsUI.SectionDetailsUI, { ref: function ref(c) {
-                    return detailsUI = (0, _reactVextensions.GetInnerComp)(c);
+                    return detailsUI = c;
                 }, baseData: newSection, forNew: true, onChange: function onChange(val) {
                     return Change(newSection = val, error = detailsUI.GetValidationError());
                 } }), error && error != "Please fill out this field." && _react2.default.createElement(_reactVcomponents.Row, { mt: 5, style: { color: "rgba(200,70,70,1)" } }, error));
@@ -14490,8 +14486,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactVcomponents = __webpack_require__(99);
 
-var _reactVextensions = __webpack_require__(98);
-
 var _SubforumDetailsUI = __webpack_require__(102);
 
 var _AddSubforum = __webpack_require__(118);
@@ -14516,7 +14510,7 @@ function ShowAddSubforumDialog(userID, sectionID) {
         message: function message() {
             boxController.options.okButtonClickable = error == null;
             return _react2.default.createElement(_reactVcomponents.Column, { style: { width: 600 } }, _react2.default.createElement(_SubforumDetailsUI.SubforumDetailsUI, { ref: function ref(c) {
-                    return detailsUI = (0, _reactVextensions.GetInnerComp)(c);
+                    return detailsUI = c;
                 }, baseData: newSubforum, forNew: true, onChange: function onChange(val) {
                     return Change(newSubforum = val, error = detailsUI.GetValidationError());
                 } }), error && error != "Please fill out this field." && _react2.default.createElement(_reactVcomponents.Row, { mt: 5, style: { color: "rgba(200,70,70,1)" } }, error));
@@ -14829,7 +14823,7 @@ var ReplyBox = function (_BaseComponent2) {
 
             this.newPost = this.newPost || new _Post.Post({});
             return _react2.default.createElement(_reactVcomponents.Column, { sel: true, mt: 20, style: { background: "rgba(0,0,0,.7)", borderRadius: 10, padding: 10, alignItems: "flex-start", cursor: "auto" } }, _react2.default.createElement(_PostEditorUI.PostEditorUI, { ref: function ref(c) {
-                    return _this3.postEditorUI = (0, _reactVextensions.GetInnerComp)(c);
+                    return _this3.postEditorUI = c;
                 }, baseData: this.newPost, forNew: true, onChange: function onChange(newData, comp) {
                     _this3.newPost = newData;
                     _this3.SetState({ dataError: comp.GetValidationError() });
@@ -14918,7 +14912,7 @@ var DetailsDropdown = function (_BaseComponent4) {
 
             var creatorOrMod = (0, _General.IsUserCreatorOrMod)(_Manager.Manager.GetUserID(), thread);
             return _react2.default.createElement(_reactVcomponents.DropDown, null, _react2.default.createElement(_reactVcomponents.DropDownTrigger, null, _react2.default.createElement(_reactVcomponents.Button, { ml: 5, text: "Details" })), _react2.default.createElement(_reactVcomponents.DropDownContent, { style: { left: 0 } }, _react2.default.createElement(_reactVcomponents.Column, null, _react2.default.createElement(_ThreadDetailsUI.ThreadDetailsUI, { ref: function ref(c) {
-                    return _this6.detailsUI = (0, _reactVextensions.GetInnerComp)(c);
+                    return _this6.detailsUI = c;
                 }, baseData: thread, forNew: false, enabled: creatorOrMod, onChange: function onChange(newData) {
                     _this6.SetState({ dataError: _this6.detailsUI.GetValidationError() });
                 } }), creatorOrMod && _react2.default.createElement(_reactVcomponents.Row, null, _react2.default.createElement(_reactVcomponents.Button, { mt: 5, text: "Save", enabled: dataError == null, onLeftClick: function onLeftClick() {
@@ -15131,7 +15125,7 @@ var PostUI = function (_BaseComponent) {
 
             if (editing) {
                 return _react2.default.createElement(_reactVcomponents.Column, { sel: true, mt: index != 0 ? 20 : 0, style: { flexShrink: 0, background: "rgba(0,0,0,.7)", borderRadius: 10, padding: 10, alignItems: "flex-start", cursor: "auto" } }, _react2.default.createElement(_PostEditorUI.PostEditorUI, { ref: function ref(c) {
-                        return _this2.postEditorUI = (0, _reactVextensions.GetInnerComp)(c);
+                        return _this2.postEditorUI = c;
                     }, baseData: post, onChange: function onChange(newData, comp) {
                         _this2.SetState({ dataError: comp.GetValidationError() });
                     } }), _react2.default.createElement(_reactVcomponents.Row, { mt: 5 }, _react2.default.createElement(_reactVcomponents.Button, { text: "Save", enabled: dataError == null, onLeftClick: function onLeftClick() {

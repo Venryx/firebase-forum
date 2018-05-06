@@ -78,7 +78,7 @@ class ReplyBox extends BaseComponent<{thread: Thread}, {dataError: string}> {
 		this.newPost = this.newPost || new Post({});
 		return (
 			<Column sel mt={20} style={{background: "rgba(0,0,0,.7)", borderRadius: 10, padding: 10, alignItems: "flex-start", cursor: "auto"}}>
-				<PostEditorUI ref={c=>this.postEditorUI = GetInnerComp(c) as any} baseData={this.newPost} forNew={true}
+				<PostEditorUI ref={c=>this.postEditorUI = c} baseData={this.newPost} forNew={true}
 					onChange={(newData, comp)=> {
 						this.newPost = newData;
 						this.SetState({dataError: comp.GetValidationError()});
@@ -140,7 +140,7 @@ class DetailsDropdown extends BaseComponent<DetailsDropdownProps, {dataError: st
 				</DropDownTrigger>
 				<DropDownContent style={{left: 0}}>
 					<Column>
-						<ThreadDetailsUI ref={c=>this.detailsUI = GetInnerComp(c) as any} baseData={thread}
+						<ThreadDetailsUI ref={c=>this.detailsUI = c} baseData={thread}
 							forNew={false} enabled={creatorOrMod}
 							onChange={newData=> {
 								this.SetState({dataError: this.detailsUI.GetValidationError()});

@@ -115,7 +115,7 @@ class DetailsDropdown extends BaseComponent<{subforum: Subforum}, {dataError: st
 				</DropDownTrigger>
 				<DropDownContent style={{left: 0}}>
 					<Column>
-						<SubforumDetailsUI ref={c=>this.detailsUI = GetInnerComp(c) as any} baseData={subforum}
+						<SubforumDetailsUI ref={c=>this.detailsUI = c} baseData={subforum}
 							forNew={false} enabled={isMod}
 							onChange={newData=> {
 								this.SetState({dataError: this.detailsUI.GetValidationError()});
