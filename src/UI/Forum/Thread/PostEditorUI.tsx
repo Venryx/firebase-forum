@@ -36,7 +36,7 @@ export class PostEditorUI extends BaseComponent
 						<MarkdownToolbar editor={()=>this.refs.editor}>
 							<Manager.Link to="https://guides.github.com/features/mastering-markdown" style={{marginLeft: 10}}>How to add links, images, etc.</Manager.Link>
 						</MarkdownToolbar>}
-					<MarkdownEditor ref="editor" value={newData.text || ""} onChange={val=>Change(newData.text = val)}
+					<MarkdownEditor ref="editor" toolbar={false} value={newData.text || ""} onChange={val=>Change(newData.text = val)}
 						options={E({
 							scrollbarStyle: "overlay",
 							lineWrapping: true,
