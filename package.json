@@ -1,6 +1,6 @@
 {
   "name": "firebase-forum",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Forum solution built using ReactJS, Redux, and Firebase.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { LogTypes } from "./Utils/Logging";
 import { BaseComponent } from "react-vextensions";
 export declare class PermissionGroupSet {
