@@ -16,11 +16,11 @@ export class Forum {
 
 export const ForumReducer = combineReducers({
 	selectedSubforumID: (state = null, action)=> {
-		if (action.Is(ACTSubforumSelect)) return action.payload.id;
+		if (action.type == "ACTSubforumSelect") return action.payload.id;
 		return state;
 	},
 	selectedThreadID: (state = null, action)=> {
-		if (action.Is(ACTThreadSelect)) return action.payload.id;
+		if (action.type == "ACTThreadSelect") return action.payload.id;
 		return state;
 	},
 }) as any;

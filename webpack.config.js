@@ -50,13 +50,13 @@ module.exports = {
 				test: /\.(png|jpg|jpeg|svg)$/,
 				loader: "file"
 			},
-			{
+			/* {
 				test: /\.json$/,
 				loader: "json-loader",
 				include: [
 					"./node_modules/ajv/lib/refs",
 				],
-			},
+			}, */
 		]
 	},
 	plugins: [
