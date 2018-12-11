@@ -1,26 +1,25 @@
 import React from "react";
 import {Column, Div} from "react-vcomponents";
-import {BaseComponent, GetInnerComp} from "react-vextensions";
+import {BaseComponent, GetInnerComp, BaseComponentWithConnector} from "react-vextensions";
 import {Row} from "react-vcomponents";
 import {Button, Span} from "react-vcomponents";
 import {PostEditorUI} from "./PostEditorUI";
 import {Thread} from "../../../Store/firebase/forum/@Thread";
 import {Post} from "../../../Store/firebase/forum/@Post";
-import { Connect } from "../../../Utils/Database/FirebaseConnect";
 import {ShowMessageBox} from "react-vmessagebox";
 import {DeletePost} from "../../../Server/Commands/DeletePost";
 import {UpdatePost} from "../../../Server/Commands/UpdatePost";
-import {Manager} from "../../../Manager";
+import {Manager, manager} from "../../../Manager";
 import { GetUpdates } from "../../../Utils/Database/DatabaseHelpers";
 import {IsUserCreatorOrMod} from "../../../General";
 
-//let VReactMarkdown_Remarkable = Manager.MarkdownRenderer as any;
+//let VReactMarkdown_Remarkable = manager.MarkdownRenderer as any;
 
-export type PostUI_Props = {index: number, thread: Thread, post: Post} & Partial<{creator: User}>;
-@Connect((state, {post}: PostUI_Props)=> ({
-	creator: Manager.GetUser(post.creator),
-}))
-export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataError: string}> {
+let PostUI_connector = (state, {post}: {index: number, thread: Thread, post: Post})=> ({
+	creator: manager.GetUser(post.creator),
+});
+export let PostUI: typeof PostUI_NC; manager.onPopulated.then(()=>PostUI = manager.Connect(PostUI_connector)(PostUI_NC));
+export class PostUI_NC extends BaseComponentWithConnector(PostUI_connector, {editing: false, dataError: null as string}) {
 	postEditorUI: PostEditorUI;
 	render() {
 		let {index, thread, post, creator} = this.props;
@@ -47,7 +46,7 @@ export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataE
 			)
 		}
 
-		let creatorOrMod = IsUserCreatorOrMod(Manager.GetUserID(), post);
+		let creatorOrMod = IsUserCreatorOrMod(manager.GetUserID(), post);
 		return (
 			<Row sel mt={index != 0 ? 20 : 0} style={{flexShrink: 0, background: "rgba(0,0,0,.7)", borderRadius: 10, alignItems: "initial", cursor: "auto"}}>
 				<Column style={{width: 125}}>
@@ -61,10 +60,10 @@ export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataE
 				<Column p={10} style={ES({flex: 1})}>
 					<Row style={{width: "100%"}}>
 						{/*post.text*/}
-						<Manager.MarkdownRenderer source={post.text != null ? post.text : "*This post has been deleted.*"}/>
+						<manager.MarkdownRenderer source={post.text != null ? post.text : "*This post has been deleted.*"}/>
 					</Row>
 					<Row mt="auto">
-						<span style={{color: "rgba(255,255,255,.5)"}}>{creator ? creator.displayName : "..."}, at {Manager.FormatTime(post.createdAt, "YYYY-MM-DD HH:mm:ss")}</span>
+						<span style={{color: "rgba(255,255,255,.5)"}}>{creator ? creator.displayName : "..."}, at {manager.FormatTime(post.createdAt, "YYYY-MM-DD HH:mm:ss")}</span>
 						{creatorOrMod &&
 							<Button ml={5} text="Edit" onClick={()=> {
 								this.SetState({editing: true});
@@ -80,7 +79,7 @@ export class PostUI extends BaseComponent<PostUI_Props, {editing: boolean, dataE
 								});
 							}}/>}
 						{post.editedAt && <Span ml="auto" style={{color: "rgba(255,255,255,.5)"}}>
-							{post.text != null ? "edited" : "deleted"} at {Manager.FormatTime(post.editedAt, "YYYY-MM-DD HH:mm:ss")}
+							{post.text != null ? "edited" : "deleted"} at {manager.FormatTime(post.editedAt, "YYYY-MM-DD HH:mm:ss")}
 						</Span>}
 					</Row>
 				</Column>

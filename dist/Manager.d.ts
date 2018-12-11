@@ -15,25 +15,35 @@ export declare type Link_Props = {
     replace?: boolean;
     actions?: (dispatch: Function) => void;
 } & React.HTMLProps<HTMLAnchorElement>;
+export declare type Omit<T, K extends keyof T> = Pick<T, ({
+    [P in keyof T]: P;
+} & {
+    [P in K]: never;
+})[keyof T]>;
 export declare class Manager {
-    static store: any;
-    static storePath_mainData: string;
-    static storePath_dbData: string;
-    static Link: new () => (BaseComponent<Link_Props, {}> & {
+    onPopulated: Promise<{}>;
+    onPopulated_resolve: Function;
+    Populate(data: Omit<Manager, "onPopulated" | "onPopulated_resolve" | "Populate">): void;
+    store: any;
+    storePath_mainData: string;
+    storePath_dbData: string;
+    Link: new () => (BaseComponent<Link_Props, {}> & {
         render: () => JSX.Element | null;
     });
-    static FormatTime: (time: number, formatStr: string) => string;
-    static router_replace: (newURL: string) => any;
-    static router_push: (newURL: string) => any;
-    static logTypes: LogTypes;
-    static State: (...props) => any;
-    static GetData: (..._) => any;
-    static GetDataAsync: (..._) => any;
-    static GetAsync: (dbGetterFunc, statsLogger) => Promise<any>;
-    static ShowSignInPopup: () => void;
-    static GetUserID: () => string;
-    static GetUser: (id: string) => any;
-    static GetUserPermissionGroups: (userID: string) => PermissionGroupSet;
-    static ApplyDBUpdates: (rootPath: string, dbUpdates) => void;
-    static MarkdownRenderer: any;
+    FormatTime: (time: number, formatStr: string) => string;
+    router_replace: (newURL: string) => any;
+    router_push: (newURL: string) => any;
+    logTypes: LogTypes;
+    Connect: (func: Function) => any;
+    State: (...props) => any;
+    GetData: (..._) => any;
+    GetDataAsync: (..._) => any;
+    GetAsync: (dbGetterFunc, statsLogger) => Promise<any>;
+    ShowSignInPopup: () => void;
+    GetUserID: () => string;
+    GetUser: (id: string) => any;
+    GetUserPermissionGroups: (userID: string) => PermissionGroupSet;
+    ApplyDBUpdates: (rootPath: string, dbUpdates) => void;
+    MarkdownRenderer: any;
 }
+export declare const manager: Manager;

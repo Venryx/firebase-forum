@@ -222,7 +222,7 @@ Object.keys(_Forum).forEach(function (key) {
 
 __webpack_require__(10);
 
-__webpack_require__(128);
+__webpack_require__(127);
 
 /***/ }),
 /* 2 */
@@ -232,23 +232,44 @@ __webpack_require__(128);
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.Manager = exports.PermissionGroupSet = undefined;
+exports.manager = exports.Manager = exports.PermissionGroupSet = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _Logging = __webpack_require__(3);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var PermissionGroupSet = exports.PermissionGroupSet = function PermissionGroupSet() {
-  _classCallCheck(this, PermissionGroupSet);
+    _classCallCheck(this, PermissionGroupSet);
 };
 
-var Manager = exports.Manager = function Manager() {
-  _classCallCheck(this, Manager);
-};
+var Manager = exports.Manager = function () {
+    function Manager() {
+        var _this = this;
 
-Manager.logTypes = new _Logging.LogTypes();
+        _classCallCheck(this, Manager);
+
+        this.onPopulated = new Promise(function (resolve, reject) {
+            return _this.onPopulated_resolve = resolve;
+        });
+        this.logTypes = new _Logging.LogTypes();
+    }
+
+    _createClass(Manager, [{
+        key: "Populate",
+        value: function Populate(data) {
+            this.Extend(data);
+            this.onPopulated_resolve();
+        }
+    }]);
+
+    return Manager;
+}();
+
+var manager = exports.manager = new Manager();
 
 /***/ }),
 /* 3 */
@@ -275,7 +296,7 @@ var LogTypes = exports.LogTypes = function LogTypes() {
 };
 
 function ShouldLog(shouldLogFunc) {
-    return shouldLogFunc(_Manager.Manager.logTypes || {});
+    return shouldLogFunc(_Manager.manager.logTypes || {});
 }
 function MaybeLog(shouldLogFunc, logMessageGetter) {
     if (!ShouldLog(shouldLogFunc)) return;
@@ -364,9 +385,9 @@ function State() {
               Assert(pathSegments.All(segment=>typeof segment == "number" || !segment.Contains("/")),
                   `Each string path-segment must be a plain prop-name. (ie. contain no "/" separators) @segments(${pathSegments})`);
           }*/
-    /*let selectedData = DeepGet(store.getState(), Manager.storePath_mainData + "/" + pathSegments.join("/"));
+    /*let selectedData = DeepGet(store.getState(), manager.storePath_mainData + "/" + pathSegments.join("/"));
     return selectedData;*/
-    return _Manager.Manager.State.apply(_Manager.Manager, _toConsumableArray(_Manager.Manager.storePath_mainData.split("/").concat(pathSegments)));
+    return _Manager.manager.State.apply(_Manager.manager, _toConsumableArray(_Manager.manager.storePath_mainData.split("/").concat(pathSegments)));
 }
 /*function ConvertPathGetterFuncToPropChain(pathGetterFunc: Function) {
     let pathStr = pathGetterFunc.toString().match(/return a\.(.+?);/)[1] as string;
@@ -389,7 +410,7 @@ var AccessLevel = exports.AccessLevel = undefined;
     return GetData("userExtras", userID, "permissionGroups");
 }*/
 function GetUserAccessLevel(userID) {
-    var groups = _Manager.Manager.GetUserPermissionGroups(userID);
+    var groups = _Manager.manager.GetUserPermissionGroups(userID);
     if (groups == null) return AccessLevel.Basic;
     if (groups.admin) return AccessLevel.Admin;
     if (groups.mod) return AccessLevel.Mod;
@@ -398,23 +419,23 @@ function GetUserAccessLevel(userID) {
     Assert(false);
 }
 function IsUserBasic(userID) {
-    return (_Manager.Manager.GetUserPermissionGroups(userID) || {}).basic;
+    return (_Manager.manager.GetUserPermissionGroups(userID) || {}).basic;
 }
 function IsUserVerified(userID) {
-    return (_Manager.Manager.GetUserPermissionGroups(userID) || {}).verified;
+    return (_Manager.manager.GetUserPermissionGroups(userID) || {}).verified;
 }
 function IsUserMod(userID) {
-    return (_Manager.Manager.GetUserPermissionGroups(userID) || {}).mod;
+    return (_Manager.manager.GetUserPermissionGroups(userID) || {}).mod;
 }
 function IsUserAdmin(userID) {
-    return (_Manager.Manager.GetUserPermissionGroups(userID) || {}).admin;
+    return (_Manager.manager.GetUserPermissionGroups(userID) || {}).admin;
 }
 function IsUserBasicOrAnon(userID) {
-    var permissionGroups = _Manager.Manager.GetUserPermissionGroups(userID);
+    var permissionGroups = _Manager.manager.GetUserPermissionGroups(userID);
     return permissionGroups == null || permissionGroups.basic;
 }
 function IsUserCreatorOrMod(userID, entity) {
-    var permissionGroups = _Manager.Manager.GetUserPermissionGroups(userID);
+    var permissionGroups = _Manager.manager.GetUserPermissionGroups(userID);
     if (permissionGroups == null) return false;
     return entity.creator == userID && permissionGroups.basic || permissionGroups.mod;
 }
@@ -686,13 +707,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.GetDataAsync_Options = exports.GetData_Options = undefined;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 exports.DBPath = DBPath;
 exports.DBPathSegments = DBPathSegments;
 exports.SlicePath = SlicePath;
-exports.ProcessDBData = ProcessDBData;
 exports.RemoveHelpers = RemoveHelpers;
 exports.GetUpdates = GetUpdates;
 exports.GetData = GetData;
@@ -703,7 +720,7 @@ var _jsVextensions = __webpack_require__(10);
 
 var _StringSplitCache = __webpack_require__(11);
 
-var _index = __webpack_require__(1);
+var _ = __webpack_require__(1);
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -733,8 +750,6 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-
-//export {DBPath};
 function DBPath() {
     var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
     var inVersionRoot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
@@ -743,7 +758,9 @@ function DBPath() {
     (0, _jsVextensions.Assert)(IsString(path), "Path must be a string.");
     /*let versionPrefix = path.match(/^v[0-9]+/);
     if (versionPrefix == null) // if no version prefix already, add one (referencing the current version)*/
-    if (inVersionRoot) path = _index.Manager.storePath_dbData + "/" + path;
+    if (inVersionRoot) {
+        path = "" + _.manager.storePath_dbData + (path ? "/" + path : "");
+    }
     return path;
 }
 function DBPathSegments(pathSegments) {
@@ -751,7 +768,7 @@ function DBPathSegments(pathSegments) {
 
     var result = pathSegments;
     if (inVersionRoot) {
-        result = _index.Manager.storePath_dbData.split("/").concat(result);
+        result = _.manager.storePath_dbData.split("/").concat(result);
     }
     return result;
 }
@@ -766,7 +783,9 @@ function SlicePath(path, removeFromEndCount) {
     parts.splice.apply(parts, [parts.length - removeFromEndCount, removeFromEndCount].concat(itemsToAdd));
     return parts.join("/");
 }
-function ProcessDBData(data, standardizeForm, addHelpers, rootKey) {
+var helperProps = ["_key", "_id"];
+/** Note: this mutates the original object. */
+function RemoveHelpers(data) {
     var treeNodes = (0, _jsVextensions.GetTreeNodesInObjTree)(data, true);
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
@@ -776,50 +795,7 @@ function ProcessDBData(data, standardizeForm, addHelpers, rootKey) {
         for (var _iterator = treeNodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var treeNode = _step.value;
 
-            // turn the should-not-have-been-array arrays (the ones without a "0" property) into objects
-            if (standardizeForm && treeNode.Value instanceof Array && treeNode.Value[0] === undefined) {
-                // if changing root, we have to actually modify the prototype of the passed-in "data" object
-                /*if (treeNode.Value == data) {
-                    Object.setPrototypeOf(data, Object.getPrototypeOf({}));
-                    for (var key of Object.keys(data)) {
-                        if (data[key] === undefined)
-                            delete data[key];
-                    }
-                    continue;
-                }*/
-                var valueAsObject = {}.Extend(treeNode.Value);
-                for (var key in valueAsObject) {
-                    // if fake array-item added by Firebase/js (just so the array would have no holes), remove it
-                    //if (valueAsObject[key] == null)
-                    if (valueAsObject[key] === undefined) delete valueAsObject[key];
-                }
-                if (treeNode.Value == data) treeNode.obj[treeNode.prop] = valueAsObject; // if changing root, we need to modify wrapper.data
-                else (0, _jsVextensions.DeepSet)(data, treeNode.PathStr, valueAsObject); // else, we need to use deep-set, because ancestors may have already changed during this transform/processing
-            }
-            // turn the should-have-been-array objects (the ones with a "0" property) into arrays
-            if (standardizeForm && _typeof(treeNode.Value) == "object" && !(treeNode.Value instanceof Array) && treeNode.Value[0] !== undefined) {
-                // if changing root, we have to actually modify the prototype of the passed-in "data" object
-                /*if (treeNode.Value == data) {
-                    Object.setPrototypeOf(data, Object.getPrototypeOf([]));
-                    data.length = data.VKeys(true).filter(a=>IsNumberString(a));
-                    continue;
-                }*/
-                var valueAsArray = [].Extend(treeNode.Value);
-                if (treeNode.Value == data) treeNode.obj[treeNode.prop] = valueAsArray; // if changing root, we need to modify wrapper.data
-                else (0, _jsVextensions.DeepSet)(data, treeNode.PathStr, valueAsArray); // else, we need to use deep-set, because ancestors may have already changed during this transform/processing
-            }
-            // add special _key or _id prop
-            if (addHelpers && _typeof(treeNode.Value) == "object") {
-                var _key2 = treeNode.prop == "_root" ? rootKey : treeNode.prop;
-                if (parseInt(_key2).toString() == _key2) {
-                    treeNode.Value._id = parseInt(_key2);
-                    //treeNode.Value._Set("_id", parseInt(key));
-                }
-                // actually, always set "_key" (in case it's a "_key" that also happens to look like an "_id"/integer)
-                //else {
-                treeNode.Value._key = _key2;
-                //treeNode.Value._Set("_key", key);
-            }
+            if (helperProps.Contains(treeNode.prop)) delete treeNode.obj[treeNode.prop];
         }
     } catch (err) {
         _didIteratorError = true;
@@ -836,21 +812,26 @@ function ProcessDBData(data, standardizeForm, addHelpers, rootKey) {
         }
     }
 
-    return treeNodes[0].Value; // get possibly-modified wrapper.data
+    return data;
 }
-var helperProps = ["_key", "_id"];
-/** Note: this mutates the original object. */
-function RemoveHelpers(data) {
-    var treeNodes = (0, _jsVextensions.GetTreeNodesInObjTree)(data, true);
+function GetUpdates(oldData, newData) {
+    var useNullInsteadOfUndefined = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+    var result = {};
     var _iteratorNormalCompletion2 = true;
     var _didIteratorError2 = false;
     var _iteratorError2 = undefined;
 
     try {
-        for (var _iterator2 = treeNodes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var treeNode = _step2.value;
+        for (var _iterator2 = oldData.VKeys(true).concat(newData.VKeys(true))[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var key = _step2.value;
 
-            if (helperProps.Contains(treeNode.prop)) delete treeNode.obj[treeNode.prop];
+            if (newData[key] !== oldData[key]) {
+                result[key] = newData[key];
+                if (newData[key] === undefined && useNullInsteadOfUndefined) {
+                    result[key] = null;
+                }
+            }
         }
     } catch (err) {
         _didIteratorError2 = true;
@@ -867,52 +848,8 @@ function RemoveHelpers(data) {
         }
     }
 
-    return data;
-}
-function GetUpdates(oldData, newData) {
-    var useNullInsteadOfUndefined = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-
-    var result = {};
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
-
-    try {
-        for (var _iterator3 = oldData.VKeys(true).concat(newData.VKeys(true))[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-            var key = _step3.value;
-
-            if (newData[key] !== oldData[key]) {
-                result[key] = newData[key];
-                if (newData[key] === undefined && useNullInsteadOfUndefined) {
-                    result[key] = null;
-                }
-            }
-        }
-    } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                _iterator3.return();
-            }
-        } finally {
-            if (_didIteratorError3) {
-                throw _iteratorError3;
-            }
-        }
-    }
-
     return RemoveHelpers(result);
 }
-
-var DBPathInfo = function DBPathInfo() {
-    _classCallCheck(this, DBPathInfo);
-
-    this.lastTimestamp = -1;
-};
-
-var pathInfos = {};
 
 var GetData_Options = exports.GetData_Options = function GetData_Options() {
     _classCallCheck(this, GetData_Options);
@@ -925,8 +862,8 @@ function GetData() {
     var pathSegments = void 0,
         options = void 0;
 
-    for (var _len2 = arguments.length, args = Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
-        args[_key3] = arguments[_key3];
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
     }
 
     if (typeof args[0] == "string") pathSegments = args;else {
@@ -934,41 +871,7 @@ function GetData() {
         options = args[0];
         pathSegments = args.slice(1);
     }options = E(new GetData_Options(), options);
-    /*if (__DEV__) {
-        Assert(pathSegments.All(segment=>typeof segment == "number" || !segment.Contains("/")),
-            `Each string path-segment must be a plain prop-name. (ie. contain no "/" separators) @segments(${pathSegments})`);
-    }
-      pathSegments = DBPathSegments(pathSegments, options.inVersionRoot);
-      /*Assert(!path.endsWith("/"), "Path cannot end with a slash. (This may mean a path parameter is missing)");
-    Assert(!path.Contains("//"), "Path cannot contain a double-slash. (This may mean a path parameter is missing)");*#/
-      let path = pathSegments.join("/");
-    /*if (options.queries && options.queries.VKeys().length) {
-        let queriesStr = "";
-        for (let {name, value, index} of options.queries.Props()) {
-            queriesStr += (index == 0 ? "#" : "&") + name + "=" + value;
-        }
-        pathSegments[pathSegments.length - 1] = pathSegments.Last() + queriesStr;
-        path += queriesStr.replace(/[#=]/g, "_");
-    }*#/
-      if (options.makeRequest) {
-        let queriesStr = "";
-        if (options.queries && options.queries.VKeys().length) {
-            for (let {name, value, index} of options.queries.Props()) {
-                queriesStr += (index == 0 ? "#" : "&") + name + "=" + value;
-            }
-        }
-        RequestPath(path + queriesStr);
-    }
-      //let result = State("firebase", "data", ...SplitStringByForwardSlash_Cached(path)) as any;
-    let result = State("firebase", "data", ...pathSegments) as any;
-    //let result = State("firebase", "data", ...pathSegments) as any;
-    if (result == null && options.useUndefinedForInProgress) {
-        let requestCompleted = State().firebase.requested[path];
-        if (!requestCompleted) return undefined; // undefined means, current-data for path is null/non-existent, but we haven't completed the current request yet
-        else return null; // null means, we've completed the request, and there is no data at that path
-    }
-    return result;*/
-    return _index.Manager.GetData.apply(_index.Manager, [options].concat(_toConsumableArray(_index.Manager.storePath_dbData.split("/").concat(pathSegments))));
+    return _.manager.GetData.apply(_.manager, [options].concat(_toConsumableArray(_.manager.storePath_dbData.split("/").concat(pathSegments))));
 }
 
 var GetDataAsync_Options = exports.GetDataAsync_Options = function GetDataAsync_Options() {
@@ -978,8 +881,8 @@ var GetDataAsync_Options = exports.GetDataAsync_Options = function GetDataAsync_
 };
 
 function GetDataAsync() {
-    for (var _len3 = arguments.length, args = Array(_len3), _key4 = 0; _key4 < _len3; _key4++) {
-        args[_key4] = arguments[_key4];
+    for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
     }
 
     return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -995,22 +898,7 @@ function GetDataAsync() {
                             options = args[0];
                             pathSegments = args.slice(1);
                         }options = E(new GetDataAsync_Options(), options);
-                        /*let firebase = store.firebase.helpers;
-                        return await new Promise((resolve, reject) => {
-                            //firebase.child(DBPath(path, inVersionRoot)).once("value",
-                            let path = pathSegments.join("/");
-                            firebase.DBRef(path, options.inVersionRoot).once("value",
-                                (snapshot: FirebaseDataSnapshot)=> {
-                                    let result = snapshot.val();
-                                    if (result)
-                                        result = ProcessDBData(result, true, options.addHelpers, pathSegments.Last()+"");
-                                    resolve(result);
-                                },
-                                (ex: Error)=> {
-                                    reject(ex);
-                                });
-                        });*/
-                        return _context.abrupt("return", _index.Manager.GetDataAsync.apply(_index.Manager, [options].concat(_toConsumableArray(_index.Manager.storePath_dbData.split("/").concat(pathSegments)))));
+                        return _context.abrupt("return", _.manager.GetDataAsync.apply(_.manager, [options].concat(_toConsumableArray(_.manager.storePath_dbData.split("/").concat(pathSegments)))));
 
                     case 4:
                     case "end":
@@ -1020,78 +908,6 @@ function GetDataAsync() {
         }, _callee, this);
     }));
 }
-/**
- * Usage: await GetAsync(()=>GetNode(123))
- * It has the same processing as in Connect(), except callable using async/await.
- * It basically makes a pretend component -- connecting to firebase, and resolving the promise once:
- * It re-calls the db-getter func (after the last generation's requested-path-data was all received), and finds that no new paths are requested.
- */
-/*G({GetAsync});
-export async function GetAsync<T>(dbGetterFunc: ()=>T, statsLogger?: ({requestedPaths: string})=>void): Promise<T> {
-    Assert(!window["inConnectFunc"], "Cannot run GetAsync() from within a Connect() function.");
-    //Assert(!g.inGetAsyncFunc, "Cannot run GetAsync() from within a GetAsync() function.");
-    let firebase = store.firebase;
-
-    let result;
-
-    let requestedPathsSoFar = {};
-    let requestedPathsSoFar_last;
-    do {
-        requestedPathsSoFar_last = Clone(requestedPathsSoFar);
-
-        ClearRequestedPaths();
-        result = dbGetterFunc();
-        let newRequestedPaths = GetRequestedPaths().Except(requestedPathsSoFar.VKeys());
-
-        unWatchEvents(firebase, store.dispatch, getEventsFromInput(newRequestedPaths)); // do this just to trigger re-get
-        // start watching paths (causes paths to be requested)
-        watchEvents(firebase, store.dispatch, getEventsFromInput(newRequestedPaths));
-
-        for (let path of newRequestedPaths) {
-            requestedPathsSoFar[path] = true;
-            // wait till data is received
-            await WaitTillPathDataIsReceived(path);
-        }
-
-        // stop watching paths (since we already got their data)
-        // todo: find correct way of unwatching events; the way below seems to sometimes unwatch while still needed watched
-        // for now, we just never unwatch
-        //unWatchEvents(firebase, store.dispatch, getEventsFromInput(newRequestedPaths));
-    } while (ShallowChanged(requestedPathsSoFar, requestedPathsSoFar_last))
-
-    /*let paths_final = requestedPathsSoFar.VKeys();
-    let paths_data = await Promise.all(paths_final.map(path=>GetDataAsync(path)));
-    let listener = ()=> {
-        listener(); // unsubscribe
-    };
-    store.subscribe(listener);*#/
-
-    if (statsLogger) {
-        statsLogger({requestedPaths: requestedPathsSoFar});
-    }
-
-    return result;
-}
-export function WaitTillPathDataIsReceived(path: string): Promise<any> {
-    return new Promise((resolve, reject)=> {
-        let pathDataReceived = (State as any)().firebase.requested[path];
-        // if data already received, return right away
-        if (pathDataReceived) {
-            resolve();
-        }
-
-        // else, add listener, and wait till store received the data (then return it)
-        let listener = ()=> {
-            //pathDataReceived = State(a=>a.firebase.requested[path]);
-            pathDataReceived = (State as any)().firebase.requested[path];
-            if (pathDataReceived) {
-                unsubscribe();
-                resolve();
-            }
-        };
-        let unsubscribe = store.subscribe(listener);
-    });
-}*/
 function GetAsync(dbGetterFunc, statsLogger) {
     return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -1099,7 +915,7 @@ function GetAsync(dbGetterFunc, statsLogger) {
                 switch (_context2.prev = _context2.next) {
                     case 0:
                         _context2.next = 2;
-                        return _index.Manager.GetAsync(dbGetterFunc, statsLogger);
+                        return _.manager.GetAsync(dbGetterFunc, statsLogger);
 
                     case 2:
                         return _context2.abrupt("return", _context2.sent);
@@ -1112,80 +928,6 @@ function GetAsync(dbGetterFunc, statsLogger) {
         }, _callee2, this);
     }));
 }
-/*;(function() {
-    var Firebase = require("firebase");
-    var FirebaseRef = Firebase.database.Reference;
-
-    Firebase.ABORT_TRANSACTION_NOW = {};
-
-    var originalTransaction = FirebaseRef.prototype.transaction;
-    FirebaseRef.prototype.transaction = function transaction(updateFunction, onComplete, applyLocally) {
-        var aborted, tries = 0, ref = this, updateError;
-
-        var promise = new Promise(function(resolve, reject) {
-            var wrappedUpdate = function(data) {
-                // Clone data in case updateFunction modifies it before aborting.
-                var originalData = JSON.parse(JSON.stringify(data));
-                aborted = false;
-                try {
-                    if (++tries > 100) throw new Error('maxretry');
-                    var result = updateFunction.call(this, data);
-                    if (result === undefined) {
-                        aborted = true;
-                        result = originalData;
-                    } else if (result === Firebase.ABORT_TRANSACTION_NOW) {
-                        aborted = true;
-                        result = undefined;
-                    }
-                    return result;
-                } catch (e) {
-                    // Firebase propagates exceptions thrown by the update function to the top level.	So
-                    // catch them here instead, reject the promise, and abort the transaction by returning
-                    // undefined.
-                    updateError = e;
-                }
-            };
-
-            function txn() {
-                try {
-                    originalTransaction.call(ref, wrappedUpdate, function(error, committed, snapshot) {
-                        error = error || updateError;
-                        var result;
-                        if (error && (error.message === 'set' || error.message === 'disconnect')) {
-                            txn();
-                        } else if (error) {
-                            result = onComplete ? onComplete(error, false, snapshot) : undefined;
-                            reject(error);
-                        } else {
-                            result = onComplete ? onComplete(error, committed && !aborted, snapshot) : undefined;
-                            resolve({committed: committed && !aborted, snapshot: snapshot});
-                        }
-                        return result;
-                    }, applyLocally);
-                } catch (e) {
-                    if (onComplete) onComplete(e, false);
-                    reject(e);
-                }
-            }
-
-            txn();
-        });
-
-        return promise;
-    };
-})();*/
-//export function FirebaseConnect<T>(paths: string[]); // just disallow this atm, since you might as well just use a connect/getter func
-/*export function FirebaseConnect<T>(pathsOrGetterFunc?: string[] | ((props: T)=>string[]));
-export function FirebaseConnect<T>(pathsOrGetterFunc?) {
-    return firebaseConnect(props=> {
-        let paths =
-            pathsOrGetterFunc instanceof Array ? pathsOrGetterFunc :
-            pathsOrGetterFunc instanceof Function ? pathsOrGetterFunc(props) :
-            [];
-        paths = paths.map(a=>DBPath(a)); // add version prefix to paths
-        return paths;
-    });
-}*/
 
 /***/ }),
 /* 10 */
@@ -12321,11 +12063,9 @@ var Thread = exports.Thread = function Thread(initialData) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.ForumUI = exports.columnWidths = undefined;
+exports.SubforumEntryUI_NC = exports.SubforumEntryUI = exports.SectionUI_NC = exports.SectionUI = exports.ForumUI_NC = exports.ForumUI = exports.columnWidths = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _react = __webpack_require__(97);
 
@@ -12339,13 +12079,11 @@ var _reactVscrollview = __webpack_require__(100);
 
 var _SubforumUI = __webpack_require__(101);
 
-var _AddSectionDialog = __webpack_require__(114);
+var _AddSectionDialog = __webpack_require__(113);
 
-var _AddSubforumDialog = __webpack_require__(117);
+var _AddSubforumDialog = __webpack_require__(116);
 
-var _ThreadUI = __webpack_require__(119);
-
-var _FirebaseConnect = __webpack_require__(110);
+var _ThreadUI = __webpack_require__(118);
 
 var _forum = __webpack_require__(8);
 
@@ -12365,25 +12103,34 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if ((typeof Reflect === "undefined" ? "undefined" : _typeof(Reflect)) === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
-        if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    }return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
 var columnWidths = exports.columnWidths = [.55, .15, .3];
-var ForumUI = function (_BaseComponent) {
-    _inherits(ForumUI, _BaseComponent);
+var ForumUI_connector = function ForumUI_connector(state, _ref) {
+    _objectDestructuringEmpty(_ref);
 
-    function ForumUI() {
-        _classCallCheck(this, ForumUI);
+    return {
+        _: _Manager.manager.GetUserPermissionGroups(_Manager.manager.GetUserID()),
+        sections: (0, _forum.GetSections)(),
+        selectedSubforum: (0, _forum2.GetSelectedSubforum)(),
+        selectedThread: (0, _forum2.GetSelectedThread)()
+    };
+};
+var ForumUI = exports.ForumUI = void 0;
+_Manager.manager.onPopulated.then(function () {
+    return exports.ForumUI = ForumUI = _Manager.manager.Connect(ForumUI_connector)(ForumUI_NC);
+});
 
-        return _possibleConstructorReturn(this, (ForumUI.__proto__ || Object.getPrototypeOf(ForumUI)).apply(this, arguments));
+var ForumUI_NC = exports.ForumUI_NC = function (_BaseComponentWithCon) {
+    _inherits(ForumUI_NC, _BaseComponentWithCon);
+
+    function ForumUI_NC() {
+        _classCallCheck(this, ForumUI_NC);
+
+        return _possibleConstructorReturn(this, (ForumUI_NC.__proto__ || Object.getPrototypeOf(ForumUI_NC)).apply(this, arguments));
     }
 
-    _createClass(ForumUI, [{
+    _createClass(ForumUI_NC, [{
         key: "render",
         value: function render() {
             var _props = this.props,
@@ -12397,10 +12144,10 @@ var ForumUI = function (_BaseComponent) {
             if (selectedSubforum) {
                 return _react2.default.createElement(_SubforumUI.SubforumUI, { subforum: selectedSubforum });
             }
-            var userID = _Manager.Manager.GetUserID();
+            var userID = _Manager.manager.GetUserID();
             var isAdmin = (0, _General.IsUserAdmin)(userID);
             return _react2.default.createElement(_reactVcomponents.Column, { style: ES({ width: 960, margin: "20px auto 20px auto", flex: 1, filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)" }) }, isAdmin && _react2.default.createElement(_reactVcomponents.Column, { className: "clickThrough", style: { height: 40, background: "rgba(0,0,0,.7)", borderRadius: 10 } }, _react2.default.createElement(_reactVcomponents.Row, { style: { height: 40, padding: 10 } }, _react2.default.createElement(_reactVcomponents.Button, { text: "Add section", ml: "auto", onClick: function onClick() {
-                    if (userID == null) return _Manager.Manager.ShowSignInPopup();
+                    if (userID == null) return _Manager.manager.ShowSignInPopup();
                     (0, _AddSectionDialog.ShowAddSectionDialog)(userID);
                 } }))), _react2.default.createElement(_reactVscrollview.ScrollView, { style: ES({ flex: 1 }), contentStyle: ES({ flex: 1 }) }, sections.length == 0 && _react2.default.createElement("div", { style: { textAlign: "center", fontSize: 18 } }, "Loading..."), sections.map(function (section, index) {
                 return _react2.default.createElement(SectionUI, { key: index, section: section });
@@ -12408,38 +12155,40 @@ var ForumUI = function (_BaseComponent) {
         }
     }]);
 
-    return ForumUI;
-}(_reactVextensions.BaseComponent);
-exports.ForumUI = ForumUI = __decorate([(0, _FirebaseConnect.Connect)(function (state) {
+    return ForumUI_NC;
+}((0, _reactVextensions.BaseComponentWithConnector)(ForumUI_connector, {}));
+
+var SectionUI_connector = function SectionUI_connector(state, _ref2) {
+    var section = _ref2.section;
     return {
-        _: _Manager.Manager.GetUserPermissionGroups(_Manager.Manager.GetUserID()),
-        sections: (0, _forum.GetSections)(),
-        selectedSubforum: (0, _forum2.GetSelectedSubforum)(),
-        selectedThread: (0, _forum2.GetSelectedThread)()
+        subforums: (0, _forum.GetSectionSubforums)(section)
     };
-})], ForumUI);
-exports.ForumUI = ForumUI;
+};
+var SectionUI = exports.SectionUI = void 0;
+_Manager.manager.onPopulated.then(function () {
+    return exports.SectionUI = SectionUI = _Manager.manager.Connect(SectionUI_connector)(SectionUI_NC);
+});
 
-var SectionUI = function (_BaseComponent2) {
-    _inherits(SectionUI, _BaseComponent2);
+var SectionUI_NC = exports.SectionUI_NC = function (_BaseComponentWithCon2) {
+    _inherits(SectionUI_NC, _BaseComponentWithCon2);
 
-    function SectionUI() {
-        _classCallCheck(this, SectionUI);
+    function SectionUI_NC() {
+        _classCallCheck(this, SectionUI_NC);
 
-        return _possibleConstructorReturn(this, (SectionUI.__proto__ || Object.getPrototypeOf(SectionUI)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (SectionUI_NC.__proto__ || Object.getPrototypeOf(SectionUI_NC)).apply(this, arguments));
     }
 
-    _createClass(SectionUI, [{
+    _createClass(SectionUI_NC, [{
         key: "render",
         value: function render() {
             var _props2 = this.props,
                 section = _props2.section,
                 subforums = _props2.subforums;
 
-            var userID = _Manager.Manager.GetUserID();
+            var userID = _Manager.manager.GetUserID();
             var isAdmin = (0, _General.IsUserAdmin)(userID);
             return _react2.default.createElement(_reactVcomponents.Column, { style: { width: 960, margin: "20px auto 20px auto" } }, _react2.default.createElement(_reactVcomponents.Column, { className: "clickThrough", style: { height: 70, background: "rgba(0,0,0,.7)", borderRadius: "10px 10px 0 0" } }, _react2.default.createElement(_reactVcomponents.Row, { style: { position: "relative", height: 40, padding: 10 } }, _react2.default.createElement("span", { style: { position: "absolute", left: "50%", transform: "translateX(-50%)", fontSize: 18 } }, section.name), isAdmin && _react2.default.createElement(_reactVcomponents.Button, { text: "Add subforum", ml: "auto", onClick: function onClick() {
-                    if (userID == null) return _Manager.Manager.ShowSignInPopup();
+                    if (userID == null) return _Manager.manager.ShowSignInPopup();
                     (0, _AddSubforumDialog.ShowAddSubforumDialog)(userID, section._id);
                 } })), _react2.default.createElement(_reactVcomponents.Row, { style: { height: 30, padding: 10 } }, _react2.default.createElement("span", { style: { flex: columnWidths[0], fontWeight: 500, fontSize: 15 } }, "Subforum"), _react2.default.createElement("span", { style: { flex: columnWidths[1], fontWeight: 500, fontSize: 15 } }, "Threads"), _react2.default.createElement("span", { style: { flex: columnWidths[2], fontWeight: 500, fontSize: 15 } }, "Last post"))), _react2.default.createElement(_reactVcomponents.Column, null, subforums.length == 0 && _react2.default.createElement("div", { style: { textAlign: "center", fontSize: 18 } }, "Loading..."), subforums.map(function (subforum, index) {
                 return _react2.default.createElement(SubforumEntryUI, { key: subforum._id, index: index, last: index == subforums.length - 1, subforum: subforum });
@@ -12447,24 +12196,35 @@ var SectionUI = function (_BaseComponent2) {
         }
     }]);
 
-    return SectionUI;
-}(_reactVextensions.BaseComponent);
-SectionUI = __decorate([(0, _FirebaseConnect.Connect)(function (state, _ref) {
-    var section = _ref.section;
+    return SectionUI_NC;
+}((0, _reactVextensions.BaseComponentWithConnector)(SectionUI_connector, {}));
+
+var SubforumEntryUI_connector = function SubforumEntryUI_connector(state, _ref3) {
+    var subforum = _ref3.subforum;
+
+    var lastPost = (0, _index.GetSubforumLastPost)(subforum._id);
     return {
-        subforums: (0, _forum.GetSectionSubforums)(section)
+        threads: (0, _forum.GetSubforumThreads)(subforum._id),
+        lastPost: lastPost,
+        lastPostThread: lastPost && (0, _forum.GetThread)(lastPost.thread),
+        lastPostCreator: lastPost && _Manager.manager.GetUser(lastPost.creator)
     };
-})], SectionUI);
-var SubforumEntryUI = function (_BaseComponent3) {
-    _inherits(SubforumEntryUI, _BaseComponent3);
+};
+var SubforumEntryUI = exports.SubforumEntryUI = void 0;
+_Manager.manager.onPopulated.then(function () {
+    return exports.SubforumEntryUI = SubforumEntryUI = _Manager.manager.Connect(SubforumEntryUI_connector)(SubforumEntryUI_NC);
+});
 
-    function SubforumEntryUI() {
-        _classCallCheck(this, SubforumEntryUI);
+var SubforumEntryUI_NC = exports.SubforumEntryUI_NC = function (_BaseComponentWithCon3) {
+    _inherits(SubforumEntryUI_NC, _BaseComponentWithCon3);
 
-        return _possibleConstructorReturn(this, (SubforumEntryUI.__proto__ || Object.getPrototypeOf(SubforumEntryUI)).apply(this, arguments));
+    function SubforumEntryUI_NC() {
+        _classCallCheck(this, SubforumEntryUI_NC);
+
+        return _possibleConstructorReturn(this, (SubforumEntryUI_NC.__proto__ || Object.getPrototypeOf(SubforumEntryUI_NC)).apply(this, arguments));
     }
 
-    _createClass(SubforumEntryUI, [{
+    _createClass(SubforumEntryUI_NC, [{
         key: "render",
         value: function render() {
             var _props3 = this.props,
@@ -12477,27 +12237,16 @@ var SubforumEntryUI = function (_BaseComponent3) {
                 lastPostCreator = _props3.lastPostCreator;
             //let toURL = new VURL(null, [subforum._id+""]);
 
-            return _react2.default.createElement(_reactVcomponents.Column, { p: "7px 10px", style: E({ background: index % 2 == 0 ? "rgba(30,30,30,.7)" : "rgba(0,0,0,.7)" }, last && { borderRadius: "0 0 10px 10px" }) }, _react2.default.createElement(_reactVcomponents.Row, null, _react2.default.createElement(_Manager.Manager.Link, { text: subforum.name, actions: function actions(d) {
+            return _react2.default.createElement(_reactVcomponents.Column, { p: "7px 10px", style: E({ background: index % 2 == 0 ? "rgba(30,30,30,.7)" : "rgba(0,0,0,.7)" }, last && { borderRadius: "0 0 10px 10px" }) }, _react2.default.createElement(_reactVcomponents.Row, null, _react2.default.createElement(_Manager.manager.Link, { text: subforum.name, actions: function actions(d) {
                     return d(new _forum2.ACTSubforumSelect({ id: subforum._id }));
-                }, style: { fontSize: 18, flex: columnWidths[0] } }), _react2.default.createElement("span", { style: { flex: columnWidths[1] } }, threads.length), _react2.default.createElement(_Manager.Manager.Link, { style: { flex: columnWidths[2], fontSize: 13 }, actions: function actions(d) {
+                }, style: { fontSize: 18, flex: columnWidths[0] } }), _react2.default.createElement("span", { style: { flex: columnWidths[1] } }, threads.length), _react2.default.createElement(_Manager.manager.Link, { style: { flex: columnWidths[2], fontSize: 13 }, actions: function actions(d) {
                     return lastPost && d(new _forum2.ACTThreadSelect({ id: lastPost.thread }));
-                } }, lastPostThread && lastPostCreator && _react2.default.createElement("div", null, lastPostThread.title, ", by ", lastPostCreator.displayName, _react2.default.createElement("br", null), !_Manager.Manager.FormatTime(lastPost.createdAt, "[calendar]").includes("/") ? _Manager.Manager.FormatTime(lastPost.createdAt, "[calendar]") : _Manager.Manager.FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")))));
+                } }, lastPostThread && lastPostCreator && _react2.default.createElement("div", null, lastPostThread.title, ", by ", lastPostCreator.displayName, _react2.default.createElement("br", null), !_Manager.manager.FormatTime(lastPost.createdAt, "[calendar]").includes("/") ? _Manager.manager.FormatTime(lastPost.createdAt, "[calendar]") : _Manager.manager.FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")))));
         }
     }]);
 
-    return SubforumEntryUI;
-}(_reactVextensions.BaseComponent);
-SubforumEntryUI = __decorate([(0, _FirebaseConnect.Connect)(function (state, _ref2) {
-    var subforum = _ref2.subforum;
-
-    var lastPost = (0, _index.GetSubforumLastPost)(subforum._id);
-    return {
-        threads: (0, _forum.GetSubforumThreads)(subforum._id),
-        lastPost: lastPost,
-        lastPostThread: lastPost && (0, _forum.GetThread)(lastPost.thread),
-        lastPostCreator: lastPost && _Manager.Manager.GetUser(lastPost.creator)
-    };
-})], SubforumEntryUI);
+    return SubforumEntryUI_NC;
+}((0, _reactVextensions.BaseComponentWithConnector)(SubforumEntryUI_connector, {}));
 
 /***/ }),
 /* 97 */
@@ -12533,11 +12282,9 @@ module.exports = require("react-vscrollview");
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.SubforumUI = exports.columnWidths = undefined;
+exports.SubforumUI_NC = exports.SubforumUI = exports.columnWidths = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _react = __webpack_require__(97);
 
@@ -12555,23 +12302,21 @@ var _DeleteSubforum = __webpack_require__(103);
 
 var _AddThreadDialog = __webpack_require__(105);
 
-var _FirebaseConnect = __webpack_require__(110);
-
 var _forum = __webpack_require__(8);
 
-var _ThreadEntryUI = __webpack_require__(111);
+var _ThreadEntryUI = __webpack_require__(110);
 
 var _forum2 = __webpack_require__(5);
 
 var _Manager = __webpack_require__(2);
 
-var _UpdateSubforumDetails = __webpack_require__(112);
+var _UpdateSubforumDetails = __webpack_require__(111);
 
 var _DatabaseHelpers = __webpack_require__(9);
 
 var _reactVmessagebox = __webpack_require__(109);
 
-var _GlobalStyles = __webpack_require__(113);
+var _GlobalStyles = __webpack_require__(112);
 
 var _General = __webpack_require__(4);
 
@@ -12583,14 +12328,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if ((typeof Reflect === "undefined" ? "undefined" : _typeof(Reflect)) === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
-        if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    }return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) {
@@ -12616,16 +12353,29 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
     });
 };
 var columnWidths = exports.columnWidths = [.5, .2, .1, .2];
-var SubforumUI = function (_BaseComponent) {
-    _inherits(SubforumUI, _BaseComponent);
+var SubforumUI_connector = function SubforumUI_connector(state, _ref) {
+    var subforum = _ref.subforum;
 
-    function SubforumUI() {
-        _classCallCheck(this, SubforumUI);
+    return {
+        permissions: _Manager.manager.GetUserPermissionGroups(_Manager.manager.GetUserID()),
+        threads: (0, _forum.GetSubforumThreads)(subforum._id)
+    };
+};
+var SubforumUI = exports.SubforumUI = void 0;
+_Manager.manager.onPopulated.then(function () {
+    return exports.SubforumUI = SubforumUI = _Manager.manager.Connect(SubforumUI_connector)(SubforumUI_NC);
+});
 
-        return _possibleConstructorReturn(this, (SubforumUI.__proto__ || Object.getPrototypeOf(SubforumUI)).apply(this, arguments));
+var SubforumUI_NC = exports.SubforumUI_NC = function (_BaseComponentWithCon) {
+    _inherits(SubforumUI_NC, _BaseComponentWithCon);
+
+    function SubforumUI_NC() {
+        _classCallCheck(this, SubforumUI_NC);
+
+        return _possibleConstructorReturn(this, (SubforumUI_NC.__proto__ || Object.getPrototypeOf(SubforumUI_NC)).apply(this, arguments));
     }
 
-    _createClass(SubforumUI, [{
+    _createClass(SubforumUI_NC, [{
         key: "render",
         value: function render() {
             var _props = this.props,
@@ -12634,12 +12384,12 @@ var SubforumUI = function (_BaseComponent) {
                 threads = _props.threads,
                 permissions = _props.permissions;
 
-            var userID = _Manager.Manager.GetUserID();
+            var userID = _Manager.manager.GetUserID();
             if (subforum == null || threads == null) {
                 return _react2.default.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: 25 } }, "Loading threads...");
             }
             return _react2.default.createElement(_reactVcomponents.Column, { style: ES({ position: "relative", flex: 1 }) }, _react2.default.createElement(ActionBar_Left, { subforum: subforum, subNavBarWidth: subNavBarWidth }), _react2.default.createElement(ActionBar_Right, { subforum: subforum, subNavBarWidth: subNavBarWidth }), _react2.default.createElement(_reactVscrollview.ScrollView, { ref: "scrollView", scrollVBarStyle: { width: 10 }, style: ES({ flex: 1 }) }, _react2.default.createElement(_reactVcomponents.Column, { style: { width: 960, margin: "50px auto 20px auto", filter: "drop-shadow(rgb(0, 0, 0) 0px 0px 10px)" } }, _react2.default.createElement(_reactVcomponents.Column, { className: "clickThrough", style: { height: 80, background: "rgba(0,0,0,.7)", borderRadius: "10px 10px 0 0" } }, _react2.default.createElement(_reactVcomponents.Row, { style: { position: "relative", height: 40, padding: 10 } }, _react2.default.createElement("span", { style: { position: "absolute", left: "50%", transform: "translateX(-50%)", fontSize: 18 } }, subforum.name), _react2.default.createElement(_reactVcomponents.Button, { text: "Add thread", ml: "auto", onClick: function onClick() {
-                    if (userID == null) return _Manager.Manager.ShowSignInPopup();
+                    if (userID == null) return _Manager.manager.ShowSignInPopup();
                     (0, _AddThreadDialog.ShowAddThreadDialog)(userID, subforum._id);
                 } })), _react2.default.createElement(_reactVcomponents.Row, { style: { height: 40, padding: 10 } }, _react2.default.createElement("span", { style: { flex: columnWidths[0], fontWeight: 500, fontSize: 17 } }, "Title"), _react2.default.createElement("span", { style: { flex: columnWidths[1], fontWeight: 500, fontSize: 17 } }, "Creator"), _react2.default.createElement("span", { style: { flex: columnWidths[2], fontWeight: 500, fontSize: 17 } }, "Posts"), _react2.default.createElement("span", { style: { flex: columnWidths[3], fontWeight: 500, fontSize: 17 } }, "Last post"))), _react2.default.createElement(_reactVcomponents.Column, null, threads.length == 0 && _react2.default.createElement(_reactVcomponents.Row, { p: "7px 10px", style: { background: "rgba(30,30,30,.7)", borderRadius: "0 0 10px 10px" } }, "There are currently no threads in this subforum."), threads.map(function (thread, index) {
                 return _react2.default.createElement(_ThreadEntryUI.ThreadEntryUI, { key: index, index: index, last: index == threads.length - 1, thread: thread });
@@ -12647,21 +12397,13 @@ var SubforumUI = function (_BaseComponent) {
         }
     }]);
 
-    return SubforumUI;
-}(_reactVextensions.BaseComponent);
-SubforumUI.defaultProps = { subNavBarWidth: 0 };
-exports.SubforumUI = SubforumUI = __decorate([(0, _FirebaseConnect.Connect)(function (state, _ref) {
-    var subforum = _ref.subforum;
+    return SubforumUI_NC;
+}((0, _reactVextensions.BaseComponentWithConnector)(SubforumUI_connector, {}));
 
-    return {
-        permissions: _Manager.Manager.GetUserPermissionGroups(_Manager.Manager.GetUserID()),
-        threads: (0, _forum.GetSubforumThreads)(subforum._id)
-    };
-})], SubforumUI);
-exports.SubforumUI = SubforumUI;
+SubforumUI_NC.defaultProps = { subNavBarWidth: 0 };
 
-var ActionBar_Left = function (_BaseComponent2) {
-    _inherits(ActionBar_Left, _BaseComponent2);
+var ActionBar_Left = function (_BaseComponent) {
+    _inherits(ActionBar_Left, _BaseComponent);
 
     function ActionBar_Left() {
         _classCallCheck(this, ActionBar_Left);
@@ -12690,8 +12432,8 @@ var ActionBar_Left = function (_BaseComponent2) {
     return ActionBar_Left;
 }(_reactVextensions.BaseComponent);
 
-var DetailsDropdown = function (_BaseComponent3) {
-    _inherits(DetailsDropdown, _BaseComponent3);
+var DetailsDropdown = function (_BaseComponent2) {
+    _inherits(DetailsDropdown, _BaseComponent2);
 
     function DetailsDropdown() {
         _classCallCheck(this, DetailsDropdown);
@@ -12707,7 +12449,7 @@ var DetailsDropdown = function (_BaseComponent3) {
             var subforum = this.props.subforum;
             var dataError = this.state.dataError;
 
-            var isMod = (0, _General.IsUserMod)(_Manager.Manager.GetUserID());
+            var isMod = (0, _General.IsUserMod)(_Manager.manager.GetUserID());
             return _react2.default.createElement(_reactVcomponents.DropDown, null, _react2.default.createElement(_reactVcomponents.DropDownTrigger, null, _react2.default.createElement(_reactVcomponents.Button, { ml: 5, text: "Details" })), _react2.default.createElement(_reactVcomponents.DropDownContent, { style: { left: 0 } }, _react2.default.createElement(_reactVcomponents.Column, null, _react2.default.createElement(_SubforumDetailsUI.SubforumDetailsUI, { ref: function ref(c) {
                     return _this4.detailsUI = c;
                 }, baseData: subforum, forNew: false, enabled: isMod, onChange: function onChange(newData) {
@@ -12795,8 +12537,8 @@ var DetailsDropdown = function (_BaseComponent3) {
     return DetailsDropdown;
 }(_reactVextensions.BaseComponent);
 
-var ActionBar_Right = function (_BaseComponent4) {
-    _inherits(ActionBar_Right, _BaseComponent4);
+var ActionBar_Right = function (_BaseComponent3) {
+    _inherits(ActionBar_Right, _BaseComponent3);
 
     function ActionBar_Right() {
         _classCallCheck(this, ActionBar_Right);
@@ -12824,9 +12566,6 @@ var ActionBar_Right = function (_BaseComponent4) {
 
     return ActionBar_Right;
 }(_reactVextensions.BaseComponent);
-ActionBar_Right = __decorate([(0, _FirebaseConnect.Connect)(function (state, props) {
-    return {};
-})], ActionBar_Right);
 
 /***/ }),
 /* 102 */
@@ -13143,7 +12882,7 @@ var Command = exports.Command = function () {
     function Command(payload) {
         _classCallCheck(this, Command);
 
-        this.userInfo = { id: _Manager.Manager.GetUserID() }; // temp
+        this.userInfo = { id: _Manager.manager.GetUserID() }; // temp
         this.type = this.constructor.name;
         this.payload = payload;
         //this.Extend(payload);
@@ -13203,7 +12942,7 @@ var Command = exports.Command = function () {
                                 //await store.firebase.helpers.ref(DBPath("", true)).update(dbUpdates);
 
                                 _context2.next = 15;
-                                return _Manager.Manager.ApplyDBUpdates((0, _DatabaseHelpers.DBPath)(""), dbUpdates);
+                                return _Manager.manager.ApplyDBUpdates((0, _DatabaseHelpers.DBPath)(), dbUpdates);
 
                             case 15:
                                 (0, _Logging.MaybeLog)(function (a) {
@@ -13469,12 +13208,12 @@ function ShowAddThreadDialog(userID, subforumID) {
 
     var newThread = new _Thread.Thread({
         title: "",
-        creator: _Manager.Manager.GetUserID(),
+        creator: _Manager.manager.GetUserID(),
         subforum: subforumID
     });
     var newPost = new _Post.Post({
         text: firstPostPlaceholderText,
-        creator: _Manager.Manager.GetUserID()
+        creator: _Manager.manager.GetUserID()
     });
     var detailsUI = void 0;
     var error = null;
@@ -13920,27 +13659,9 @@ module.exports = require("react-vmessagebox");
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Connect = Connect;
-function Connect(funcOrFuncGetter) {
-    //return Manager.FirebaseConnect(funcOrFuncGetter);
-    return window["FirebaseConnect"](funcOrFuncGetter);
-}
-
-/***/ }),
-/* 111 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.ThreadEntryUI = undefined;
+exports.ThreadEntryUI_NC = exports.ThreadEntryUI = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _react = __webpack_require__(97);
 
@@ -13951,8 +13672,6 @@ var _reactVextensions = __webpack_require__(98);
 var _reactVcomponents = __webpack_require__(99);
 
 var _forum = __webpack_require__(8);
-
-var _FirebaseConnect = __webpack_require__(110);
 
 var _forum2 = __webpack_require__(5);
 
@@ -13970,26 +13689,32 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if ((typeof Reflect === "undefined" ? "undefined" : _typeof(Reflect)) === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
-        if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    }return c > 3 && r && Object.defineProperty(target, key, r), r;
+var ThreadEntryUI_connector = function ThreadEntryUI_connector(state, _ref) {
+    var thread = _ref.thread;
+
+    var lastPost = (0, _forum.GetThreadLastPost)(thread._id);
+    return {
+        creator: thread && _Manager.manager.GetUser(thread.creator),
+        posts: thread && (0, _forum.GetThreadPosts)(thread),
+        lastPost: lastPost,
+        lastPostCreator: lastPost && _Manager.manager.GetUser(lastPost.creator)
+    };
 };
+var ThreadEntryUI = exports.ThreadEntryUI = void 0;
+_Manager.manager.onPopulated.then(function () {
+    return exports.ThreadEntryUI = ThreadEntryUI = _Manager.manager.Connect(ThreadEntryUI_connector)(ThreadEntryUI_NC);
+});
 
-var Link = _Manager.Manager.Link;
-var ThreadEntryUI = function (_BaseComponent) {
-    _inherits(ThreadEntryUI, _BaseComponent);
+var ThreadEntryUI_NC = exports.ThreadEntryUI_NC = function (_BaseComponentWithCon) {
+    _inherits(ThreadEntryUI_NC, _BaseComponentWithCon);
 
-    function ThreadEntryUI() {
-        _classCallCheck(this, ThreadEntryUI);
+    function ThreadEntryUI_NC() {
+        _classCallCheck(this, ThreadEntryUI_NC);
 
-        return _possibleConstructorReturn(this, (ThreadEntryUI.__proto__ || Object.getPrototypeOf(ThreadEntryUI)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (ThreadEntryUI_NC.__proto__ || Object.getPrototypeOf(ThreadEntryUI_NC)).apply(this, arguments));
     }
 
-    _createClass(ThreadEntryUI, [{
+    _createClass(ThreadEntryUI_NC, [{
         key: "render",
         value: function render() {
             var _props = this.props,
@@ -14002,31 +13727,19 @@ var ThreadEntryUI = function (_BaseComponent) {
                 lastPostCreator = _props.lastPostCreator;
 
             var toURL = new _jsVextensions.VURL(null, ["threads", thread._id + ""]);
-            return _react2.default.createElement(_reactVcomponents.Column, { p: "7px 10px", style: E({ background: index % 2 == 0 ? "rgba(30,30,30,.7)" : "rgba(0,0,0,.7)" }, last && { borderRadius: "0 0 10px 10px" }) }, _react2.default.createElement(_reactVcomponents.Row, null, _react2.default.createElement(_Manager.Manager.Link, { text: thread.title, actions: function actions(d) {
+            return _react2.default.createElement(_reactVcomponents.Column, { p: "7px 10px", style: E({ background: index % 2 == 0 ? "rgba(30,30,30,.7)" : "rgba(0,0,0,.7)" }, last && { borderRadius: "0 0 10px 10px" }) }, _react2.default.createElement(_reactVcomponents.Row, null, _react2.default.createElement(_Manager.manager.Link, { text: thread.title, actions: function actions(d) {
                     return d(new _forum2.ACTThreadSelect({ id: thread._id }));
-                }, style: { fontSize: 17, flex: _SubforumUI.columnWidths[0] } }), _react2.default.createElement("span", { style: { flex: _SubforumUI.columnWidths[1] } }, creator ? creator.displayName : "..."), _react2.default.createElement("span", { style: { flex: _SubforumUI.columnWidths[2] } }, posts ? posts.length : "..."), _react2.default.createElement(_Manager.Manager.Link, { style: { flex: _SubforumUI.columnWidths[3], fontSize: 13 }, actions: function actions(d) {
+                }, style: { fontSize: 17, flex: _SubforumUI.columnWidths[0] } }), _react2.default.createElement("span", { style: { flex: _SubforumUI.columnWidths[1] } }, creator ? creator.displayName : "..."), _react2.default.createElement("span", { style: { flex: _SubforumUI.columnWidths[2] } }, posts ? posts.length : "..."), _react2.default.createElement(_Manager.manager.Link, { style: { flex: _SubforumUI.columnWidths[3], fontSize: 13 }, actions: function actions(d) {
                     return lastPost && d(new _forum2.ACTThreadSelect({ id: lastPost.thread }));
-                } }, lastPostCreator && _react2.default.createElement("div", null, "By ", lastPostCreator.displayName, _react2.default.createElement("br", null), !_Manager.Manager.FormatTime(lastPost.createdAt, "[calendar]").includes("/") ? _Manager.Manager.FormatTime(lastPost.createdAt, "[calendar]") : _Manager.Manager.FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")))));
+                } }, lastPostCreator && _react2.default.createElement("div", null, "By ", lastPostCreator.displayName, _react2.default.createElement("br", null), !_Manager.manager.FormatTime(lastPost.createdAt, "[calendar]").includes("/") ? _Manager.manager.FormatTime(lastPost.createdAt, "[calendar]") : _Manager.manager.FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")))));
         }
     }]);
 
-    return ThreadEntryUI;
-}(_reactVextensions.BaseComponent);
-exports.ThreadEntryUI = ThreadEntryUI = __decorate([(0, _FirebaseConnect.Connect)(function (state, _ref) {
-    var thread = _ref.thread;
-
-    var lastPost = (0, _forum.GetThreadLastPost)(thread._id);
-    return {
-        creator: thread && _Manager.Manager.GetUser(thread.creator),
-        posts: thread && (0, _forum.GetThreadPosts)(thread),
-        lastPost: lastPost,
-        lastPostCreator: lastPost && _Manager.Manager.GetUser(lastPost.creator)
-    };
-})], ThreadEntryUI);
-exports.ThreadEntryUI = ThreadEntryUI;
+    return ThreadEntryUI_NC;
+}((0, _reactVextensions.BaseComponentWithConnector)(ThreadEntryUI_connector, { editing: false, dataError: null }));
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14167,7 +13880,7 @@ var UpdateSubforumDetails = exports.UpdateSubforumDetails = function (_Command) 
 }(_Command2.Command);
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14199,7 +13912,7 @@ function ES() {
 }
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14216,13 +13929,13 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactVcomponents = __webpack_require__(99);
 
-var _SectionDetailsUI = __webpack_require__(115);
-
-var _AddSection = __webpack_require__(116);
-
 var _reactVmessagebox = __webpack_require__(109);
 
+var _AddSection = __webpack_require__(114);
+
 var _Section = __webpack_require__(93);
+
+var _SectionDetailsUI = __webpack_require__(115);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14252,96 +13965,7 @@ function ShowAddSectionDialog(userID) {
 }
 
 /***/ }),
-/* 115 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.SectionDetailsUI = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(97);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactVextensions = __webpack_require__(98);
-
-var _reactVcomponents = __webpack_require__(99);
-
-var _jsVextensions = __webpack_require__(10);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var SectionDetailsUI = exports.SectionDetailsUI = function (_BaseComponent) {
-    _inherits(SectionDetailsUI, _BaseComponent);
-
-    function SectionDetailsUI() {
-        _classCallCheck(this, SectionDetailsUI);
-
-        return _possibleConstructorReturn(this, (SectionDetailsUI.__proto__ || Object.getPrototypeOf(SectionDetailsUI)).apply(this, arguments));
-    }
-
-    _createClass(SectionDetailsUI, [{
-        key: "ComponentWillMountOrReceiveProps",
-        value: function ComponentWillMountOrReceiveProps(props, forMount) {
-            if (forMount || props.baseData != this.props.baseData) {
-                // if base-data changed
-                this.SetState({ newData: Clone(props.baseData) });
-            }
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            var _props = this.props,
-                forNew = _props.forNew,
-                enabled = _props.enabled,
-                style = _props.style,
-                onChange = _props.onChange,
-                creator = _props.creator;
-            var newData = this.state.newData;
-
-            var Change = function Change(_) {
-                if (onChange) onChange(_this2.GetNewData());
-                _this2.Update();
-            };
-            var splitAt = 170,
-                width = 600;
-            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Name: "), _react2.default.createElement(_reactVcomponents.TextInput, { required: true, enabled: enabled, style: { width: "100%" }, value: newData.name, onChange: function onChange(val) {
-                    return Change(newData.name = val);
-                } })));
-        }
-    }, {
-        key: "GetValidationError",
-        value: function GetValidationError() {
-            return (0, _jsVextensions.GetErrorMessagesUnderElement)((0, _reactVextensions.GetDOM)(this))[0];
-        }
-    }, {
-        key: "GetNewData",
-        value: function GetNewData() {
-            var newData = this.state.newData;
-
-            return Clone(newData);
-        }
-    }]);
-
-    return SectionDetailsUI;
-}(_reactVextensions.BaseComponent);
-
-/***/ }),
-/* 116 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14484,7 +14108,96 @@ var AddSection = exports.AddSection = function (_Command) {
 }(_Command2.Command);
 
 /***/ }),
-/* 117 */
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.SectionDetailsUI = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(97);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactVextensions = __webpack_require__(98);
+
+var _reactVcomponents = __webpack_require__(99);
+
+var _jsVextensions = __webpack_require__(10);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SectionDetailsUI = exports.SectionDetailsUI = function (_BaseComponent) {
+    _inherits(SectionDetailsUI, _BaseComponent);
+
+    function SectionDetailsUI() {
+        _classCallCheck(this, SectionDetailsUI);
+
+        return _possibleConstructorReturn(this, (SectionDetailsUI.__proto__ || Object.getPrototypeOf(SectionDetailsUI)).apply(this, arguments));
+    }
+
+    _createClass(SectionDetailsUI, [{
+        key: "ComponentWillMountOrReceiveProps",
+        value: function ComponentWillMountOrReceiveProps(props, forMount) {
+            if (forMount || props.baseData != this.props.baseData) {
+                // if base-data changed
+                this.SetState({ newData: Clone(props.baseData) });
+            }
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                forNew = _props.forNew,
+                enabled = _props.enabled,
+                style = _props.style,
+                onChange = _props.onChange,
+                creator = _props.creator;
+            var newData = this.state.newData;
+
+            var Change = function Change(_) {
+                if (onChange) onChange(_this2.GetNewData());
+                _this2.Update();
+            };
+            var splitAt = 170,
+                width = 600;
+            return _react2.default.createElement(_reactVcomponents.Column, { style: style }, _react2.default.createElement(_reactVcomponents.RowLR, { splitAt: splitAt, style: { width: width } }, _react2.default.createElement(_reactVcomponents.Pre, null, "Name: "), _react2.default.createElement(_reactVcomponents.TextInput, { required: true, enabled: enabled, style: { width: "100%" }, value: newData.name, onChange: function onChange(val) {
+                    return Change(newData.name = val);
+                } })));
+        }
+    }, {
+        key: "GetValidationError",
+        value: function GetValidationError() {
+            return (0, _jsVextensions.GetErrorMessagesUnderElement)((0, _reactVextensions.GetDOM)(this))[0];
+        }
+    }, {
+        key: "GetNewData",
+        value: function GetNewData() {
+            var newData = this.state.newData;
+
+            return Clone(newData);
+        }
+    }]);
+
+    return SectionDetailsUI;
+}(_reactVextensions.BaseComponent);
+
+/***/ }),
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14503,7 +14216,7 @@ var _reactVcomponents = __webpack_require__(99);
 
 var _SubforumDetailsUI = __webpack_require__(102);
 
-var _AddSubforum = __webpack_require__(118);
+var _AddSubforum = __webpack_require__(117);
 
 var _reactVmessagebox = __webpack_require__(109);
 
@@ -14537,7 +14250,7 @@ function ShowAddSubforumDialog(userID, sectionID) {
 }
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14683,7 +14396,7 @@ var AddSubforum = exports.AddSubforum = function (_Command) {
 }(_Command2.Command);
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14692,11 +14405,9 @@ var AddSubforum = exports.AddSubforum = function (_Command) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.ThreadUI = undefined;
+exports.DetailsDropdown_NC = exports.DetailsDropdown = exports.ThreadUI_NC = exports.ThreadUI = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _reactVextensions = __webpack_require__(98);
 
@@ -14708,13 +14419,13 @@ var _AddThreadDialog = __webpack_require__(105);
 
 var _forum = __webpack_require__(8);
 
-var _PostUI = __webpack_require__(120);
+var _PostUI = __webpack_require__(119);
 
 var _ThreadDetailsUI = __webpack_require__(106);
 
-var _UpdateThreadDetails = __webpack_require__(126);
+var _UpdateThreadDetails = __webpack_require__(125);
 
-var _PostEditorUI = __webpack_require__(121);
+var _PostEditorUI = __webpack_require__(120);
 
 var _react = __webpack_require__(97);
 
@@ -14722,11 +14433,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _Post = __webpack_require__(13);
 
-var _FirebaseConnect = __webpack_require__(110);
-
 var _AddPost = __webpack_require__(108);
 
-var _DeleteThread = __webpack_require__(127);
+var _DeleteThread = __webpack_require__(126);
 
 var _forum2 = __webpack_require__(5);
 
@@ -14734,7 +14443,7 @@ var _reactVmessagebox = __webpack_require__(109);
 
 var _Manager = __webpack_require__(2);
 
-var _GlobalStyles = __webpack_require__(113);
+var _GlobalStyles = __webpack_require__(112);
 
 var _General = __webpack_require__(4);
 
@@ -14748,14 +14457,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if ((typeof Reflect === "undefined" ? "undefined" : _typeof(Reflect)) === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
-        if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    }return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) {
@@ -14781,23 +14482,34 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
     });
 };
 
-var ThreadUI = function (_BaseComponent) {
-    _inherits(ThreadUI, _BaseComponent);
+var ThreadUI_connector = function ThreadUI_connector(state, _ref) {
+    var thread = _ref.thread;
+    return {
+        posts: (0, _forum.GetThreadPosts)(thread)
+    };
+};
+var ThreadUI = exports.ThreadUI = void 0;
+_Manager.manager.onPopulated.then(function () {
+    return exports.ThreadUI = ThreadUI = _Manager.manager.Connect(ThreadUI_connector)(ThreadUI_NC);
+});
 
-    function ThreadUI() {
-        _classCallCheck(this, ThreadUI);
+var ThreadUI_NC = exports.ThreadUI_NC = function (_BaseComponentWithCon) {
+    _inherits(ThreadUI_NC, _BaseComponentWithCon);
 
-        return _possibleConstructorReturn(this, (ThreadUI.__proto__ || Object.getPrototypeOf(ThreadUI)).apply(this, arguments));
+    function ThreadUI_NC() {
+        _classCallCheck(this, ThreadUI_NC);
+
+        return _possibleConstructorReturn(this, (ThreadUI_NC.__proto__ || Object.getPrototypeOf(ThreadUI_NC)).apply(this, arguments));
     }
 
-    _createClass(ThreadUI, [{
+    _createClass(ThreadUI_NC, [{
         key: "render",
         value: function render() {
             var _props = this.props,
                 thread = _props.thread,
                 posts = _props.posts;
 
-            var userID = _Manager.Manager.GetUserID();
+            var userID = _Manager.manager.GetUserID();
             if (thread == null || posts == null || posts.length == 0) {
                 return _react2.default.createElement("div", { style: ES({ display: "flex", alignItems: "center", justifyContent: "center", flex: 1, fontSize: 25 }) }, "Loading posts...");
             }
@@ -14808,19 +14520,13 @@ var ThreadUI = function (_BaseComponent) {
         }
     }]);
 
-    return ThreadUI;
-}(_reactVextensions.BaseComponent);
-ThreadUI.defaultProps = { subNavBarWidth: 0 };
-exports.ThreadUI = ThreadUI = __decorate([(0, _FirebaseConnect.Connect)(function (state, _ref) {
-    var thread = _ref.thread;
-    return {
-        posts: (0, _forum.GetThreadPosts)(thread)
-    };
-})], ThreadUI);
-exports.ThreadUI = ThreadUI;
+    return ThreadUI_NC;
+}((0, _reactVextensions.BaseComponentWithConnector)(ThreadUI_connector, {}));
 
-var ReplyBox = function (_BaseComponent2) {
-    _inherits(ReplyBox, _BaseComponent2);
+ThreadUI_NC.defaultProps = { subNavBarWidth: 0 };
+
+var ReplyBox = function (_BaseComponent) {
+    _inherits(ReplyBox, _BaseComponent);
 
     function ReplyBox() {
         _classCallCheck(this, ReplyBox);
@@ -14849,12 +14555,12 @@ var ReplyBox = function (_BaseComponent2) {
                             while (1) {
                                 switch (_context.prev = _context.next) {
                                     case 0:
-                                        if (!(_Manager.Manager.GetUserID() == null)) {
+                                        if (!(_Manager.manager.GetUserID() == null)) {
                                             _context.next = 2;
                                             break;
                                         }
 
-                                        return _context.abrupt("return", _Manager.Manager.ShowSignInPopup());
+                                        return _context.abrupt("return", _Manager.manager.ShowSignInPopup());
 
                                     case 2:
                                         post = this.postEditorUI.GetNewData();
@@ -14878,8 +14584,8 @@ var ReplyBox = function (_BaseComponent2) {
     return ReplyBox;
 }(_reactVextensions.BaseComponent);
 
-var ActionBar_Left = function (_BaseComponent3) {
-    _inherits(ActionBar_Left, _BaseComponent3);
+var ActionBar_Left = function (_BaseComponent2) {
+    _inherits(ActionBar_Left, _BaseComponent2);
 
     function ActionBar_Left() {
         _classCallCheck(this, ActionBar_Left);
@@ -14906,16 +14612,27 @@ var ActionBar_Left = function (_BaseComponent3) {
     return ActionBar_Left;
 }(_reactVextensions.BaseComponent);
 
-var DetailsDropdown = function (_BaseComponent4) {
-    _inherits(DetailsDropdown, _BaseComponent4);
+var DetailsDropdown_connector = function DetailsDropdown_connector(state, _ref2) {
+    var thread = _ref2.thread;
+    return {
+        posts: (0, _forum.GetThreadPosts)(thread)
+    };
+};
+var DetailsDropdown = exports.DetailsDropdown = void 0;
+_Manager.manager.onPopulated.then(function () {
+    return exports.DetailsDropdown = DetailsDropdown = _Manager.manager.Connect(DetailsDropdown_connector)(DetailsDropdown_NC);
+});
 
-    function DetailsDropdown() {
-        _classCallCheck(this, DetailsDropdown);
+var DetailsDropdown_NC = exports.DetailsDropdown_NC = function (_BaseComponentWithCon2) {
+    _inherits(DetailsDropdown_NC, _BaseComponentWithCon2);
 
-        return _possibleConstructorReturn(this, (DetailsDropdown.__proto__ || Object.getPrototypeOf(DetailsDropdown)).apply(this, arguments));
+    function DetailsDropdown_NC() {
+        _classCallCheck(this, DetailsDropdown_NC);
+
+        return _possibleConstructorReturn(this, (DetailsDropdown_NC.__proto__ || Object.getPrototypeOf(DetailsDropdown_NC)).apply(this, arguments));
     }
 
-    _createClass(DetailsDropdown, [{
+    _createClass(DetailsDropdown_NC, [{
         key: "render",
         value: function render() {
             var _this6 = this;
@@ -14925,7 +14642,7 @@ var DetailsDropdown = function (_BaseComponent4) {
                 posts = _props2.posts;
             var dataError = this.state.dataError;
 
-            var creatorOrMod = (0, _General.IsUserCreatorOrMod)(_Manager.Manager.GetUserID(), thread);
+            var creatorOrMod = (0, _General.IsUserCreatorOrMod)(_Manager.manager.GetUserID(), thread);
             return _react2.default.createElement(_reactVcomponents.DropDown, null, _react2.default.createElement(_reactVcomponents.DropDownTrigger, null, _react2.default.createElement(_reactVcomponents.Button, { ml: 5, text: "Details" })), _react2.default.createElement(_reactVcomponents.DropDownContent, { style: { left: 0 } }, _react2.default.createElement(_reactVcomponents.Column, null, _react2.default.createElement(_ThreadDetailsUI.ThreadDetailsUI, { ref: function ref(c) {
                     return _this6.detailsUI = c;
                 }, baseData: thread, forNew: false, enabled: creatorOrMod, onChange: function onChange(newData) {
@@ -14949,7 +14666,7 @@ var DetailsDropdown = function (_BaseComponent4) {
                         }, _callee2, this);
                     }));
                 } })), creatorOrMod && _react2.default.createElement(_reactVcomponents.Column, { mt: 10 }, _react2.default.createElement(_reactVcomponents.Row, { style: { fontWeight: "bold" } }, "Advanced:"), _react2.default.createElement(_reactVcomponents.Row, { mt: 5 }, _react2.default.createElement(_reactVcomponents.Button, { text: "Delete", enabled: posts.filter(function (a) {
-                    return a.creator != _Manager.Manager.GetUserID() && a.text;
+                    return a.creator != _Manager.manager.GetUserID() && a.text;
                 }).length <= 1, onLeftClick: function onLeftClick() {
                     return __awaiter(_this6, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
                         var _this7 = this;
@@ -14999,17 +14716,11 @@ var DetailsDropdown = function (_BaseComponent4) {
         }
     }]);
 
-    return DetailsDropdown;
-}(_reactVextensions.BaseComponent);
-DetailsDropdown = __decorate([(0, _FirebaseConnect.Connect)(function (state, _ref2) {
-    var thread = _ref2.thread;
-    return {
-        posts: (0, _forum.GetThreadPosts)(thread)
-    };
-})], DetailsDropdown);
+    return DetailsDropdown_NC;
+}((0, _reactVextensions.BaseComponentWithConnector)(DetailsDropdown_connector, { dataError: null }));
 
-var ActionBar_Right = function (_BaseComponent5) {
-    _inherits(ActionBar_Right, _BaseComponent5);
+var ActionBar_Right = function (_BaseComponent3) {
+    _inherits(ActionBar_Right, _BaseComponent3);
 
     function ActionBar_Right() {
         _classCallCheck(this, ActionBar_Right);
@@ -15035,7 +14746,7 @@ var ActionBar_Right = function (_BaseComponent5) {
 }(_reactVextensions.BaseComponent);
 
 /***/ }),
-/* 120 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15044,11 +14755,9 @@ var ActionBar_Right = function (_BaseComponent5) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.PostUI = undefined;
+exports.PostUI_NC = exports.PostUI = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _react = __webpack_require__(97);
 
@@ -15058,15 +14767,13 @@ var _reactVcomponents = __webpack_require__(99);
 
 var _reactVextensions = __webpack_require__(98);
 
-var _PostEditorUI = __webpack_require__(121);
-
-var _FirebaseConnect = __webpack_require__(110);
+var _PostEditorUI = __webpack_require__(120);
 
 var _reactVmessagebox = __webpack_require__(109);
 
-var _DeletePost = __webpack_require__(124);
+var _DeletePost = __webpack_require__(123);
 
-var _UpdatePost = __webpack_require__(125);
+var _UpdatePost = __webpack_require__(124);
 
 var _Manager = __webpack_require__(2);
 
@@ -15082,14 +14789,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if ((typeof Reflect === "undefined" ? "undefined" : _typeof(Reflect)) === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
-        if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    }return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) {
@@ -15115,16 +14814,28 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
     });
 };
 
-var PostUI = function (_BaseComponent) {
-    _inherits(PostUI, _BaseComponent);
+//let VReactMarkdown_Remarkable = manager.MarkdownRenderer as any;
+var PostUI_connector = function PostUI_connector(state, _ref) {
+    var post = _ref.post;
+    return {
+        creator: _Manager.manager.GetUser(post.creator)
+    };
+};
+var PostUI = exports.PostUI = void 0;
+_Manager.manager.onPopulated.then(function () {
+    return exports.PostUI = PostUI = _Manager.manager.Connect(PostUI_connector)(PostUI_NC);
+});
 
-    function PostUI() {
-        _classCallCheck(this, PostUI);
+var PostUI_NC = exports.PostUI_NC = function (_BaseComponentWithCon) {
+    _inherits(PostUI_NC, _BaseComponentWithCon);
 
-        return _possibleConstructorReturn(this, (PostUI.__proto__ || Object.getPrototypeOf(PostUI)).apply(this, arguments));
+    function PostUI_NC() {
+        _classCallCheck(this, PostUI_NC);
+
+        return _possibleConstructorReturn(this, (PostUI_NC.__proto__ || Object.getPrototypeOf(PostUI_NC)).apply(this, arguments));
     }
 
-    _createClass(PostUI, [{
+    _createClass(PostUI_NC, [{
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -15181,8 +14892,8 @@ var PostUI = function (_BaseComponent) {
                         }));
                     } })));
             }
-            var creatorOrMod = (0, _General.IsUserCreatorOrMod)(_Manager.Manager.GetUserID(), post);
-            return _react2.default.createElement(_reactVcomponents.Row, { sel: true, mt: index != 0 ? 20 : 0, style: { flexShrink: 0, background: "rgba(0,0,0,.7)", borderRadius: 10, alignItems: "initial", cursor: "auto" } }, _react2.default.createElement(_reactVcomponents.Column, { style: { width: 125 } }, _react2.default.createElement(_reactVcomponents.Div, { p: "5px 5px 0 5px", style: { textAlign: "center" } }, creator ? creator.displayName : "..."), _react2.default.createElement(_reactVcomponents.Row, { p: "3px 10px 10px 10px" }, _react2.default.createElement("img", { src: creator ? creator.avatarUrl : "", style: { margin: "auto", maxWidth: 105, maxHeight: 105 } }))), _react2.default.createElement(_reactVcomponents.Column, { p: 10, style: ES({ flex: 1 }) }, _react2.default.createElement(_reactVcomponents.Row, { style: { width: "100%" } }, _react2.default.createElement(_Manager.Manager.MarkdownRenderer, { source: post.text != null ? post.text : "*This post has been deleted.*" })), _react2.default.createElement(_reactVcomponents.Row, { mt: "auto" }, _react2.default.createElement("span", { style: { color: "rgba(255,255,255,.5)" } }, creator ? creator.displayName : "...", ", at ", _Manager.Manager.FormatTime(post.createdAt, "YYYY-MM-DD HH:mm:ss")), creatorOrMod && _react2.default.createElement(_reactVcomponents.Button, { ml: 5, text: "Edit", onClick: function onClick() {
+            var creatorOrMod = (0, _General.IsUserCreatorOrMod)(_Manager.manager.GetUserID(), post);
+            return _react2.default.createElement(_reactVcomponents.Row, { sel: true, mt: index != 0 ? 20 : 0, style: { flexShrink: 0, background: "rgba(0,0,0,.7)", borderRadius: 10, alignItems: "initial", cursor: "auto" } }, _react2.default.createElement(_reactVcomponents.Column, { style: { width: 125 } }, _react2.default.createElement(_reactVcomponents.Div, { p: "5px 5px 0 5px", style: { textAlign: "center" } }, creator ? creator.displayName : "..."), _react2.default.createElement(_reactVcomponents.Row, { p: "3px 10px 10px 10px" }, _react2.default.createElement("img", { src: creator ? creator.avatarUrl : "", style: { margin: "auto", maxWidth: 105, maxHeight: 105 } }))), _react2.default.createElement(_reactVcomponents.Column, { p: 10, style: ES({ flex: 1 }) }, _react2.default.createElement(_reactVcomponents.Row, { style: { width: "100%" } }, _react2.default.createElement(_Manager.manager.MarkdownRenderer, { source: post.text != null ? post.text : "*This post has been deleted.*" })), _react2.default.createElement(_reactVcomponents.Row, { mt: "auto" }, _react2.default.createElement("span", { style: { color: "rgba(255,255,255,.5)" } }, creator ? creator.displayName : "...", ", at ", _Manager.manager.FormatTime(post.createdAt, "YYYY-MM-DD HH:mm:ss")), creatorOrMod && _react2.default.createElement(_reactVcomponents.Button, { ml: 5, text: "Edit", onClick: function onClick() {
                     _this2.SetState({ editing: true });
                 } }), creatorOrMod && index != 0 && (post.text != null || post._id == thread.posts.Last()) && _react2.default.createElement(_reactVcomponents.Button, { ml: 5, text: "Delete", onClick: function onClick() {
                     (0, _reactVmessagebox.ShowMessageBox)({
@@ -15206,22 +14917,15 @@ var PostUI = function (_BaseComponent) {
                             }));
                         }
                     });
-                } }), post.editedAt && _react2.default.createElement(_reactVcomponents.Span, { ml: "auto", style: { color: "rgba(255,255,255,.5)" } }, post.text != null ? "edited" : "deleted", " at ", _Manager.Manager.FormatTime(post.editedAt, "YYYY-MM-DD HH:mm:ss")))));
+                } }), post.editedAt && _react2.default.createElement(_reactVcomponents.Span, { ml: "auto", style: { color: "rgba(255,255,255,.5)" } }, post.text != null ? "edited" : "deleted", " at ", _Manager.manager.FormatTime(post.editedAt, "YYYY-MM-DD HH:mm:ss")))));
         }
     }]);
 
-    return PostUI;
-}(_reactVextensions.BaseComponent);
-exports.PostUI = PostUI = __decorate([(0, _FirebaseConnect.Connect)(function (state, _ref) {
-    var post = _ref.post;
-    return {
-        creator: _Manager.Manager.GetUser(post.creator)
-    };
-})], PostUI);
-exports.PostUI = PostUI;
+    return PostUI_NC;
+}((0, _reactVextensions.BaseComponentWithConnector)(PostUI_connector, { editing: false, dataError: null }));
 
 /***/ }),
-/* 121 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15244,7 +14948,7 @@ var _reactVcomponents = __webpack_require__(99);
 
 var _jsVextensions = __webpack_require__(10);
 
-var _reactVmarkdown = __webpack_require__(122);
+var _reactVmarkdown = __webpack_require__(121);
 
 var _Manager = __webpack_require__(2);
 
@@ -15289,7 +14993,7 @@ var PostEditorUI = exports.PostEditorUI = function (_BaseComponent) {
             };
             return _react2.default.createElement(_reactVcomponents.Column, null, _react2.default.createElement(_reactVcomponents.Column, null, enabled && _react2.default.createElement(_reactVmarkdown.MarkdownToolbar, { editor: function editor() {
                     return _this2.refs.editor;
-                } }, _react2.default.createElement(_Manager.Manager.Link, { to: "https://guides.github.com/features/mastering-markdown", style: { marginLeft: 10 } }, "How to add links, images, etc.")), _react2.default.createElement(_reactVmarkdown.MarkdownEditor, { ref: "editor", toolbar: false, value: newData.text || "", onChange: function onChange(val) {
+                } }, _react2.default.createElement(_Manager.manager.Link, { to: "https://guides.github.com/features/mastering-markdown", style: { marginLeft: 10 } }, "How to add links, images, etc.")), _react2.default.createElement(_reactVmarkdown.MarkdownEditor, { ref: "editor", toolbar: false, value: newData.text || "", onChange: function onChange(val) {
                     return Change(newData.text = val);
                 }, options: E({
                     scrollbarStyle: "overlay",
@@ -15318,7 +15022,7 @@ var PostEditorUI = exports.PostEditorUI = function (_BaseComponent) {
 PostEditorUI.defaultProps = { enabled: true };
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29963,7 +29667,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     /* 23 */
     /***/function (module, exports) {
 
-      module.exports = __webpack_require__(123);
+      module.exports = __webpack_require__(122);
 
       /***/
     }]
@@ -29973,13 +29677,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(20)(module)))
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-dom");
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30117,7 +29821,7 @@ var DeletePost = exports.DeletePost = function (_Command) {
 }(_Command2.Command);
 
 /***/ }),
-/* 125 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30255,7 +29959,7 @@ var UpdatePost = exports.UpdatePost = function (_Command) {
 }(_Command2.Command);
 
 /***/ }),
-/* 126 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30394,7 +30098,7 @@ var UpdateThreadDetails = exports.UpdateThreadDetails = function (_Command) {
 }(_Command2.Command);
 
 /***/ }),
-/* 127 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30554,7 +30258,7 @@ var DeleteThread = exports.DeleteThread = function (_Command) {
 }(_Command2.Command);
 
 /***/ }),
-/* 128 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -30562,7 +30266,7 @@ var DeleteThread = exports.DeleteThread = function (_Command) {
 
 (function(mod) {
   if (true) // CommonJS
-    mod(__webpack_require__(129));
+    mod(__webpack_require__(128));
   else {}
 })(function(CodeMirror) {
   "use strict";
@@ -30709,7 +30413,7 @@ var DeleteThread = exports.DeleteThread = function (_Command) {
 
 
 /***/ }),
-/* 129 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others

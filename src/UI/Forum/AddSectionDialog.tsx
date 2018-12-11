@@ -1,16 +1,9 @@
 import React from "react";
-import {Column} from "react-vcomponents";
-import {Row} from "react-vcomponents";
-import {TextInput} from "react-vcomponents";
-import {GetInnerComp} from "react-vextensions";
-import {Pre} from "react-vcomponents";
-import {ThreadDetailsUI} from "./Thread/ThreadDetailsUI";
-import {Thread} from "../../Store/firebase/forum/@Thread";
-import {AddThread} from "../../Server/Commands/AddThread";
-import {SectionDetailsUI} from "./SectionDetailsUI";
-import {AddSection} from "../../Server/Commands/AddSection";
-import {ShowMessageBox, BoxController} from "react-vmessagebox";
-import {Section} from "../../Store/firebase/forum/@Section";
+import { Column, Row } from "react-vcomponents";
+import { BoxController, ShowMessageBox } from "react-vmessagebox";
+import { AddSection } from "../../Server/Commands/AddSection";
+import { Section } from "../../Store/firebase/forum/@Section";
+import { SectionDetailsUI } from "./SectionDetailsUI";
 
 export function ShowAddSectionDialog(userID: string) {
 	let newSection = new Section({

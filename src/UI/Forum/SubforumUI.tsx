@@ -1,5 +1,5 @@
 import React from "react";
-import {BaseComponent, GetInnerComp} from "react-vextensions";
+import {BaseComponent, GetInnerComp, BaseComponentWithConnector} from "react-vextensions";
 import {Subforum} from "../../Store/firebase/forum/@Subforum";
 import {Row, DropDownTrigger, DropDownContent} from "react-vcomponents";
 import {Button} from "react-vcomponents";
@@ -11,11 +11,10 @@ import {ScrollView} from "react-vscrollview";
 import {Spinner} from "react-vcomponents";
 import {DeleteSubforum} from "../../Server/Commands/DeleteSubforum";
 import {ShowAddThreadDialog} from "./AddThreadDialog";
-import {Connect} from "../../Utils/Database/FirebaseConnect";
 import {GetSubforumThreads} from "../../Store/firebase/forum";
 import {ThreadEntryUI} from "./ThreadEntryUI";
 import {ACTSubforumSelect} from "../../Store/forum";
-import {Manager, PermissionGroupSet} from "../../Manager";
+import {Manager, PermissionGroupSet, manager} from "../../Manager";
 import {UpdateSubforumDetails} from "../../Server/Commands/UpdateSubforumDetails";
 import {GetAsync, GetUpdates} from "../../Utils/Database/DatabaseHelpers";
 import {ShowMessageBox} from "react-vmessagebox";
@@ -24,18 +23,18 @@ import {IsUserMod} from "../../General";
 
 export const columnWidths = [.5, .2, .1, .2];
 
-export type SubforumUI_Props = {subforum: Subforum, subNavBarWidth?: number} & Partial<{permissions: PermissionGroupSet, threads: Thread[]}>;
-@Connect((state, {subforum}: SubforumUI_Props)=> {
+let SubforumUI_connector = (state, {subforum}: {subforum: Subforum, subNavBarWidth?: number})=> {
 	return {
-		permissions: Manager.GetUserPermissionGroups(Manager.GetUserID()),
+		permissions: manager.GetUserPermissionGroups(manager.GetUserID()),
 		threads: GetSubforumThreads(subforum._id),
 	};
-})
-export class SubforumUI extends BaseComponent<SubforumUI_Props, {}> {
+};
+export let SubforumUI: typeof SubforumUI_NC; manager.onPopulated.then(()=>SubforumUI = manager.Connect(SubforumUI_connector)(SubforumUI_NC));
+export class SubforumUI_NC extends BaseComponentWithConnector(SubforumUI_connector, {}) {
 	static defaultProps = {subNavBarWidth: 0};
 	render() {
 		let {subforum, subNavBarWidth, threads, permissions} = this.props;
-		let userID = Manager.GetUserID();
+		let userID = manager.GetUserID();
 		
 		if (subforum == null || threads == null) {
 			return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: 25}}>Loading threads...</div>;
@@ -51,7 +50,7 @@ export class SubforumUI extends BaseComponent<SubforumUI_Props, {}> {
 							<Row style={{position: "relative", height: 40, padding: 10}}>
 								<span style={{position: "absolute", left: "50%", transform: "translateX(-50%)", fontSize: 18}}>{subforum.name}</span>
 								<Button text="Add thread" ml="auto" onClick={()=> {
-									if (userID == null) return Manager.ShowSignInPopup();
+									if (userID == null) return manager.ShowSignInPopup();
 									ShowAddThreadDialog(userID, subforum._id);
 								}}/>
 							</Row>
@@ -107,7 +106,7 @@ class DetailsDropdown extends BaseComponent<{subforum: Subforum}, {dataError: st
 	render() {
 		let {subforum} = this.props;
 		let {dataError} = this.state;
-		let isMod = IsUserMod(Manager.GetUserID());
+		let isMod = IsUserMod(manager.GetUserID());
 		return (
 			<DropDown>
 				<DropDownTrigger>
@@ -156,8 +155,6 @@ class DetailsDropdown extends BaseComponent<{subforum: Subforum}, {dataError: st
 	}
 }
 
-@Connect((state, props)=> ({
-}))
 class ActionBar_Right extends BaseComponent<{subforum: Subforum, subNavBarWidth: number} & Partial<{initialChildLimit: number}>, {}> {
 	render() {
 		let {subforum, subNavBarWidth, initialChildLimit} = this.props;

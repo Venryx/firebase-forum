@@ -15,30 +15,39 @@ export type Link_Props = {
 	actions?: (dispatch: Function)=>void, //updateURLOnActions?: boolean, // action-based
 } & React.HTMLProps<HTMLAnchorElement>;
 
+export type Omit<T, K extends keyof T> = Pick<T, ({ [P in keyof T]: P } & { [P in K]: never })[keyof T]>;
 export class Manager {
-	static store;
-	static storePath_mainData: string;
-	static storePath_dbData: string;
-	static Link: new ()=>(BaseComponent<Link_Props, {}>
+	onPopulated = new Promise((resolve, reject)=>this.onPopulated_resolve = resolve);
+	onPopulated_resolve: Function;
+	Populate(data: Omit<Manager, "onPopulated" | "onPopulated_resolve" | "Populate">) {
+		this.Extend(data);
+		this.onPopulated_resolve();
+	}
+
+	store;
+	storePath_mainData: string;
+	storePath_dbData: string;
+	Link: new ()=>(BaseComponent<Link_Props, {}>
 		& {render: ()=>JSX.Element | null}); // temp fix for typing issue ("render" returning Element | null | false, in one version)
-	static FormatTime: (time: number, formatStr: string)=>string;
+	FormatTime: (time: number, formatStr: string)=>string;
 
-	static router_replace: (newURL: string)=>any;
-	static router_push: (newURL: string)=>any;
+	router_replace: (newURL: string)=>any;
+	router_push: (newURL: string)=>any;
 	
-	static logTypes = new LogTypes();
+	logTypes = new LogTypes();
 
-	//static FirebaseConnect: (func: Function)=>any; // must set "window.FirebaseConnect" manually
-	static State: (...props)=>any;
-	static GetData: (..._)=>any;
-	static GetDataAsync: (..._)=>any;
-	static GetAsync: (dbGetterFunc, statsLogger)=>Promise<any>;
-	static ShowSignInPopup: ()=>void;
-	static GetUserID: ()=>string;
-	static GetUser: (id: string)=>any;
-	static GetUserPermissionGroups: (userID: string)=>PermissionGroupSet;
+	Connect: (func: Function)=>any;
+	State: (...props)=>any;
+	GetData: (..._)=>any;
+	GetDataAsync: (..._)=>any;
+	GetAsync: (dbGetterFunc, statsLogger)=>Promise<any>;
+	ShowSignInPopup: ()=>void;
+	GetUserID: ()=>string;
+	GetUser: (id: string)=>any;
+	GetUserPermissionGroups: (userID: string)=>PermissionGroupSet;
 
-	static ApplyDBUpdates: (rootPath: string, dbUpdates)=>void;
+	ApplyDBUpdates: (rootPath: string, dbUpdates)=>void;
 
-	static MarkdownRenderer: any; //(...props: any[])=>JSX.Element;
+	MarkdownRenderer: any; //(...props: any[])=>JSX.Element;
 }
+export const manager = new Manager();

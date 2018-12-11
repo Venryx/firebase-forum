@@ -1,5 +1,5 @@
 import {DeepGet} from "js-vextensions";
-import {Manager} from "./Manager";
+import {Manager, manager} from "./Manager";
 import {Post} from "./Store/firebase/forum/@Post";
 import {Thread} from "./Store/firebase/forum/@Thread";
 
@@ -36,10 +36,10 @@ export function State<T>(...args) {
 			`Each string path-segment must be a plain prop-name. (ie. contain no "/" separators) @segments(${pathSegments})`);
 	}*/
 	
-	/*let selectedData = DeepGet(store.getState(), Manager.storePath_mainData + "/" + pathSegments.join("/"));
+	/*let selectedData = DeepGet(store.getState(), manager.storePath_mainData + "/" + pathSegments.join("/"));
 	return selectedData;*/
 
-	return Manager.State(...Manager.storePath_mainData.split("/").concat(pathSegments as any));
+	return manager.State(...manager.storePath_mainData.split("/").concat(pathSegments as any));
 }
 /*function ConvertPathGetterFuncToPropChain(pathGetterFunc: Function) {
 	let pathStr = pathGetterFunc.toString().match(/return a\.(.+?);/)[1] as string;
@@ -64,7 +64,7 @@ export enum AccessLevel {
 	return GetData("userExtras", userID, "permissionGroups");
 }*/
 export function GetUserAccessLevel(userID: string) {
-	let groups = Manager.GetUserPermissionGroups(userID);
+	let groups = manager.GetUserPermissionGroups(userID);
 	if (groups == null) return AccessLevel.Basic;
 	
 	if (groups.admin) return AccessLevel.Admin;
@@ -73,17 +73,17 @@ export function GetUserAccessLevel(userID: string) {
 	//if (groups.basic) return AccessLevel.Basic;
 	Assert(false);
 }
-export function IsUserBasic(userID: string) { return (Manager.GetUserPermissionGroups(userID) || {} as any).basic; }
-export function IsUserVerified(userID: string) { return (Manager.GetUserPermissionGroups(userID) || {} as any).verified; }
-export function IsUserMod(userID: string) { return (Manager.GetUserPermissionGroups(userID) || {} as any).mod; }
-export function IsUserAdmin(userID: string) { return (Manager.GetUserPermissionGroups(userID) || {} as any).admin; }
+export function IsUserBasic(userID: string) { return (manager.GetUserPermissionGroups(userID) || {} as any).basic; }
+export function IsUserVerified(userID: string) { return (manager.GetUserPermissionGroups(userID) || {} as any).verified; }
+export function IsUserMod(userID: string) { return (manager.GetUserPermissionGroups(userID) || {} as any).mod; }
+export function IsUserAdmin(userID: string) { return (manager.GetUserPermissionGroups(userID) || {} as any).admin; }
 
 export function IsUserBasicOrAnon(userID: string) {
-	let permissionGroups = Manager.GetUserPermissionGroups(userID);
+	let permissionGroups = manager.GetUserPermissionGroups(userID);
 	return permissionGroups == null || permissionGroups.basic;
 }
 export function IsUserCreatorOrMod(userID: string, entity: Post | Thread) {
-	let permissionGroups = Manager.GetUserPermissionGroups(userID);
+	let permissionGroups = manager.GetUserPermissionGroups(userID);
 	if (permissionGroups == null) return false;
 	return (entity.creator == userID && permissionGroups.basic) || permissionGroups.mod;
 }
