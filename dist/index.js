@@ -12066,7 +12066,7 @@ var Thread = exports.Thread = function Thread(initialData) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.SubforumEntryUI_NC = exports.SubforumEntryUI = exports.SectionUI_NC = exports.SectionUI = exports.ForumUI_NC = exports.ForumUI = exports.columnWidths = undefined;
+exports.SubforumEntryUI = exports.SectionUI = exports.ForumUI = exports.columnWidths = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -12119,21 +12119,20 @@ var ForumUI_connector = function ForumUI_connector(state, _ref) {
         selectedThread: (0, _forum2.GetSelectedThread)()
     };
 };
-var ForumUI = exports.ForumUI = void 0;
 _Manager.manager.onPopulated.then(function () {
-    return exports.ForumUI = ForumUI = _Manager.manager.Connect(ForumUI_connector)(ForumUI_NC);
+    return exports.ForumUI = ForumUI = _Manager.manager.Connect(ForumUI_connector)(ForumUI);
 });
 
-var ForumUI_NC = exports.ForumUI_NC = function (_BaseComponentWithCon) {
-    _inherits(ForumUI_NC, _BaseComponentWithCon);
+var ForumUI = exports.ForumUI = function (_BaseComponentWithCon) {
+    _inherits(ForumUI, _BaseComponentWithCon);
 
-    function ForumUI_NC() {
-        _classCallCheck(this, ForumUI_NC);
+    function ForumUI() {
+        _classCallCheck(this, ForumUI);
 
-        return _possibleConstructorReturn(this, (ForumUI_NC.__proto__ || Object.getPrototypeOf(ForumUI_NC)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (ForumUI.__proto__ || Object.getPrototypeOf(ForumUI)).apply(this, arguments));
     }
 
-    _createClass(ForumUI_NC, [{
+    _createClass(ForumUI, [{
         key: "render",
         value: function render() {
             var _props = this.props,
@@ -12158,7 +12157,7 @@ var ForumUI_NC = exports.ForumUI_NC = function (_BaseComponentWithCon) {
         }
     }]);
 
-    return ForumUI_NC;
+    return ForumUI;
 }((0, _reactVextensions.BaseComponentWithConnector)(ForumUI_connector, {}));
 
 var SectionUI_connector = function SectionUI_connector(state, _ref2) {
@@ -12167,21 +12166,20 @@ var SectionUI_connector = function SectionUI_connector(state, _ref2) {
         subforums: (0, _forum.GetSectionSubforums)(section)
     };
 };
-var SectionUI = exports.SectionUI = void 0;
 _Manager.manager.onPopulated.then(function () {
-    return exports.SectionUI = SectionUI = _Manager.manager.Connect(SectionUI_connector)(SectionUI_NC);
+    return exports.SectionUI = SectionUI = _Manager.manager.Connect(SectionUI_connector)(SectionUI);
 });
 
-var SectionUI_NC = exports.SectionUI_NC = function (_BaseComponentWithCon2) {
-    _inherits(SectionUI_NC, _BaseComponentWithCon2);
+var SectionUI = exports.SectionUI = function (_BaseComponentWithCon2) {
+    _inherits(SectionUI, _BaseComponentWithCon2);
 
-    function SectionUI_NC() {
-        _classCallCheck(this, SectionUI_NC);
+    function SectionUI() {
+        _classCallCheck(this, SectionUI);
 
-        return _possibleConstructorReturn(this, (SectionUI_NC.__proto__ || Object.getPrototypeOf(SectionUI_NC)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (SectionUI.__proto__ || Object.getPrototypeOf(SectionUI)).apply(this, arguments));
     }
 
-    _createClass(SectionUI_NC, [{
+    _createClass(SectionUI, [{
         key: "render",
         value: function render() {
             var _props2 = this.props,
@@ -12199,7 +12197,7 @@ var SectionUI_NC = exports.SectionUI_NC = function (_BaseComponentWithCon2) {
         }
     }]);
 
-    return SectionUI_NC;
+    return SectionUI;
 }((0, _reactVextensions.BaseComponentWithConnector)(SectionUI_connector, {}));
 
 var SubforumEntryUI_connector = function SubforumEntryUI_connector(state, _ref3) {
@@ -12213,21 +12211,20 @@ var SubforumEntryUI_connector = function SubforumEntryUI_connector(state, _ref3)
         lastPostCreator: lastPost && _Manager.manager.GetUser(lastPost.creator)
     };
 };
-var SubforumEntryUI = exports.SubforumEntryUI = void 0;
 _Manager.manager.onPopulated.then(function () {
-    return exports.SubforumEntryUI = SubforumEntryUI = _Manager.manager.Connect(SubforumEntryUI_connector)(SubforumEntryUI_NC);
+    return exports.SubforumEntryUI = SubforumEntryUI = _Manager.manager.Connect(SubforumEntryUI_connector)(SubforumEntryUI);
 });
 
-var SubforumEntryUI_NC = exports.SubforumEntryUI_NC = function (_BaseComponentWithCon3) {
-    _inherits(SubforumEntryUI_NC, _BaseComponentWithCon3);
+var SubforumEntryUI = exports.SubforumEntryUI = function (_BaseComponentWithCon3) {
+    _inherits(SubforumEntryUI, _BaseComponentWithCon3);
 
-    function SubforumEntryUI_NC() {
-        _classCallCheck(this, SubforumEntryUI_NC);
+    function SubforumEntryUI() {
+        _classCallCheck(this, SubforumEntryUI);
 
-        return _possibleConstructorReturn(this, (SubforumEntryUI_NC.__proto__ || Object.getPrototypeOf(SubforumEntryUI_NC)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (SubforumEntryUI.__proto__ || Object.getPrototypeOf(SubforumEntryUI)).apply(this, arguments));
     }
 
-    _createClass(SubforumEntryUI_NC, [{
+    _createClass(SubforumEntryUI, [{
         key: "render",
         value: function render() {
             var _props3 = this.props,
@@ -12248,7 +12245,7 @@ var SubforumEntryUI_NC = exports.SubforumEntryUI_NC = function (_BaseComponentWi
         }
     }]);
 
-    return SubforumEntryUI_NC;
+    return SubforumEntryUI;
 }((0, _reactVextensions.BaseComponentWithConnector)(SubforumEntryUI_connector, {}));
 
 /***/ }),
@@ -12285,7 +12282,7 @@ module.exports = require("react-vscrollview");
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.SubforumUI_NC = exports.SubforumUI = exports.columnWidths = undefined;
+exports.SubforumUI = exports.columnWidths = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -12364,21 +12361,20 @@ var SubforumUI_connector = function SubforumUI_connector(state, _ref) {
         threads: (0, _forum.GetSubforumThreads)(subforum._id)
     };
 };
-var SubforumUI = exports.SubforumUI = void 0;
 _Manager.manager.onPopulated.then(function () {
-    return exports.SubforumUI = SubforumUI = _Manager.manager.Connect(SubforumUI_connector)(SubforumUI_NC);
+    return exports.SubforumUI = SubforumUI = _Manager.manager.Connect(SubforumUI_connector)(SubforumUI);
 });
 
-var SubforumUI_NC = exports.SubforumUI_NC = function (_BaseComponentWithCon) {
-    _inherits(SubforumUI_NC, _BaseComponentWithCon);
+var SubforumUI = exports.SubforumUI = function (_BaseComponentWithCon) {
+    _inherits(SubforumUI, _BaseComponentWithCon);
 
-    function SubforumUI_NC() {
-        _classCallCheck(this, SubforumUI_NC);
+    function SubforumUI() {
+        _classCallCheck(this, SubforumUI);
 
-        return _possibleConstructorReturn(this, (SubforumUI_NC.__proto__ || Object.getPrototypeOf(SubforumUI_NC)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (SubforumUI.__proto__ || Object.getPrototypeOf(SubforumUI)).apply(this, arguments));
     }
 
-    _createClass(SubforumUI_NC, [{
+    _createClass(SubforumUI, [{
         key: "render",
         value: function render() {
             var _props = this.props,
@@ -12400,10 +12396,10 @@ var SubforumUI_NC = exports.SubforumUI_NC = function (_BaseComponentWithCon) {
         }
     }]);
 
-    return SubforumUI_NC;
+    return SubforumUI;
 }((0, _reactVextensions.BaseComponentWithConnector)(SubforumUI_connector, {}));
 
-SubforumUI_NC.defaultProps = { subNavBarWidth: 0 };
+SubforumUI.defaultProps = { subNavBarWidth: 0 };
 
 var ActionBar_Left = function (_BaseComponent) {
     _inherits(ActionBar_Left, _BaseComponent);
@@ -13662,7 +13658,7 @@ module.exports = require("react-vmessagebox");
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.ThreadEntryUI_NC = exports.ThreadEntryUI = undefined;
+exports.ThreadEntryUI = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -13703,21 +13699,20 @@ var ThreadEntryUI_connector = function ThreadEntryUI_connector(state, _ref) {
         lastPostCreator: lastPost && _Manager.manager.GetUser(lastPost.creator)
     };
 };
-var ThreadEntryUI = exports.ThreadEntryUI = void 0;
 _Manager.manager.onPopulated.then(function () {
-    return exports.ThreadEntryUI = ThreadEntryUI = _Manager.manager.Connect(ThreadEntryUI_connector)(ThreadEntryUI_NC);
+    return exports.ThreadEntryUI = ThreadEntryUI = _Manager.manager.Connect(ThreadEntryUI_connector)(ThreadEntryUI);
 });
 
-var ThreadEntryUI_NC = exports.ThreadEntryUI_NC = function (_BaseComponentWithCon) {
-    _inherits(ThreadEntryUI_NC, _BaseComponentWithCon);
+var ThreadEntryUI = exports.ThreadEntryUI = function (_BaseComponentWithCon) {
+    _inherits(ThreadEntryUI, _BaseComponentWithCon);
 
-    function ThreadEntryUI_NC() {
-        _classCallCheck(this, ThreadEntryUI_NC);
+    function ThreadEntryUI() {
+        _classCallCheck(this, ThreadEntryUI);
 
-        return _possibleConstructorReturn(this, (ThreadEntryUI_NC.__proto__ || Object.getPrototypeOf(ThreadEntryUI_NC)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (ThreadEntryUI.__proto__ || Object.getPrototypeOf(ThreadEntryUI)).apply(this, arguments));
     }
 
-    _createClass(ThreadEntryUI_NC, [{
+    _createClass(ThreadEntryUI, [{
         key: "render",
         value: function render() {
             var _props = this.props,
@@ -13738,7 +13733,7 @@ var ThreadEntryUI_NC = exports.ThreadEntryUI_NC = function (_BaseComponentWithCo
         }
     }]);
 
-    return ThreadEntryUI_NC;
+    return ThreadEntryUI;
 }((0, _reactVextensions.BaseComponentWithConnector)(ThreadEntryUI_connector, { editing: false, dataError: null }));
 
 /***/ }),
@@ -14408,7 +14403,7 @@ var AddSubforum = exports.AddSubforum = function (_Command) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.DetailsDropdown_NC = exports.DetailsDropdown = exports.ThreadUI_NC = exports.ThreadUI = undefined;
+exports.DetailsDropdown = exports.ThreadUI = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -14491,21 +14486,20 @@ var ThreadUI_connector = function ThreadUI_connector(state, _ref) {
         posts: (0, _forum.GetThreadPosts)(thread)
     };
 };
-var ThreadUI = exports.ThreadUI = void 0;
 _Manager.manager.onPopulated.then(function () {
-    return exports.ThreadUI = ThreadUI = _Manager.manager.Connect(ThreadUI_connector)(ThreadUI_NC);
+    return exports.ThreadUI = ThreadUI = _Manager.manager.Connect(ThreadUI_connector)(ThreadUI);
 });
 
-var ThreadUI_NC = exports.ThreadUI_NC = function (_BaseComponentWithCon) {
-    _inherits(ThreadUI_NC, _BaseComponentWithCon);
+var ThreadUI = exports.ThreadUI = function (_BaseComponentWithCon) {
+    _inherits(ThreadUI, _BaseComponentWithCon);
 
-    function ThreadUI_NC() {
-        _classCallCheck(this, ThreadUI_NC);
+    function ThreadUI() {
+        _classCallCheck(this, ThreadUI);
 
-        return _possibleConstructorReturn(this, (ThreadUI_NC.__proto__ || Object.getPrototypeOf(ThreadUI_NC)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (ThreadUI.__proto__ || Object.getPrototypeOf(ThreadUI)).apply(this, arguments));
     }
 
-    _createClass(ThreadUI_NC, [{
+    _createClass(ThreadUI, [{
         key: "render",
         value: function render() {
             var _props = this.props,
@@ -14523,10 +14517,10 @@ var ThreadUI_NC = exports.ThreadUI_NC = function (_BaseComponentWithCon) {
         }
     }]);
 
-    return ThreadUI_NC;
+    return ThreadUI;
 }((0, _reactVextensions.BaseComponentWithConnector)(ThreadUI_connector, {}));
 
-ThreadUI_NC.defaultProps = { subNavBarWidth: 0 };
+ThreadUI.defaultProps = { subNavBarWidth: 0 };
 
 var ReplyBox = function (_BaseComponent) {
     _inherits(ReplyBox, _BaseComponent);
@@ -14621,21 +14615,20 @@ var DetailsDropdown_connector = function DetailsDropdown_connector(state, _ref2)
         posts: (0, _forum.GetThreadPosts)(thread)
     };
 };
-var DetailsDropdown = exports.DetailsDropdown = void 0;
 _Manager.manager.onPopulated.then(function () {
-    return exports.DetailsDropdown = DetailsDropdown = _Manager.manager.Connect(DetailsDropdown_connector)(DetailsDropdown_NC);
+    return exports.DetailsDropdown = DetailsDropdown = _Manager.manager.Connect(DetailsDropdown_connector)(DetailsDropdown);
 });
 
-var DetailsDropdown_NC = exports.DetailsDropdown_NC = function (_BaseComponentWithCon2) {
-    _inherits(DetailsDropdown_NC, _BaseComponentWithCon2);
+var DetailsDropdown = exports.DetailsDropdown = function (_BaseComponentWithCon2) {
+    _inherits(DetailsDropdown, _BaseComponentWithCon2);
 
-    function DetailsDropdown_NC() {
-        _classCallCheck(this, DetailsDropdown_NC);
+    function DetailsDropdown() {
+        _classCallCheck(this, DetailsDropdown);
 
-        return _possibleConstructorReturn(this, (DetailsDropdown_NC.__proto__ || Object.getPrototypeOf(DetailsDropdown_NC)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (DetailsDropdown.__proto__ || Object.getPrototypeOf(DetailsDropdown)).apply(this, arguments));
     }
 
-    _createClass(DetailsDropdown_NC, [{
+    _createClass(DetailsDropdown, [{
         key: "render",
         value: function render() {
             var _this6 = this;
@@ -14719,7 +14712,7 @@ var DetailsDropdown_NC = exports.DetailsDropdown_NC = function (_BaseComponentWi
         }
     }]);
 
-    return DetailsDropdown_NC;
+    return DetailsDropdown;
 }((0, _reactVextensions.BaseComponentWithConnector)(DetailsDropdown_connector, { dataError: null }));
 
 var ActionBar_Right = function (_BaseComponent3) {
@@ -14758,7 +14751,7 @@ var ActionBar_Right = function (_BaseComponent3) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.PostUI_NC = exports.PostUI = undefined;
+exports.PostUI = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -14824,21 +14817,20 @@ var PostUI_connector = function PostUI_connector(state, _ref) {
         creator: _Manager.manager.GetUser(post.creator)
     };
 };
-var PostUI = exports.PostUI = void 0;
 _Manager.manager.onPopulated.then(function () {
-    return exports.PostUI = PostUI = _Manager.manager.Connect(PostUI_connector)(PostUI_NC);
+    return exports.PostUI = PostUI = _Manager.manager.Connect(PostUI_connector)(PostUI);
 });
 
-var PostUI_NC = exports.PostUI_NC = function (_BaseComponentWithCon) {
-    _inherits(PostUI_NC, _BaseComponentWithCon);
+var PostUI = exports.PostUI = function (_BaseComponentWithCon) {
+    _inherits(PostUI, _BaseComponentWithCon);
 
-    function PostUI_NC() {
-        _classCallCheck(this, PostUI_NC);
+    function PostUI() {
+        _classCallCheck(this, PostUI);
 
-        return _possibleConstructorReturn(this, (PostUI_NC.__proto__ || Object.getPrototypeOf(PostUI_NC)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (PostUI.__proto__ || Object.getPrototypeOf(PostUI)).apply(this, arguments));
     }
 
-    _createClass(PostUI_NC, [{
+    _createClass(PostUI, [{
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -14924,7 +14916,7 @@ var PostUI_NC = exports.PostUI_NC = function (_BaseComponentWithCon) {
         }
     }]);
 
-    return PostUI_NC;
+    return PostUI;
 }((0, _reactVextensions.BaseComponentWithConnector)(PostUI_connector, { editing: false, dataError: null }));
 
 /***/ }),

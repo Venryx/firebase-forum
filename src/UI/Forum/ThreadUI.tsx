@@ -27,8 +27,8 @@ import {GetUpdates} from "../../Utils/Database/DatabaseHelpers";
 let ThreadUI_connector = (state, {thread}: {thread: Thread, subNavBarWidth?: number})=> ({
 	posts: GetThreadPosts(thread),
 });
-export let ThreadUI: typeof ThreadUI_NC; manager.onPopulated.then(()=>ThreadUI = manager.Connect(ThreadUI_connector)(ThreadUI_NC));
-export class ThreadUI_NC extends BaseComponentWithConnector(ThreadUI_connector, {}) {
+manager.onPopulated.then(()=>(ThreadUI as any) = manager.Connect(ThreadUI_connector)(ThreadUI));
+export class ThreadUI extends BaseComponentWithConnector(ThreadUI_connector, {}) {
 	static defaultProps = {subNavBarWidth: 0};
 	render() {
 		let {thread, posts} = this.props;
@@ -124,8 +124,8 @@ class ActionBar_Left extends BaseComponent<ActionBar_LeftProps, {}> {
 let DetailsDropdown_connector = (state, {thread}: {thread: Thread})=> ({
 	posts: GetThreadPosts(thread),
 });
-export let DetailsDropdown: typeof DetailsDropdown_NC; manager.onPopulated.then(()=>DetailsDropdown = manager.Connect(DetailsDropdown_connector)(DetailsDropdown_NC));
-export class DetailsDropdown_NC extends BaseComponentWithConnector(DetailsDropdown_connector, {dataError: null as string}) {
+manager.onPopulated.then(()=>(DetailsDropdown as any) = manager.Connect(DetailsDropdown_connector)(DetailsDropdown));
+export class DetailsDropdown extends BaseComponentWithConnector(DetailsDropdown_connector, {dataError: null as string}) {
 	detailsUI: ThreadDetailsUI;
 	render() {
 		let {thread, posts} = this.props;

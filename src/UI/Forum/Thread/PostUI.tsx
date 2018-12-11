@@ -18,8 +18,8 @@ import {IsUserCreatorOrMod} from "../../../General";
 let PostUI_connector = (state, {post}: {index: number, thread: Thread, post: Post})=> ({
 	creator: manager.GetUser(post.creator),
 });
-export let PostUI: typeof PostUI_NC; manager.onPopulated.then(()=>PostUI = manager.Connect(PostUI_connector)(PostUI_NC));
-export class PostUI_NC extends BaseComponentWithConnector(PostUI_connector, {editing: false, dataError: null as string}) {
+manager.onPopulated.then(()=>(PostUI as any) = manager.Connect(PostUI_connector)(PostUI));
+export class PostUI extends BaseComponentWithConnector(PostUI_connector, {editing: false, dataError: null as string}) {
 	postEditorUI: PostEditorUI;
 	render() {
 		let {index, thread, post, creator} = this.props;

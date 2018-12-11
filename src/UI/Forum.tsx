@@ -26,8 +26,8 @@ let ForumUI_connector = (state, {}: {})=> ({
 	selectedSubforum: GetSelectedSubforum(),
 	selectedThread: GetSelectedThread(),
 });
-export let ForumUI: typeof ForumUI_NC; manager.onPopulated.then(()=>ForumUI = manager.Connect(ForumUI_connector)(ForumUI_NC));
-export class ForumUI_NC extends BaseComponentWithConnector(ForumUI_connector, {}) {
+manager.onPopulated.then(()=>(ForumUI as any) = manager.Connect(ForumUI_connector)(ForumUI));
+export class ForumUI extends BaseComponentWithConnector(ForumUI_connector, {}) {
 	render() {
 		let {sections, selectedSubforum, selectedThread} = this.props;
 
@@ -64,8 +64,8 @@ export class ForumUI_NC extends BaseComponentWithConnector(ForumUI_connector, {}
 let SectionUI_connector = (state, {section}: {section: Section})=> ({
 	subforums: GetSectionSubforums(section),
 });
-export let SectionUI: typeof SectionUI_NC; manager.onPopulated.then(()=>SectionUI = manager.Connect(SectionUI_connector)(SectionUI_NC));
-export class SectionUI_NC extends BaseComponentWithConnector(SectionUI_connector, {}) {
+manager.onPopulated.then(()=>(SectionUI as any) = manager.Connect(SectionUI_connector)(SectionUI));
+export class SectionUI extends BaseComponentWithConnector(SectionUI_connector, {}) {
 	render() {
 		let {section, subforums} = this.props;
 		let userID = manager.GetUserID();
@@ -107,8 +107,8 @@ let SubforumEntryUI_connector = (state, {subforum}: {index: number, last: boolea
 		lastPostCreator: lastPost && manager.GetUser(lastPost.creator),
 	};
 };
-export let SubforumEntryUI: typeof SubforumEntryUI_NC; manager.onPopulated.then(()=>SubforumEntryUI = manager.Connect(SubforumEntryUI_connector)(SubforumEntryUI_NC));
-export class SubforumEntryUI_NC extends BaseComponentWithConnector(SubforumEntryUI_connector, {}) {
+manager.onPopulated.then(()=>(SubforumEntryUI as any) = manager.Connect(SubforumEntryUI_connector)(SubforumEntryUI));
+export class SubforumEntryUI extends BaseComponentWithConnector(SubforumEntryUI_connector, {}) {
 	render() {
 		let {index, last, subforum, threads, lastPost, lastPostThread, lastPostCreator} = this.props;
 		//let toURL = new VURL(null, [subforum._id+""]);

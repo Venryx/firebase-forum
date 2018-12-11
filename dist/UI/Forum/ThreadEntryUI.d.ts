@@ -1,8 +1,7 @@
 import { BaseComponent } from "react-vextensions";
 import { Thread } from "../../Store/firebase/forum/@Thread";
 import { Post } from "../../Store/firebase/forum/@Post";
-export declare let ThreadEntryUI: typeof ThreadEntryUI_NC;
-declare const ThreadEntryUI_NC_base: new (..._: any[]) => BaseComponent<{
+declare const ThreadEntryUI_base: new (..._: any[]) => BaseComponent<{
     index: number;
     last: boolean;
     thread: Thread;
@@ -15,6 +14,6 @@ declare const ThreadEntryUI_NC_base: new (..._: any[]) => BaseComponent<{
     editing: boolean;
     dataError: string;
 }>;
-export declare class ThreadEntryUI_NC extends ThreadEntryUI_NC_base {
+export declare class ThreadEntryUI extends ThreadEntryUI_base {
     render(): JSX.Element;
 }

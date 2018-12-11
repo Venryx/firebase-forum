@@ -2,8 +2,7 @@ import { BaseComponent } from "react-vextensions";
 import { PostEditorUI } from "./PostEditorUI";
 import { Thread } from "../../../Store/firebase/forum/@Thread";
 import { Post } from "../../../Store/firebase/forum/@Post";
-export declare let PostUI: typeof PostUI_NC;
-declare const PostUI_NC_base: new (..._: any[]) => BaseComponent<{
+declare const PostUI_base: new (..._: any[]) => BaseComponent<{
     index: number;
     thread: Thread;
     post: Post;
@@ -13,7 +12,7 @@ declare const PostUI_NC_base: new (..._: any[]) => BaseComponent<{
     editing: boolean;
     dataError: string;
 }>;
-export declare class PostUI_NC extends PostUI_NC_base {
+export declare class PostUI extends PostUI_base {
     postEditorUI: PostEditorUI;
     render(): JSX.Element;
 }

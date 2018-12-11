@@ -19,8 +19,8 @@ let ThreadEntryUI_connector = (state, {thread}: {index: number, last: boolean, t
 		lastPostCreator: lastPost && manager.GetUser(lastPost.creator),
 	});
 };
-export let ThreadEntryUI: typeof ThreadEntryUI_NC; manager.onPopulated.then(()=>ThreadEntryUI = manager.Connect(ThreadEntryUI_connector)(ThreadEntryUI_NC));
-export class ThreadEntryUI_NC extends BaseComponentWithConnector(ThreadEntryUI_connector, {editing: false, dataError: null as string}) {
+manager.onPopulated.then(()=>(ThreadEntryUI as any) = manager.Connect(ThreadEntryUI_connector)(ThreadEntryUI));
+export class ThreadEntryUI extends BaseComponentWithConnector(ThreadEntryUI_connector, {editing: false, dataError: null as string}) {
 	render() {
 		let {index, last, thread, creator, posts, lastPost, lastPostCreator} = this.props;
 		let toURL = new VURL(null, ["threads", thread._id+""]);

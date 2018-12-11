@@ -29,8 +29,8 @@ let SubforumUI_connector = (state, {subforum}: {subforum: Subforum, subNavBarWid
 		threads: GetSubforumThreads(subforum._id),
 	};
 };
-export let SubforumUI: typeof SubforumUI_NC; manager.onPopulated.then(()=>SubforumUI = manager.Connect(SubforumUI_connector)(SubforumUI_NC));
-export class SubforumUI_NC extends BaseComponentWithConnector(SubforumUI_connector, {}) {
+manager.onPopulated.then(()=>(SubforumUI as any) = manager.Connect(SubforumUI_connector)(SubforumUI));
+export class SubforumUI extends BaseComponentWithConnector(SubforumUI_connector, {}) {
 	static defaultProps = {subNavBarWidth: 0};
 	render() {
 		let {subforum, subNavBarWidth, threads, permissions} = this.props;
