@@ -55,6 +55,7 @@ export function GetThreads(): Thread[] {
 }
 export function GetSubforumThreads(subforumID: number): Thread[] {
 	let threads = GetThreads();
+	if (threads.filter(a=>a == null).length) return emptyArray;
 	return CachedTransform("GetSubforumThreads", [subforumID], threads, ()=>threads.filter(thread=>thread.subforum == subforumID));
 }
 export function GetSubforumLastPost(subforumID: number): Post {

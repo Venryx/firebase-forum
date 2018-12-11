@@ -642,6 +642,9 @@ function GetThreads() {
 }
 function GetSubforumThreads(subforumID) {
     var threads = GetThreads();
+    if (threads.filter(function (a) {
+        return a == null;
+    }).length) return _General.emptyArray;
     return (0, _VCache.CachedTransform)("GetSubforumThreads", [subforumID], threads, function () {
         return threads.filter(function (thread) {
             return thread.subforum == subforumID;
