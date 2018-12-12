@@ -9,7 +9,7 @@ import {Post} from "../../../Store/firebase/forum/@Post";
 import {ShowMessageBox} from "react-vmessagebox";
 import {DeletePost} from "../../../Server/Commands/DeletePost";
 import {UpdatePost} from "../../../Server/Commands/UpdatePost";
-import {Manager, manager} from "../../../Manager";
+import {Manager, manager, OnPopulated} from "../../../Manager";
 import { GetUpdates } from "../../../Utils/Database/DatabaseHelpers";
 import {IsUserCreatorOrMod} from "../../../General";
 
@@ -18,7 +18,7 @@ import {IsUserCreatorOrMod} from "../../../General";
 let PostUI_connector = (state, {post}: {index: number, thread: Thread, post: Post})=> ({
 	creator: manager.GetUser(post.creator),
 });
-manager.onPopulated.then(()=>(PostUI as any) = manager.Connect(PostUI_connector)(PostUI));
+OnPopulated(()=>(PostUI as any) = manager.Connect(PostUI_connector)(PostUI));
 export class PostUI extends BaseComponentWithConnector(PostUI_connector, {editing: false, dataError: null as string}) {
 	postEditorUI: PostEditorUI;
 	render() {

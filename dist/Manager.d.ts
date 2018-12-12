@@ -21,10 +21,9 @@ export declare type Omit<T, K extends keyof T> = Pick<T, ({
     [P in K]: never;
 })[keyof T]>;
 export declare class Manager {
-    onPopulated: Promise<{}>;
-    onPopulated_resolve: Function;
-    Populate(data: Omit<Manager, "onPopulated" | "onPopulated_resolve" | "Populate">): void;
-    store: any;
+    Populate(data: Omit<Manager, "Populate" | "store">): void;
+    GetStore: () => any;
+    readonly store: any;
     storePath_mainData: string;
     storePath_dbData: string;
     Link: new () => (BaseComponent<Link_Props, {}> & {
@@ -47,3 +46,5 @@ export declare class Manager {
     MarkdownRenderer: any;
 }
 export declare const manager: Manager;
+export declare let OnPopulated_listeners: any[];
+export declare function OnPopulated(listener: () => any): void;

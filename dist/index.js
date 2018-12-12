@@ -234,9 +234,11 @@ __webpack_require__(127);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.manager = exports.Manager = exports.PermissionGroupSet = undefined;
+exports.OnPopulated_listeners = exports.manager = exports.Manager = exports.PermissionGroupSet = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+exports.OnPopulated = OnPopulated;
 
 var _Logging = __webpack_require__(3);
 
@@ -248,13 +250,8 @@ var PermissionGroupSet = exports.PermissionGroupSet = function PermissionGroupSe
 
 var Manager = exports.Manager = function () {
     function Manager() {
-        var _this = this;
-
         _classCallCheck(this, Manager);
 
-        this.onPopulated = new Promise(function (resolve, reject) {
-            return _this.onPopulated_resolve = resolve;
-        });
         this.logTypes = new _Logging.LogTypes();
     }
 
@@ -262,7 +259,14 @@ var Manager = exports.Manager = function () {
         key: "Populate",
         value: function Populate(data) {
             this.Extend(data);
-            this.onPopulated_resolve();
+            OnPopulated_listeners.forEach(function (a) {
+                return a();
+            });
+        }
+    }, {
+        key: "store",
+        get: function get() {
+            return this.GetStore();
         }
     }]);
 
@@ -270,6 +274,10 @@ var Manager = exports.Manager = function () {
 }();
 
 var manager = exports.manager = new Manager();
+var OnPopulated_listeners = exports.OnPopulated_listeners = [];
+function OnPopulated(listener) {
+    OnPopulated_listeners.push(listener);
+}
 
 /***/ }),
 /* 3 */
@@ -12119,17 +12127,20 @@ var ForumUI_connector = function ForumUI_connector(state, _ref) {
         selectedThread: (0, _forum2.GetSelectedThread)()
     };
 };
-_Manager.manager.onPopulated.then(function () {
-    return exports.ForumUI = ForumUI = _Manager.manager.Connect(ForumUI_connector)(ForumUI);
+var wrapped = false;
+(0, _Manager.OnPopulated)(function () {
+    exports.ForumUI = ForumUI = _Manager.manager.Connect(ForumUI_connector)(ForumUI);
+    wrapped = true;
 });
 
 var ForumUI = exports.ForumUI = function (_BaseComponentWithCon) {
     _inherits(ForumUI, _BaseComponentWithCon);
 
-    function ForumUI() {
+    function ForumUI(props) {
         _classCallCheck(this, ForumUI);
 
-        return _possibleConstructorReturn(this, (ForumUI.__proto__ || Object.getPrototypeOf(ForumUI)).apply(this, arguments));
+        Assert(wrapped, "ForumUI is being created before the class has been wrapped by Connect()!");
+        return _possibleConstructorReturn(this, (ForumUI.__proto__ || Object.getPrototypeOf(ForumUI)).call(this, props));
     }
 
     _createClass(ForumUI, [{
@@ -12166,7 +12177,7 @@ var SectionUI_connector = function SectionUI_connector(state, _ref2) {
         subforums: (0, _forum.GetSectionSubforums)(section)
     };
 };
-_Manager.manager.onPopulated.then(function () {
+(0, _Manager.OnPopulated)(function () {
     return exports.SectionUI = SectionUI = _Manager.manager.Connect(SectionUI_connector)(SectionUI);
 });
 
@@ -12211,7 +12222,7 @@ var SubforumEntryUI_connector = function SubforumEntryUI_connector(state, _ref3)
         lastPostCreator: lastPost && _Manager.manager.GetUser(lastPost.creator)
     };
 };
-_Manager.manager.onPopulated.then(function () {
+(0, _Manager.OnPopulated)(function () {
     return exports.SubforumEntryUI = SubforumEntryUI = _Manager.manager.Connect(SubforumEntryUI_connector)(SubforumEntryUI);
 });
 
@@ -12361,7 +12372,7 @@ var SubforumUI_connector = function SubforumUI_connector(state, _ref) {
         threads: (0, _forum.GetSubforumThreads)(subforum._id)
     };
 };
-_Manager.manager.onPopulated.then(function () {
+(0, _Manager.OnPopulated)(function () {
     return exports.SubforumUI = SubforumUI = _Manager.manager.Connect(SubforumUI_connector)(SubforumUI);
 });
 
@@ -13699,7 +13710,7 @@ var ThreadEntryUI_connector = function ThreadEntryUI_connector(state, _ref) {
         lastPostCreator: lastPost && _Manager.manager.GetUser(lastPost.creator)
     };
 };
-_Manager.manager.onPopulated.then(function () {
+(0, _Manager.OnPopulated)(function () {
     return exports.ThreadEntryUI = ThreadEntryUI = _Manager.manager.Connect(ThreadEntryUI_connector)(ThreadEntryUI);
 });
 
@@ -14486,7 +14497,7 @@ var ThreadUI_connector = function ThreadUI_connector(state, _ref) {
         posts: (0, _forum.GetThreadPosts)(thread)
     };
 };
-_Manager.manager.onPopulated.then(function () {
+(0, _Manager.OnPopulated)(function () {
     return exports.ThreadUI = ThreadUI = _Manager.manager.Connect(ThreadUI_connector)(ThreadUI);
 });
 
@@ -14615,7 +14626,7 @@ var DetailsDropdown_connector = function DetailsDropdown_connector(state, _ref2)
         posts: (0, _forum.GetThreadPosts)(thread)
     };
 };
-_Manager.manager.onPopulated.then(function () {
+(0, _Manager.OnPopulated)(function () {
     return exports.DetailsDropdown = DetailsDropdown = _Manager.manager.Connect(DetailsDropdown_connector)(DetailsDropdown);
 });
 
@@ -14817,7 +14828,7 @@ var PostUI_connector = function PostUI_connector(state, _ref) {
         creator: _Manager.manager.GetUser(post.creator)
     };
 };
-_Manager.manager.onPopulated.then(function () {
+(0, _Manager.OnPopulated)(function () {
     return exports.PostUI = PostUI = _Manager.manager.Connect(PostUI_connector)(PostUI);
 });
 

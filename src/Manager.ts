@@ -17,14 +17,13 @@ export type Link_Props = {
 
 export type Omit<T, K extends keyof T> = Pick<T, ({ [P in keyof T]: P } & { [P in K]: never })[keyof T]>;
 export class Manager {
-	onPopulated = new Promise((resolve, reject)=>this.onPopulated_resolve = resolve);
-	onPopulated_resolve: Function;
-	Populate(data: Omit<Manager, "onPopulated" | "onPopulated_resolve" | "Populate">) {
+	Populate(data: Omit<Manager, "Populate" | "store">) {
 		this.Extend(data);
-		this.onPopulated_resolve();
+		OnPopulated_listeners.forEach(a=>a());
 	}
 
-	store;
+	GetStore: ()=>any;
+	get store() { return this.GetStore(); }
 	storePath_mainData: string;
 	storePath_dbData: string;
 	Link: new ()=>(BaseComponent<Link_Props, {}>
@@ -51,3 +50,6 @@ export class Manager {
 	MarkdownRenderer: any; //(...props: any[])=>JSX.Element;
 }
 export const manager = new Manager();
+
+export let OnPopulated_listeners = [];
+export function OnPopulated(listener: ()=>any) { OnPopulated_listeners.push(listener); }

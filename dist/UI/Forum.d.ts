@@ -11,6 +11,7 @@ declare const ForumUI_base: new (..._: any[]) => BaseComponent<Partial<{
     selectedThread: Thread;
 }>, {}>;
 export declare class ForumUI extends ForumUI_base {
+    constructor(props: any);
     render(): JSX.Element;
 }
 declare const SectionUI_base: new (..._: any[]) => BaseComponent<{

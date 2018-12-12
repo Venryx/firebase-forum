@@ -12,7 +12,7 @@ import {ShowAddSubforumDialog} from "./Forum/AddSubforumDialog";
 import {ThreadUI} from "./Forum/ThreadUI";
 import {GetSections, GetSectionSubforums, GetSubforumThreads, GetThread} from "../Store/firebase/forum";
 import {GetSelectedSubforum, GetSelectedThread, ACTSubforumSelect, ACTThreadSelect} from "../Store/forum";
-import {Manager, manager} from "../Manager";
+import {Manager, manager, OnPopulated} from "../Manager";
 import {IsUserAdmin} from "../General";
 import {Thread} from "../Store/firebase/forum/@Thread";
 import { GetSubforumLastPost } from "../index";
@@ -26,8 +26,17 @@ let ForumUI_connector = (state, {}: {})=> ({
 	selectedSubforum: GetSelectedSubforum(),
 	selectedThread: GetSelectedThread(),
 });
-manager.onPopulated.then(()=>(ForumUI as any) = manager.Connect(ForumUI_connector)(ForumUI));
+let wrapped = false;
+OnPopulated(()=> {
+	(ForumUI as any) = manager.Connect(ForumUI_connector)(ForumUI)
+	wrapped = true;
+});
 export class ForumUI extends BaseComponentWithConnector(ForumUI_connector, {}) {
+	constructor(props) {
+		Assert(wrapped, "ForumUI is being created before the class has been wrapped by Connect()!");
+		super(props);
+	}
+	
 	render() {
 		let {sections, selectedSubforum, selectedThread} = this.props;
 
@@ -64,7 +73,7 @@ export class ForumUI extends BaseComponentWithConnector(ForumUI_connector, {}) {
 let SectionUI_connector = (state, {section}: {section: Section})=> ({
 	subforums: GetSectionSubforums(section),
 });
-manager.onPopulated.then(()=>(SectionUI as any) = manager.Connect(SectionUI_connector)(SectionUI));
+OnPopulated(()=>(SectionUI as any) = manager.Connect(SectionUI_connector)(SectionUI));
 export class SectionUI extends BaseComponentWithConnector(SectionUI_connector, {}) {
 	render() {
 		let {section, subforums} = this.props;
@@ -107,7 +116,7 @@ let SubforumEntryUI_connector = (state, {subforum}: {index: number, last: boolea
 		lastPostCreator: lastPost && manager.GetUser(lastPost.creator),
 	};
 };
-manager.onPopulated.then(()=>(SubforumEntryUI as any) = manager.Connect(SubforumEntryUI_connector)(SubforumEntryUI));
+OnPopulated(()=>(SubforumEntryUI as any) = manager.Connect(SubforumEntryUI_connector)(SubforumEntryUI));
 export class SubforumEntryUI extends BaseComponentWithConnector(SubforumEntryUI_connector, {}) {
 	render() {
 		let {index, last, subforum, threads, lastPost, lastPostThread, lastPostCreator} = this.props;

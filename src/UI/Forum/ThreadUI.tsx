@@ -19,7 +19,7 @@ import {AddPost} from "../../Server/Commands/AddPost";
 import {DeleteThread} from "../../Server/Commands/DeleteThread";
 import {ACTThreadSelect} from "../../Store/forum";
 import {ShowMessageBox} from "react-vmessagebox";
-import {Manager, PermissionGroupSet, manager} from "../../Manager";
+import {Manager, PermissionGroupSet, manager, OnPopulated} from "../../Manager";
 import {colors} from "../GlobalStyles";
 import {IsUserCreatorOrMod} from "../../General";
 import {GetUpdates} from "../../Utils/Database/DatabaseHelpers";
@@ -27,7 +27,7 @@ import {GetUpdates} from "../../Utils/Database/DatabaseHelpers";
 let ThreadUI_connector = (state, {thread}: {thread: Thread, subNavBarWidth?: number})=> ({
 	posts: GetThreadPosts(thread),
 });
-manager.onPopulated.then(()=>(ThreadUI as any) = manager.Connect(ThreadUI_connector)(ThreadUI));
+OnPopulated(()=>(ThreadUI as any) = manager.Connect(ThreadUI_connector)(ThreadUI));
 export class ThreadUI extends BaseComponentWithConnector(ThreadUI_connector, {}) {
 	static defaultProps = {subNavBarWidth: 0};
 	render() {
@@ -124,7 +124,7 @@ class ActionBar_Left extends BaseComponent<ActionBar_LeftProps, {}> {
 let DetailsDropdown_connector = (state, {thread}: {thread: Thread})=> ({
 	posts: GetThreadPosts(thread),
 });
-manager.onPopulated.then(()=>(DetailsDropdown as any) = manager.Connect(DetailsDropdown_connector)(DetailsDropdown));
+OnPopulated(()=>(DetailsDropdown as any) = manager.Connect(DetailsDropdown_connector)(DetailsDropdown));
 export class DetailsDropdown extends BaseComponentWithConnector(DetailsDropdown_connector, {dataError: null as string}) {
 	detailsUI: ThreadDetailsUI;
 	render() {

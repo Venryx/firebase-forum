@@ -7,7 +7,7 @@ import {GetThreadPosts, GetSubforumLastPost, GetThreadLastPost} from "../../Stor
 import {ACTThreadSelect} from "../../Store/forum";
 import {columnWidths} from "./SubforumUI";
 import {Post} from "../../Store/firebase/forum/@Post";
-import {Manager, manager} from "../../Manager";
+import {Manager, manager, OnPopulated} from "../../Manager";
 import {VURL} from "js-vextensions";
 
 let ThreadEntryUI_connector = (state, {thread}: {index: number, last: boolean, thread: Thread})=> {
@@ -19,7 +19,7 @@ let ThreadEntryUI_connector = (state, {thread}: {index: number, last: boolean, t
 		lastPostCreator: lastPost && manager.GetUser(lastPost.creator),
 	});
 };
-manager.onPopulated.then(()=>(ThreadEntryUI as any) = manager.Connect(ThreadEntryUI_connector)(ThreadEntryUI));
+OnPopulated(()=>(ThreadEntryUI as any) = manager.Connect(ThreadEntryUI_connector)(ThreadEntryUI));
 export class ThreadEntryUI extends BaseComponentWithConnector(ThreadEntryUI_connector, {editing: false, dataError: null as string}) {
 	render() {
 		let {index, last, thread, creator, posts, lastPost, lastPostCreator} = this.props;

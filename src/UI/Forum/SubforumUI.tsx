@@ -14,7 +14,7 @@ import {ShowAddThreadDialog} from "./AddThreadDialog";
 import {GetSubforumThreads} from "../../Store/firebase/forum";
 import {ThreadEntryUI} from "./ThreadEntryUI";
 import {ACTSubforumSelect} from "../../Store/forum";
-import {Manager, PermissionGroupSet, manager} from "../../Manager";
+import {Manager, PermissionGroupSet, manager, OnPopulated} from "../../Manager";
 import {UpdateSubforumDetails} from "../../Server/Commands/UpdateSubforumDetails";
 import {GetAsync, GetUpdates} from "../../Utils/Database/DatabaseHelpers";
 import {ShowMessageBox} from "react-vmessagebox";
@@ -29,7 +29,7 @@ let SubforumUI_connector = (state, {subforum}: {subforum: Subforum, subNavBarWid
 		threads: GetSubforumThreads(subforum._id),
 	};
 };
-manager.onPopulated.then(()=>(SubforumUI as any) = manager.Connect(SubforumUI_connector)(SubforumUI));
+OnPopulated(()=>(SubforumUI as any) = manager.Connect(SubforumUI_connector)(SubforumUI));
 export class SubforumUI extends BaseComponentWithConnector(SubforumUI_connector, {}) {
 	static defaultProps = {subNavBarWidth: 0};
 	render() {
