@@ -13269,15 +13269,15 @@ exports.ThreadDetailsUI = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _jsVextensions = __webpack_require__(10);
+
 var _react = __webpack_require__(97);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactVextensions = __webpack_require__(98);
-
 var _reactVcomponents = __webpack_require__(99);
 
-var _jsVextensions = __webpack_require__(10);
+var _reactVextensions = __webpack_require__(98);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13330,7 +13330,7 @@ var ThreadDetailsUI = exports.ThreadDetailsUI = function (_BaseComponent) {
     }, {
         key: "GetValidationError",
         value: function GetValidationError() {
-            return (0, _jsVextensions.GetErrorMessagesUnderElement)(GetDOM(this))[0];
+            return (0, _jsVextensions.GetErrorMessagesUnderElement)((0, _reactVextensions.GetDOM)(this))[0];
         }
     }, {
         key: "GetNewData",

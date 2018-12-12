@@ -1,17 +1,8 @@
+import { GetErrorMessagesUnderElement } from "js-vextensions";
 import React from "react";
-import {BaseComponent} from "react-vextensions";
-import {Pre} from "react-vcomponents";
-import {Column} from "react-vcomponents";
-import {Row} from "react-vcomponents";
-import {TextInput} from "react-vcomponents";
-import {Select} from "react-vcomponents";
-import {RowLR} from "react-vcomponents";
-import {CheckBox} from "react-vcomponents";
-import {ScrollView} from "react-vscrollview";
-import {Button} from "react-vcomponents";
-import {Spinner} from "react-vcomponents";
-import {Thread} from "../../../Store/firebase/forum/@Thread";
-import {GetErrorMessagesUnderElement} from "js-vextensions";
+import { Column, Pre, RowLR, TextInput } from "react-vcomponents";
+import { BaseComponent, GetDOM } from "react-vextensions";
+import { Thread } from "../../../Store/firebase/forum/@Thread";
 
 export type ThreadDetailsUI_Props = {baseData: Thread, forNew: boolean, enabled?: boolean, style?, onChange?: (newData: Thread)=>void}
 	& Partial<{creator: User}>;

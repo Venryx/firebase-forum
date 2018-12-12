@@ -40,8 +40,8 @@
   },
   "devDependencies": {
     "@types/firebase": "^2.4.31",
-    "@types/react": "^15.0.14",
-    "@types/react-redux": "^4.4.37",
+    "@types/react": "^16.7.13",
+    "@types/react-redux": "^6.0.11",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-loader": "^7.1.4",
@@ -50,16 +50,16 @@
     "firebase": "^3.6.5",
     "js-vextensions": "^0.0.1",
     "json-loader": "^0.5.4",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
-    "react-redux": "^4.4.5",
-    "react-redux-firebase": "^1.2.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-redux": "^6.0.0",
+    "react-redux-firebase": "^2.2.4",
     "react-vcomponents": "^0.0.1",
     "react-vextensions": "^0.0.1",
     "react-vmarkdown": "0.0.2",
     "react-vmessagebox": "0.0.1",
-    "react-vscrollview": "0.0.2",
-    "redux": "^3.6.0",
+    "react-vscrollview": "0.0.3",
+    "redux": "^4.0.1",
     "style-loader": "^0.13.0",
     "ts-loader": "^4.2.0",
     "typescript": "^2.8.3",
@@ -71,7 +71,6 @@
     "ajv": "^5.5.2",
     "ajv-keywords": "^2.1.1",
     "classnames": "^2.2.5",
-    "codemirror": "^5.25.2",
-    "react-redux-firebase": "^1.2.0"
+    "codemirror": "^5.25.2"
   }
 }
