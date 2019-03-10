@@ -21907,11 +21907,9 @@ function (_BaseComponentWithCon3) {
         })
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_vcomponents__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Manager__WEBPACK_IMPORTED_MODULE_5__["manager"].Link, {
         text: subforum.name,
-        actions: function actions(d) {
-          return d(new _Store_forum__WEBPACK_IMPORTED_MODULE_7__["ACTSubforumSelect"]({
-            id: subforum._id
-          }));
-        },
+        actions: [new _Store_forum__WEBPACK_IMPORTED_MODULE_7__["ACTSubforumSelect"]({
+          id: subforum._id
+        })],
         style: {
           fontSize: 18,
           flex: columnWidths[0]
@@ -21925,11 +21923,9 @@ function (_BaseComponentWithCon3) {
           flex: columnWidths[2],
           fontSize: 13
         },
-        actions: function actions(d) {
-          return lastPost && d(new _Store_forum__WEBPACK_IMPORTED_MODULE_7__["ACTThreadSelect"]({
-            id: lastPost.thread
-          }));
-        }
+        actions: lastPost == null ? [] : [new _Store_forum__WEBPACK_IMPORTED_MODULE_7__["ACTThreadSelect"]({
+          id: lastPost.thread
+        })]
       }, lastPostThread && lastPostCreator && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, lastPostThread.title, ", by ", lastPostCreator.displayName, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), !_Manager__WEBPACK_IMPORTED_MODULE_5__["manager"].FormatTime(lastPost.createdAt, "[calendar]").includes("/") ? _Manager__WEBPACK_IMPORTED_MODULE_5__["manager"].FormatTime(lastPost.createdAt, "[calendar]") : _Manager__WEBPACK_IMPORTED_MODULE_5__["manager"].FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")))));
     }
   }]);
@@ -24313,11 +24309,9 @@ function (_BaseComponentWithCon) {
         })
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_vcomponents__WEBPACK_IMPORTED_MODULE_2__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Manager__WEBPACK_IMPORTED_MODULE_6__["manager"].Link, {
         text: thread.title,
-        actions: function actions(d) {
-          return d(new _Store_forum__WEBPACK_IMPORTED_MODULE_4__["ACTThreadSelect"]({
-            id: thread._id
-          }));
-        },
+        actions: [new _Store_forum__WEBPACK_IMPORTED_MODULE_4__["ACTThreadSelect"]({
+          id: thread._id
+        })],
         style: {
           fontSize: 17,
           flex: _SubforumUI__WEBPACK_IMPORTED_MODULE_5__["columnWidths"][0]
@@ -24335,11 +24329,9 @@ function (_BaseComponentWithCon) {
           flex: _SubforumUI__WEBPACK_IMPORTED_MODULE_5__["columnWidths"][3],
           fontSize: 13
         },
-        actions: function actions(d) {
-          return lastPost && d(new _Store_forum__WEBPACK_IMPORTED_MODULE_4__["ACTThreadSelect"]({
-            id: lastPost.thread
-          }));
-        }
+        actions: lastPost == null ? [] : [new _Store_forum__WEBPACK_IMPORTED_MODULE_4__["ACTThreadSelect"]({
+          id: lastPost.thread
+        })]
       }, lastPostCreator && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "By ", lastPostCreator.displayName, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), !_Manager__WEBPACK_IMPORTED_MODULE_6__["manager"].FormatTime(lastPost.createdAt, "[calendar]").includes("/") ? _Manager__WEBPACK_IMPORTED_MODULE_6__["manager"].FormatTime(lastPost.createdAt, "[calendar]") : _Manager__WEBPACK_IMPORTED_MODULE_6__["manager"].FormatTime(lastPost.createdAt, "YYYY-MM-DD HH:mm:ss")))));
     }
   }]);
@@ -25472,7 +25464,7 @@ function (_BaseComponent) {
           return Change(newData.text = val);
         },
         options: Object(js_vextensions__WEBPACK_IMPORTED_MODULE_3__["E"])({
-          scrollbarStyle: "overlay",
+          //scrollbarStyle: "overlay",
           lineWrapping: true,
           readOnly: !enabled,
           placeholder: "Write your reply..."
@@ -25502,10 +25494,10 @@ PostEditorUI.defaultProps = {
 /* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 
 (function webpackUniversalModuleDefinition(root, factory) {
-  if (( false ? undefined : _typeof(exports)) === 'object' && ( false ? undefined : _typeof(module)) === 'object') module.exports = factory();else if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+  if (( false ? undefined : _typeof2(exports)) === 'object' && ( false ? undefined : _typeof2(module)) === 'object') module.exports = factory();else if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));else { var i, a; }
@@ -25719,101 +25711,157 @@ PostEditorUI.defaultProps = {
     /* 1 */
 
     /***/
-    function (module, exports, __webpack_require__) {
+    function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
-      Object.defineProperty(exports, "__esModule", {
-        value: true
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony import */
+
+
+      var _Editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+      /* harmony reexport (safe) */
+
+
+      __webpack_require__.d(__webpack_exports__, "MarkdownEditor", function () {
+        return _Editor__WEBPACK_IMPORTED_MODULE_0__["MarkdownEditor"];
       });
+      /* harmony import */
 
-      var _Editor = __webpack_require__(2);
 
-      Object.keys(_Editor).forEach(function (key) {
-        if (key === "default" || key === "__esModule") return;
-        Object.defineProperty(exports, key, {
-          enumerable: true,
-          get: function get() {
-            return _Editor[key];
-          }
-        });
-      });
+      var _Toolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+      /* harmony reexport (safe) */
 
-      var _Toolbar = __webpack_require__(11);
 
-      Object.keys(_Toolbar).forEach(function (key) {
-        if (key === "default" || key === "__esModule") return;
-        Object.defineProperty(exports, key, {
-          enumerable: true,
-          get: function get() {
-            return _Toolbar[key];
-          }
-        });
+      __webpack_require__.d(__webpack_exports__, "MarkdownToolbar", function () {
+        return _Toolbar__WEBPACK_IMPORTED_MODULE_1__["MarkdownToolbar"];
       });
       /***/
+
     },
     /* 2 */
 
     /***/
-    function (module, exports, __webpack_require__) {
+    function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.MarkdownEditor = undefined;
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
 
-      var _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
+
+      __webpack_require__.d(__webpack_exports__, "MarkdownEditor", function () {
+        return MarkdownEditor;
+      });
+      /* harmony import */
+
+
+      var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+      /* harmony import */
+
+
+      var classnames__WEBPACK_IMPORTED_MODULE_0___default =
+      /*#__PURE__*/
+      __webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+      /* harmony import */
+
+
+      var codemirror__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+      /* harmony import */
+
+
+      var codemirror__WEBPACK_IMPORTED_MODULE_1___default =
+      /*#__PURE__*/
+      __webpack_require__.n(codemirror__WEBPACK_IMPORTED_MODULE_1__);
+      /* harmony import */
+
+
+      var _Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
+      /* harmony import */
+
+
+      var codemirror_mode_xml_xml__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6);
+      /* harmony import */
+
+
+      var codemirror_mode_xml_xml__WEBPACK_IMPORTED_MODULE_3___default =
+      /*#__PURE__*/
+      __webpack_require__.n(codemirror_mode_xml_xml__WEBPACK_IMPORTED_MODULE_3__);
+      /* harmony import */
+
+
+      var codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7);
+      /* harmony import */
+
+
+      var codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_4___default =
+      /*#__PURE__*/
+      __webpack_require__.n(codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_4__);
+      /* harmony import */
+
+
+      var codemirror_addon_edit_continuelist__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9);
+      /* harmony import */
+
+
+      var codemirror_addon_edit_continuelist__WEBPACK_IMPORTED_MODULE_5___default =
+      /*#__PURE__*/
+      __webpack_require__.n(codemirror_addon_edit_continuelist__WEBPACK_IMPORTED_MODULE_5__);
+      /* harmony import */
+
+
+      var codemirror_addon_scroll_simplescrollbars__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(10);
+      /* harmony import */
+
+
+      var codemirror_addon_scroll_simplescrollbars__WEBPACK_IMPORTED_MODULE_6___default =
+      /*#__PURE__*/
+      __webpack_require__.n(codemirror_addon_scroll_simplescrollbars__WEBPACK_IMPORTED_MODULE_6__);
+      /* harmony import */
+
+
+      var _Toolbar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(11);
+      /* harmony import */
+
+
+      var react_vextensions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(13);
+      /* harmony import */
+
+
+      var react_vextensions__WEBPACK_IMPORTED_MODULE_8___default =
+      /*#__PURE__*/
+      __webpack_require__.n(react_vextensions__WEBPACK_IMPORTED_MODULE_8__);
+      /* harmony import */
+
+
+      var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(12);
+      /* harmony import */
+
+
+      var react__WEBPACK_IMPORTED_MODULE_9___default =
+      /*#__PURE__*/
+      __webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
+      /* harmony import */
+
+
+      var react_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(23);
+      /* harmony import */
+
+
+      var react_dom__WEBPACK_IMPORTED_MODULE_10___default =
+      /*#__PURE__*/
+      __webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_10__);
+
+      function _typeof(obj) {
+        if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+          _typeof = function _typeof(obj) {
+            return _typeof2(obj);
+          };
+        } else {
+          _typeof = function _typeof(obj) {
+            return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+          };
         }
 
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      var _classnames = __webpack_require__(3);
-
-      var _classnames2 = _interopRequireDefault(_classnames);
-
-      var _codemirror = __webpack_require__(4);
-
-      var _codemirror2 = _interopRequireDefault(_codemirror);
-
-      var _Formatter = __webpack_require__(5);
-
-      __webpack_require__(6);
-
-      __webpack_require__(7);
-
-      __webpack_require__(9);
-
-      __webpack_require__(10);
-
-      var _Toolbar = __webpack_require__(11);
-
-      var _reactVextensions = __webpack_require__(13);
-
-      var _react = __webpack_require__(12);
-
-      var _react2 = _interopRequireDefault(_react);
-
-      var _reactDom = __webpack_require__(23);
-
-      var _reactDom2 = _interopRequireDefault(_reactDom);
-
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-          default: obj
-        };
+        return _typeof(obj);
       }
 
       function _classCallCheck(instance, Constructor) {
@@ -25822,37 +25870,78 @@ PostEditorUI.defaultProps = {
         }
       }
 
+      function _defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+          var descriptor = props[i];
+          descriptor.enumerable = descriptor.enumerable || false;
+          descriptor.configurable = true;
+          if ("value" in descriptor) descriptor.writable = true;
+          Object.defineProperty(target, descriptor.key, descriptor);
+        }
+      }
+
+      function _createClass(Constructor, protoProps, staticProps) {
+        if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+        if (staticProps) _defineProperties(Constructor, staticProps);
+        return Constructor;
+      }
+
       function _possibleConstructorReturn(self, call) {
-        if (!self) {
+        if (call && (_typeof(call) === "object" || typeof call === "function")) {
+          return call;
+        }
+
+        return _assertThisInitialized(self);
+      }
+
+      function _assertThisInitialized(self) {
+        if (self === void 0) {
           throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
         }
 
-        return call && (_typeof(call) === "object" || typeof call === "function") ? call : self;
+        return self;
+      }
+
+      function _getPrototypeOf(o) {
+        _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+          return o.__proto__ || Object.getPrototypeOf(o);
+        };
+        return _getPrototypeOf(o);
       }
 
       function _inherits(subClass, superClass) {
         if (typeof superClass !== "function" && superClass !== null) {
-          throw new TypeError("Super expression must either be null or a function, not " + _typeof(superClass));
+          throw new TypeError("Super expression must either be null or a function");
         }
 
         subClass.prototype = Object.create(superClass && superClass.prototype, {
           constructor: {
             value: subClass,
-            enumerable: false,
             writable: true,
             configurable: true
           }
         });
-        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+        if (superClass) _setPrototypeOf(subClass, superClass);
       }
 
-      var MarkdownEditor = exports.MarkdownEditor = function (_BaseComponent) {
+      function _setPrototypeOf(o, p) {
+        _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+          o.__proto__ = p;
+          return o;
+        };
+
+        return _setPrototypeOf(o, p);
+      }
+
+      var MarkdownEditor =
+      /*#__PURE__*/
+      function (_BaseComponent) {
         _inherits(MarkdownEditor, _BaseComponent);
 
         function MarkdownEditor() {
           _classCallCheck(this, MarkdownEditor);
 
-          return _possibleConstructorReturn(this, (MarkdownEditor.__proto__ || Object.getPrototypeOf(MarkdownEditor)).apply(this, arguments));
+          return _possibleConstructorReturn(this, _getPrototypeOf(MarkdownEditor).apply(this, arguments));
         }
 
         _createClass(MarkdownEditor, [{
@@ -25866,7 +25955,7 @@ PostEditorUI.defaultProps = {
         }, {
           key: "componentDidMount",
           value: function componentDidMount() {
-            this.codeMirror = _codemirror2.default.fromTextArea(_reactDom2.default.findDOMNode(this.refs.codemirror), this.getOptions());
+            this.codeMirror = codemirror__WEBPACK_IMPORTED_MODULE_1___default.a.fromTextArea(react_dom__WEBPACK_IMPORTED_MODULE_10___default.a.findDOMNode(this.refs.codemirror), this.getOptions());
             this.codeMirror.on("change", this.codemirrorValueChanged);
             this.codeMirror.on("focus", this.focusChanged.bind(this, true));
             this.codeMirror.on("blur", this.focusChanged.bind(this, false));
@@ -25916,7 +26005,7 @@ PostEditorUI.defaultProps = {
           key: "updateCursorState",
           value: function updateCursorState() {
             this.SetState({
-              cursorState: (0, _Formatter.GetCursorState)(this.codeMirror)
+              cursorState: Object(_Formatter__WEBPACK_IMPORTED_MODULE_2__["GetCursorState"])(this.codeMirror)
             });
           }
         }, {
@@ -25929,21 +26018,21 @@ PostEditorUI.defaultProps = {
         }, {
           key: "render",
           value: function render() {
-            var _this2 = this;
+            var _this = this;
 
             var toolbar = this.props.toolbar;
-            var editorClassName = (0, _classnames2.default)("MDEditor_editor", {
+            var editorClassName = classnames__WEBPACK_IMPORTED_MODULE_0___default()("MDEditor_editor", {
               "MDEditor_editor--focused": this.state.isFocused
             });
-            return _react2.default.createElement("div", {
+            return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
               className: "MDEditor"
-            }, toolbar && _react2.default.createElement(_Toolbar.MarkdownToolbar, {
+            }, toolbar && react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_Toolbar__WEBPACK_IMPORTED_MODULE_7__["MarkdownToolbar"], {
               editor: function editor() {
-                return _this2;
+                return _this;
               }
-            }), _react2.default.createElement("div", {
+            }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
               className: editorClassName
-            }, _react2.default.createElement("textarea", {
+            }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("textarea", {
               ref: "codemirror",
               defaultValue: this.props.value,
               autoComplete: "off"
@@ -25952,7 +26041,7 @@ PostEditorUI.defaultProps = {
         }]);
 
         return MarkdownEditor;
-      }(_reactVextensions.BaseComponent);
+      }(react_vextensions__WEBPACK_IMPORTED_MODULE_8__["BaseComponent"]);
 
       MarkdownEditor.defaultProps = {
         toolbar: true
@@ -25985,7 +26074,7 @@ PostEditorUI.defaultProps = {
             var arg = arguments[i];
             if (!arg) continue;
 
-            var argType = _typeof(arg);
+            var argType = _typeof2(arg);
 
             if (argType === 'string' || argType === 'number') {
               classes.push(arg);
@@ -38415,7 +38504,7 @@ PostEditorUI.defaultProps = {
 
               if (start == null) {
                 pos = range$$1.head;
-              } else if (_typeof(start) == "object") {
+              } else if (_typeof2(start) == "object") {
                 pos = _clipPos(this.doc, start);
               } else {
                 pos = start ? range$$1.from() : range$$1.to();
@@ -40410,24 +40499,42 @@ PostEditorUI.defaultProps = {
     /* 5 */
 
     /***/
-    function (module, exports, __webpack_require__) {
+    function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
-      Object.defineProperty(exports, "__esModule", {
-        value: true
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "GetCursorState", function () {
+        return GetCursorState;
       });
-      exports.GetCursorState = GetCursorState;
-      exports.ApplyFormat = ApplyFormat;
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "ApplyFormat", function () {
+        return ApplyFormat;
+      });
 
       function _toConsumableArray(arr) {
+        return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+      }
+
+      function _nonIterableSpread() {
+        throw new TypeError("Invalid attempt to spread non-iterable instance");
+      }
+
+      function _iterableToArray(iter) {
+        if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+      }
+
+      function _arrayWithoutHoles(arr) {
         if (Array.isArray(arr)) {
-          for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+          for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
             arr2[i] = arr[i];
           }
 
           return arr2;
-        } else {
-          return Array.from(arr);
         }
       }
 
@@ -43255,50 +43362,73 @@ PostEditorUI.defaultProps = {
     /* 11 */
 
     /***/
-    function (module, exports, __webpack_require__) {
+    function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.MarkdownToolbar = undefined;
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
 
-      var _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
+
+      __webpack_require__.d(__webpack_exports__, "MarkdownToolbar", function () {
+        return MarkdownToolbar;
+      });
+      /* harmony import */
+
+
+      var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+      /* harmony import */
+
+
+      var react__WEBPACK_IMPORTED_MODULE_0___default =
+      /*#__PURE__*/
+      __webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+      /* harmony import */
+
+
+      var react_vextensions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+      /* harmony import */
+
+
+      var react_vextensions__WEBPACK_IMPORTED_MODULE_1___default =
+      /*#__PURE__*/
+      __webpack_require__.n(react_vextensions__WEBPACK_IMPORTED_MODULE_1__);
+      /* harmony import */
+
+
+      var _Icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(14);
+      /* harmony import */
+
+
+      var _Icons__WEBPACK_IMPORTED_MODULE_2___default =
+      /*#__PURE__*/
+      __webpack_require__.n(_Icons__WEBPACK_IMPORTED_MODULE_2__);
+      /* harmony import */
+
+
+      var _Formatter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
+      /* harmony import */
+
+
+      var react_vcomponents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(22);
+      /* harmony import */
+
+
+      var react_vcomponents__WEBPACK_IMPORTED_MODULE_4___default =
+      /*#__PURE__*/
+      __webpack_require__.n(react_vcomponents__WEBPACK_IMPORTED_MODULE_4__);
+
+      function _typeof(obj) {
+        if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+          _typeof = function _typeof(obj) {
+            return _typeof2(obj);
+          };
+        } else {
+          _typeof = function _typeof(obj) {
+            return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+          };
         }
 
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      var _react = __webpack_require__(12);
-
-      var _react2 = _interopRequireDefault(_react);
-
-      var _reactVextensions = __webpack_require__(13);
-
-      var _Icons = __webpack_require__(14);
-
-      var _Icons2 = _interopRequireDefault(_Icons);
-
-      var _Formatter = __webpack_require__(5);
-
-      var _reactVcomponents = __webpack_require__(22);
-
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-          default: obj
-        };
+        return _typeof(obj);
       }
 
       function _classCallCheck(instance, Constructor) {
@@ -43307,28 +43437,67 @@ PostEditorUI.defaultProps = {
         }
       }
 
+      function _defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+          var descriptor = props[i];
+          descriptor.enumerable = descriptor.enumerable || false;
+          descriptor.configurable = true;
+          if ("value" in descriptor) descriptor.writable = true;
+          Object.defineProperty(target, descriptor.key, descriptor);
+        }
+      }
+
+      function _createClass(Constructor, protoProps, staticProps) {
+        if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+        if (staticProps) _defineProperties(Constructor, staticProps);
+        return Constructor;
+      }
+
       function _possibleConstructorReturn(self, call) {
-        if (!self) {
+        if (call && (_typeof(call) === "object" || typeof call === "function")) {
+          return call;
+        }
+
+        return _assertThisInitialized(self);
+      }
+
+      function _assertThisInitialized(self) {
+        if (self === void 0) {
           throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
         }
 
-        return call && (_typeof(call) === "object" || typeof call === "function") ? call : self;
+        return self;
+      }
+
+      function _getPrototypeOf(o) {
+        _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+          return o.__proto__ || Object.getPrototypeOf(o);
+        };
+        return _getPrototypeOf(o);
       }
 
       function _inherits(subClass, superClass) {
         if (typeof superClass !== "function" && superClass !== null) {
-          throw new TypeError("Super expression must either be null or a function, not " + _typeof(superClass));
+          throw new TypeError("Super expression must either be null or a function");
         }
 
         subClass.prototype = Object.create(superClass && superClass.prototype, {
           constructor: {
             value: subClass,
-            enumerable: false,
             writable: true,
             configurable: true
           }
         });
-        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+        if (superClass) _setPrototypeOf(subClass, superClass);
+      }
+
+      function _setPrototypeOf(o, p) {
+        _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+          o.__proto__ = p;
+          return o;
+        };
+
+        return _setPrototypeOf(o, p);
       }
 
       var __rest = undefined && undefined.__rest || function (s, e) {
@@ -43344,23 +43513,25 @@ PostEditorUI.defaultProps = {
         return t;
       };
 
-      var MarkdownToolbar = exports.MarkdownToolbar = function (_BaseComponent) {
+      var MarkdownToolbar =
+      /*#__PURE__*/
+      function (_BaseComponent) {
         _inherits(MarkdownToolbar, _BaseComponent);
 
         function MarkdownToolbar() {
           _classCallCheck(this, MarkdownToolbar);
 
-          return _possibleConstructorReturn(this, (MarkdownToolbar.__proto__ || Object.getPrototypeOf(MarkdownToolbar)).apply(this, arguments));
+          return _possibleConstructorReturn(this, _getPrototypeOf(MarkdownToolbar).apply(this, arguments));
         }
 
         _createClass(MarkdownToolbar, [{
           key: "render",
           value: function render() {
-            var _props = this.props,
-                enabled = _props.enabled,
-                editor = _props.editor,
-                excludeCommands = _props.excludeCommands,
-                children = _props.children;
+            var _this$props = this.props,
+                enabled = _this$props.enabled,
+                editor = _this$props.editor,
+                excludeCommands = _this$props.excludeCommands,
+                children = _this$props.children;
             excludeCommands = excludeCommands || [];
             var commands = [{
               name: "h1",
@@ -43393,7 +43564,7 @@ PostEditorUI.defaultProps = {
               name: "link",
               label: "a"
             }];
-            return _react2.default.createElement(_reactVcomponents.Row, {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_vcomponents__WEBPACK_IMPORTED_MODULE_4__["Row"], {
               style: {
                 marginTop: 3,
                 marginBottom: 3
@@ -43401,7 +43572,7 @@ PostEditorUI.defaultProps = {
             }, commands.filter(function (a) {
               return excludeCommands.indexOf(a.name) == -1;
             }).map(function (command, index) {
-              return _react2.default.createElement(ToolBarButton, {
+              return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ToolBarButton, {
                 key: index,
                 enabled: enabled,
                 editor: editor,
@@ -43414,15 +43585,17 @@ PostEditorUI.defaultProps = {
         }]);
 
         return MarkdownToolbar;
-      }(_reactVextensions.BaseComponent);
+      }(react_vextensions__WEBPACK_IMPORTED_MODULE_1__["BaseComponent"]);
 
-      var ToolBarButton = function (_BaseComponent2) {
+      var ToolBarButton =
+      /*#__PURE__*/
+      function (_BaseComponent2) {
         _inherits(ToolBarButton, _BaseComponent2);
 
         function ToolBarButton() {
           _classCallCheck(this, ToolBarButton);
 
-          return _possibleConstructorReturn(this, (ToolBarButton.__proto__ || Object.getPrototypeOf(ToolBarButton)).apply(this, arguments));
+          return _possibleConstructorReturn(this, _getPrototypeOf(ToolBarButton).apply(this, arguments));
         }
 
         _createClass(ToolBarButton, [{
@@ -43435,15 +43608,18 @@ PostEditorUI.defaultProps = {
                 first = _a.first,
                 rest = __rest(_a, ["editor", "command", "label", "first"]);
 
-            var icon = _Icons2.default[command];
-            return _react2.default.createElement(_reactVcomponents.Button, Object.assign({}, rest, {
+            var icon = _Icons__WEBPACK_IMPORTED_MODULE_2___default.a[command];
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_vcomponents__WEBPACK_IMPORTED_MODULE_4__["Button"], Object.assign({}, rest, {
               width: 24,
               height: 24,
               ml: first ? 0 : 5,
+              style: {
+                whiteSpace: "pre"
+              },
               onClick: function onClick() {
-                (0, _Formatter.ApplyFormat)(editor().codeMirror, command);
+                Object(_Formatter__WEBPACK_IMPORTED_MODULE_3__["ApplyFormat"])(editor().codeMirror, command);
               }
-            }), icon ? _react2.default.createElement("span", {
+            }), icon ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
               dangerouslySetInnerHTML: {
                 __html: icon
               },
@@ -43456,7 +43632,7 @@ PostEditorUI.defaultProps = {
         }]);
 
         return ToolBarButton;
-      }(_reactVextensions.BaseComponent);
+      }(react_vextensions__WEBPACK_IMPORTED_MODULE_1__["BaseComponent"]);
       /***/
 
     },
@@ -43478,8 +43654,6 @@ PostEditorUI.defaultProps = {
 
     /***/
     function (module, exports, __webpack_require__) {
-      "use strict";
-
       module.exports = {
         bold: __webpack_require__(15),
         italic: __webpack_require__(16),
@@ -43494,63 +43668,49 @@ PostEditorUI.defaultProps = {
     /* 15 */
 
     /***/
-    function (module, exports, __webpack_require__) {
-      "use strict";
-
+    function (module, exports) {
       module.exports = '<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z"/></svg>';
       /***/
     },
     /* 16 */
 
     /***/
-    function (module, exports, __webpack_require__) {
-      "use strict";
-
+    function (module, exports) {
       module.exports = '<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z"/></svg>';
       /***/
     },
     /* 17 */
 
     /***/
-    function (module, exports, __webpack_require__) {
-      "use strict";
-
+    function (module, exports) {
       module.exports = '<svg width="1850" height="1850" viewBox="0 -256 1850 1850"><path d="m 928,704 q 0,14 -9,23 -9,9 -23,9 -66,0 -113,-47 -47,-47 -47,-113 0,-14 9,-23 9,-9 23,-9 14,0 23,9 9,9 9,23 0,40 28,68 28,28 68,28 14,0 23,9 9,9 9,23 z m 224,-130 q 0,-106 -75,-181 -75,-75 -181,-75 -106,0 -181,75 -75,75 -75,181 0,106 75,181 75,75 181,75 106,0 181,-75 75,-75 75,-181 z M 128,0 H 1664 V 128 H 128 V 0 z m 1152,574 q 0,159 -112.5,271.5 Q 1055,958 896,958 737,958 624.5,845.5 512,733 512,574 512,415 624.5,302.5 737,190 896,190 1055,190 1167.5,302.5 1280,415 1280,574 z M 256,1216 h 384 v 128 H 256 V 1216 z M 128,1024 h 1536 v 118 138 H 836 L 772,1152 H 128 v -128 z m 1664,256 V 0 q 0,-53 -37.5,-90.5 Q 1717,-128 1664,-128 H 128 Q 75,-128 37.5,-90.5 0,-53 0,0 v 1280 q 0,53 37.5,90.5 Q 75,1408 128,1408 h 1536 q 53,0 90.5,-37.5 37.5,-37.5 37.5,-90.5 z"/></svg>';
       /***/
     },
     /* 18 */
 
     /***/
-    function (module, exports, __webpack_require__) {
-      "use strict";
-
+    function (module, exports) {
       module.exports = '<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg>';
       /***/
     },
     /* 19 */
 
     /***/
-    function (module, exports, __webpack_require__) {
-      "use strict";
-
+    function (module, exports) {
       module.exports = '<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z"/></svg>';
       /***/
     },
     /* 20 */
 
     /***/
-    function (module, exports, __webpack_require__) {
-      "use strict";
-
+    function (module, exports) {
       module.exports = '<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z"/></svg>';
       /***/
     },
     /* 21 */
 
     /***/
-    function (module, exports, __webpack_require__) {
-      "use strict";
-
+    function (module, exports) {
       module.exports = '<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M832 960v384q0 80-56 136t-136 56h-384q-80 0-136-56t-56-136v-704q0-104 40.5-198.5t109.5-163.5 163.5-109.5 198.5-40.5h64q26 0 45 19t19 45v128q0 26-19 45t-45 19h-64q-106 0-181 75t-75 181v32q0 40 28 68t68 28h224q80 0 136 56t56 136zm896 0v384q0 80-56 136t-136 56h-384q-80 0-136-56t-56-136v-704q0-104 40.5-198.5t109.5-163.5 163.5-109.5 198.5-40.5h64q26 0 45 19t19 45v128q0 26-19 45t-45 19h-64q-106 0-181 75t-75 181v32q0 40 28 68t68 28h224q80 0 136 56t56 136z"/></svg>';
       /***/
     },

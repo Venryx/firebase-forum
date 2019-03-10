@@ -127,9 +127,9 @@ export class SubforumEntryUI extends BaseComponentWithConnector(SubforumEntryUI_
 						e.preventDefault();
 						store.dispatch(new ACTSubforumSelect({id: subforum._id}));
 					}}/>*/}
-					<manager.Link text={subforum.name} actions={d=>d(new ACTSubforumSelect({id: subforum._id}))} style={{fontSize: 18, flex: columnWidths[0]}}/>
+					<manager.Link text={subforum.name} actions={[new ACTSubforumSelect({id: subforum._id})]} style={{fontSize: 18, flex: columnWidths[0]}}/>
 					<span style={{flex: columnWidths[1]}}>{threads.length}</span>
-					<manager.Link style={{flex: columnWidths[2], fontSize: 13}} actions={d=>lastPost && d(new ACTThreadSelect({id: lastPost.thread}))}>
+					<manager.Link style={{flex: columnWidths[2], fontSize: 13}} actions={lastPost == null ? [] : [new ACTThreadSelect({id: lastPost.thread})]}>
 						{lastPostThread && lastPostCreator &&
 							<div>
 								{lastPostThread.title}, by { lastPostCreator.displayName}<br/>

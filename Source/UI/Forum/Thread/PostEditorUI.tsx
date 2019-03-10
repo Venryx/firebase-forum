@@ -38,7 +38,7 @@ export class PostEditorUI extends BaseComponent
 						</MarkdownToolbar>}
 					<MarkdownEditor ref="editor" toolbar={false} value={newData.text || ""} onChange={val=>Change(newData.text = val)}
 						options={E({
-							scrollbarStyle: "overlay",
+							//scrollbarStyle: "overlay",
 							lineWrapping: true,
 							readOnly: !enabled,
 							placeholder: "Write your reply..."

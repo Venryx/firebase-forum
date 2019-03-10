@@ -12,7 +12,7 @@ export class PermissionGroupSet {
 export type Link_Props = {
 	onClick?, style?,
 	text?: string, to?: string, target?: string, replace?: boolean, // url-based
-	actions?: (dispatch: Function)=>void, //updateURLOnActions?: boolean, // action-based
+	actions?: Action<any>[], //updateURLOnActions?: boolean, // action-based
 } & React.HTMLProps<HTMLAnchorElement>;
 
 export type Omit<T, K extends keyof T> = Pick<T, ({ [P in keyof T]: P } & { [P in K]: never })[keyof T]>;

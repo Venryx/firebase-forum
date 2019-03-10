@@ -13,7 +13,7 @@ export function DBPath(path = "", inVersionRoot = true) {
 	return path;
 }
 export type PathSegment = string | number;
-export function DBPathSegments(pathSegments: PathSegment[], inVersionRoot = true) {
+export function DBPathSegments(pathSegments: PathSegment[], inVersionRoot = true): PathSegment[] {
 	let result = pathSegments;
 	if (inVersionRoot) {
 		result = manager.storePath_dbData.split("/").concat(result as any);

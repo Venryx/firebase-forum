@@ -30,10 +30,10 @@ export class ThreadEntryUI extends BaseComponentWithConnector(ThreadEntryUI_conn
 				last && {borderRadius: "0 0 10px 10px"}
 			)}>
 				<Row>
-					<manager.Link text={thread.title} actions={d=>d(new ACTThreadSelect({id: thread._id}))} style={{fontSize: 17, flex: columnWidths[0]}}/>
+					<manager.Link text={thread.title} actions={[new ACTThreadSelect({id: thread._id})]} style={{fontSize: 17, flex: columnWidths[0]}}/>
 					<span style={{flex: columnWidths[1]}}>{creator ? creator.displayName : "..."}</span>
 					<span style={{flex: columnWidths[2]}}>{posts ? posts.length : "..."}</span>
-					<manager.Link style={{flex: columnWidths[3], fontSize: 13}} actions={d=>lastPost && d(new ACTThreadSelect({id: lastPost.thread}))}>
+					<manager.Link style={{flex: columnWidths[3], fontSize: 13}} actions={lastPost == null ? [] : [new ACTThreadSelect({id: lastPost.thread})]}>
 						{lastPostCreator &&
 							<div>
 								By { lastPostCreator.displayName}<br/>

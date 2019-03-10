@@ -1,4 +1,5 @@
 import { LogTypes } from "./Utils/Logging";
+import { Action } from "./Utils/Action";
 import { BaseComponent } from "react-vextensions";
 export declare class PermissionGroupSet {
     basic: boolean;
@@ -13,7 +14,7 @@ export declare type Link_Props = {
     to?: string;
     target?: string;
     replace?: boolean;
-    actions?: (dispatch: Function) => void;
+    actions?: Action<any>[];
 } & React.HTMLProps<HTMLAnchorElement>;
 export declare type Omit<T, K extends keyof T> = Pick<T, ({
     [P in keyof T]: P;
