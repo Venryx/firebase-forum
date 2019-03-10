@@ -1,13 +1,12 @@
-/* global __dirname */
 var webpack = require("webpack");
 
 module.exports = {
 	mode: "none",
 	entry: [
-		"./src/index.ts"
+		"./Source/index.ts"
 	],
 	output: {
-		path: __dirname + "/dist",
+		path: __dirname + "/Dist",
 		publicPath: "http://localhost:8080/",
 		filename: "index.js",
 		libraryTarget: "umd",
@@ -15,7 +14,7 @@ module.exports = {
 	},
 	resolve: {
 		//root: paths.client(),
-		//root: "src",
+		//root: "Source",
 		extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
 	},
 	externals: {
@@ -42,21 +41,10 @@ module.exports = {
 				loader: "babel-loader",
 				exclude: /node_modules/,
 				query: {
-					presets: ["es2015", "react"]
+					presets: ["@babel/env", "@babel/react"]
 				}
 			},
 			{test: /\.tsx?$/, loader: "ts-loader"},
-			{
-				test: /\.(png|jpg|jpeg|svg)$/,
-				loader: "file"
-			},
-			/* {
-				test: /\.json$/,
-				loader: "json-loader",
-				include: [
-					"./node_modules/ajv/lib/refs",
-				],
-			}, */
 		]
 	},
 	plugins: [

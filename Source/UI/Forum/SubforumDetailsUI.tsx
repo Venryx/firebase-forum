@@ -1,16 +1,8 @@
+import {Clone, GetErrorMessagesUnderElement} from "js-vextensions";
 import React from "react";
+import {Column, Pre, RowLR, TextInput} from "react-vcomponents";
 import {BaseComponent, GetDOM} from "react-vextensions";
-import {Pre, RowLR} from "react-vcomponents";
-import {Column} from "react-vcomponents";
-import {Row} from "react-vcomponents";
-import {TextInput} from "react-vcomponents";
-import {Select} from "react-vcomponents";
-import {CheckBox} from "react-vcomponents";
-import {ScrollView} from "react-vscrollview";
-import {Button} from "react-vcomponents";
-import {Spinner} from "react-vcomponents";
 import {Subforum, Subforum_nameFormat} from "../../Store/firebase/forum/@Subforum";
-import {GetErrorMessagesUnderElement} from "js-vextensions";
 
 export type SubforumDetailsUI_Props = {baseData: Subforum, forNew: boolean, enabled?: boolean, style?, onChange?: (newData: Subforum)=>void};
 export class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {newData: Subforum}> {

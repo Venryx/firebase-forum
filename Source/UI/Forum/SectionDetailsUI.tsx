@@ -1,12 +1,12 @@
-import { GetErrorMessagesUnderElement } from "js-vextensions";
+import {Clone, GetErrorMessagesUnderElement} from "js-vextensions";
 import React from "react";
-import { Column, Pre, RowLR, TextInput } from "react-vcomponents";
-import { BaseComponent, GetDOM } from "react-vextensions";
-import { Thread } from "../../../Store/firebase/forum/@Thread";
+import {Column, Pre, RowLR, TextInput} from "react-vcomponents";
+import {BaseComponent, GetDOM} from "react-vextensions";
+import {Section} from "../../Store/firebase/forum/@Section";
 
-export type ThreadDetailsUI_Props = {baseData: Thread, forNew: boolean, enabled?: boolean, style?, onChange?: (newData: Thread)=>void}
+export type SectionDetailsUI_Props = {baseData: Section, forNew: boolean, enabled?: boolean, style?, onChange?: (newData: Section)=>void}
 	& Partial<{creator: User}>;
-export class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {newData: Thread}> {
+export class SectionDetailsUI extends BaseComponent<SectionDetailsUI_Props, {newData: Section}> {
 	ComponentWillMountOrReceiveProps(props, forMount) {
 		if (forMount || props.baseData != this.props.baseData) { // if base-data changed
 			this.SetState({newData: Clone(props.baseData)});
@@ -26,10 +26,10 @@ export class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {newDa
 		return (
 			<Column style={style}>
 				<RowLR splitAt={splitAt} style={{width}}>
-					<Pre>Title: </Pre>
+					<Pre>Name: </Pre>
 					<TextInput required
 						enabled={enabled} style={{width: "100%"}}
-						value={newData.title} onChange={val=>Change(newData.title = val)}/>
+						value={newData.name} onChange={val=>Change(newData.name = val)}/>
 				</RowLR>
 			</Column>
 		);
@@ -40,6 +40,6 @@ export class ThreadDetailsUI extends BaseComponent<ThreadDetailsUI_Props, {newDa
 
 	GetNewData() {
 		let {newData} = this.state;
-		return Clone(newData) as Thread;
+		return Clone(newData) as Section;
 	}
 }

@@ -8,7 +8,7 @@ export declare enum AccessLevel {
     Basic = 10,
     Verified = 20,
     Mod = 30,
-    Admin = 40,
+    Admin = 40
 }
 export declare function GetUserAccessLevel(userID: string): AccessLevel;
 export declare function IsUserBasic(userID: string): any;

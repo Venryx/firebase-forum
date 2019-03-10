@@ -16,3 +16,4 @@ export declare class PostUI extends PostUI_base {
     postEditorUI: PostEditorUI;
     render(): JSX.Element;
 }
+export {};

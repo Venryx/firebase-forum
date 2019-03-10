@@ -16,3 +16,4 @@ export declare class SubforumUI extends SubforumUI_base {
     };
     render(): JSX.Element;
 }
+export {};

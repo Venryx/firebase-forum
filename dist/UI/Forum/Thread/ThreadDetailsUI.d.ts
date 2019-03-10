@@ -4,7 +4,7 @@ export declare type ThreadDetailsUI_Props = {
     baseData: Thread;
     forNew: boolean;
     enabled?: boolean;
-    style?;
+    style?: any;
     onChange?: (newData: Thread) => void;
 } & Partial<{
     creator: User;

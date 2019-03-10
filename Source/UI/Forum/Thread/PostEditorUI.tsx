@@ -8,7 +8,7 @@ import {Button} from "react-vcomponents";
 import {Component} from "react";
 import {Select} from "react-vcomponents";
 import {Post} from "../../../Store/firebase/forum/@Post";
-import {GetErrorMessagesUnderElement} from "js-vextensions";
+import {GetErrorMessagesUnderElement, Clone, E} from "js-vextensions";
 import {MarkdownEditor, MarkdownToolbar} from "react-vmarkdown";
 import {Manager, manager} from "../../../Manager";
 

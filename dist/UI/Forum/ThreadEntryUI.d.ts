@@ -17,3 +17,4 @@ declare const ThreadEntryUI_base: new (..._: any[]) => BaseComponent<{
 export declare class ThreadEntryUI extends ThreadEntryUI_base {
     render(): JSX.Element;
 }
+export {};

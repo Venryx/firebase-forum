@@ -1,3 +1,5 @@
+import {E} from "js-vextensions";
+
 //import {AddGlobalStyle} from "react-vextensions";
 
 export var styles = {

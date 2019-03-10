@@ -4,7 +4,7 @@ export declare type SectionDetailsUI_Props = {
     baseData: Section;
     forNew: boolean;
     enabled?: boolean;
-    style?;
+    style?: any;
     onChange?: (newData: Section) => void;
 } & Partial<{
     creator: User;

@@ -4,7 +4,7 @@ export declare type SubforumDetailsUI_Props = {
     baseData: Subforum;
     forNew: boolean;
     enabled?: boolean;
-    style?;
+    style?: any;
     onChange?: (newData: Subforum) => void;
 };
 export declare class SubforumDetailsUI extends BaseComponent<SubforumDetailsUI_Props, {

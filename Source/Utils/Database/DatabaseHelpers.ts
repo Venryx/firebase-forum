@@ -1,6 +1,6 @@
-import { Assert, DeepSet, GetTreeNodesInObjTree } from "js-vextensions";
+import { Assert, DeepSet, GetTreeNodesInObjTree, E, IsString } from "js-vextensions";
 import { SplitStringBySlash_Cached } from "./StringSplitCache";
-import { manager } from "../..";
+import {manager} from "../../Manager";
 
 export function DBPath(path = "", inVersionRoot = true) {
 	Assert(path != null, "Path cannot be null.");
@@ -12,7 +12,8 @@ export function DBPath(path = "", inVersionRoot = true) {
 	}
 	return path;
 }
-export function DBPathSegments(pathSegments: (string | number)[], inVersionRoot = true) {
+export type PathSegment = string | number;
+export function DBPathSegments(pathSegments: PathSegment[], inVersionRoot = true) {
 	let result = pathSegments;
 	if (inVersionRoot) {
 		result = manager.storePath_dbData.split("/").concat(result as any);

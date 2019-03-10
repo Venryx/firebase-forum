@@ -8,7 +8,7 @@ import {ACTThreadSelect} from "../../Store/forum";
 import {columnWidths} from "./SubforumUI";
 import {Post} from "../../Store/firebase/forum/@Post";
 import {Manager, manager, OnPopulated} from "../../Manager";
-import {VURL} from "js-vextensions";
+import {VURL, E} from "js-vextensions";
 
 let ThreadEntryUI_connector = (state, {thread}: {index: number, last: boolean, thread: Thread})=> {
 	let lastPost = GetThreadLastPost(thread._id);

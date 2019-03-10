@@ -25,3 +25,4 @@ export declare class DetailsDropdown extends DetailsDropdown_base {
     detailsUI: ThreadDetailsUI;
     render(): JSX.Element;
 }
+export {};

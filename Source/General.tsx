@@ -1,4 +1,4 @@
-import {DeepGet} from "js-vextensions";
+import {DeepGet, Assert} from "js-vextensions";
 import {Manager, manager} from "./Manager";
 import {Post} from "./Store/firebase/forum/@Post";
 import {Thread} from "./Store/firebase/forum/@Thread";

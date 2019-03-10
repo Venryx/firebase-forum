@@ -7,8 +7,8 @@ export declare class PermissionGroupSet {
     admin: boolean;
 }
 export declare type Link_Props = {
-    onClick?;
-    style?;
+    onClick?: any;
+    style?: any;
     text?: string;
     to?: string;
     target?: string;
@@ -34,15 +34,15 @@ export declare class Manager {
     router_push: (newURL: string) => any;
     logTypes: LogTypes;
     Connect: (func: Function) => any;
-    State: (...props) => any;
-    GetData: (..._) => any;
-    GetDataAsync: (..._) => any;
-    GetAsync: (dbGetterFunc, statsLogger) => Promise<any>;
+    State: (...props: any[]) => any;
+    GetData: (..._: any[]) => any;
+    GetDataAsync: (..._: any[]) => any;
+    GetAsync: (dbGetterFunc: any, statsLogger: any) => Promise<any>;
     ShowSignInPopup: () => void;
     GetUserID: () => string;
     GetUser: (id: string) => any;
     GetUserPermissionGroups: (userID: string) => PermissionGroupSet;
-    ApplyDBUpdates: (rootPath: string, dbUpdates) => void;
+    ApplyDBUpdates: (rootPath: string, dbUpdates: any) => void;
     MarkdownRenderer: any;
 }
 export declare const manager: Manager;

@@ -1,20 +1,17 @@
-import { BaseComponent } from "react-vextensions";
 import { Section } from "../Store/firebase/forum/@Section";
 import { Subforum } from "../Store/firebase/forum/@Subforum";
-import { Thread } from "../Store/firebase/forum/@Thread";
-import { Post } from "../Store/firebase/forum/@Post";
 export declare const columnWidths: number[];
-declare const ForumUI_base: new (..._: any[]) => BaseComponent<Partial<{
+declare const ForumUI_base: new (..._: any[]) => import("../../../../react-vextensions/Main/dist").BaseComponent<Partial<{
     _: any;
     sections: Section[];
     selectedSubforum: Subforum;
-    selectedThread: Thread;
+    selectedThread: import("..").Thread;
 }>, {}>;
 export declare class ForumUI extends ForumUI_base {
     constructor(props: any);
     render(): JSX.Element;
 }
-declare const SectionUI_base: new (..._: any[]) => BaseComponent<{
+declare const SectionUI_base: new (..._: any[]) => import("../../../../react-vextensions/Main/dist").BaseComponent<{
     section: Section;
 } & Partial<{
     subforums: Subforum[];
@@ -22,16 +19,17 @@ declare const SectionUI_base: new (..._: any[]) => BaseComponent<{
 export declare class SectionUI extends SectionUI_base {
     render(): JSX.Element;
 }
-declare const SubforumEntryUI_base: new (..._: any[]) => BaseComponent<{
+declare const SubforumEntryUI_base: new (..._: any[]) => import("../../../../react-vextensions/Main/dist").BaseComponent<{
     index: number;
     last: boolean;
     subforum: Subforum;
 } & Partial<{
-    threads: Thread[];
-    lastPost: Post;
-    lastPostThread: Thread;
+    threads: import("..").Thread[];
+    lastPost: import("..").Post;
+    lastPostThread: import("..").Thread;
     lastPostCreator: any;
 }>, {}>;
 export declare class SubforumEntryUI extends SubforumEntryUI_base {
     render(): JSX.Element;
 }
+export {};
