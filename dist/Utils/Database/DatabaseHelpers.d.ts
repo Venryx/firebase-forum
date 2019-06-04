@@ -6,9 +6,11 @@ export declare function SlicePath(path: string, removeFromEndCount: number, ...i
 export declare function RemoveHelpers(data: any): any;
 export declare function GetUpdates(oldData: any, newData: any, useNullInsteadOfUndefined?: boolean): any;
 export declare class GetData_Options {
+    inVersionRoot?: boolean;
     makeRequest?: boolean;
+    collection?: boolean;
+    excludeCollections?: string[];
     useUndefinedForInProgress?: boolean;
-    queries?: any;
 }
 export declare function GetData(...pathSegments: (string | number)[]): any;
 export declare function GetData(options: GetData_Options, ...pathSegments: (string | number)[]): any;

@@ -52,9 +52,12 @@ export function GetUpdates(oldData, newData, useNullInsteadOfUndefined = true) {
 }
 
 export class GetData_Options {
+	inVersionRoot? = true;
 	makeRequest? = true;
+	collection? = false;
+	excludeCollections?: string[];
 	useUndefinedForInProgress? = false;
-	queries?: any;
+	//queries?: any;
 }
 
 export function GetData(...pathSegments: (string | number)[]);

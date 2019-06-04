@@ -10111,7 +10111,9 @@ function GetSection(id) {
   return Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])("sections", id);
 }
 function GetSections() {
-  var sectionMap = Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])("sections");
+  var sectionMap = Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])({
+    collection: true
+  }, "sections");
   return Object(_Utils_VCache__WEBPACK_IMPORTED_MODULE_1__["CachedTransform"])("GetSections", [], sectionMap, function () {
     return sectionMap ? sectionMap.VValues(true) : [];
   });
@@ -10121,7 +10123,9 @@ function GetSubforum(id) {
   return Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])("subforums", id);
 }
 function GetSubforums() {
-  var subforumMap = Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])("subforums");
+  var subforumMap = Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])({
+    collection: true
+  }, "subforums");
   return Object(_Utils_VCache__WEBPACK_IMPORTED_MODULE_1__["CachedTransform"])("GetSubforums", [], subforumMap, function () {
     return subforumMap ? subforumMap.VValues(true) : [];
   });
@@ -10145,7 +10149,9 @@ function GetThread(id) {
   return Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])("threads", id);
 }
 function GetThreads() {
-  var threadMap = Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])("threads");
+  var threadMap = Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])({
+    collection: true
+  }, "threads");
   return Object(_Utils_VCache__WEBPACK_IMPORTED_MODULE_1__["CachedTransform"])("GetThreads", [], threadMap, function () {
     return threadMap ? threadMap.VValues(true) : [];
   });
@@ -10181,7 +10187,9 @@ function GetPost(id) {
   return Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])("posts", id);
 }
 function GetPosts() {
-  var postsMap = Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])("posts");
+  var postsMap = Object(_Utils_Database_DatabaseHelpers__WEBPACK_IMPORTED_MODULE_0__["GetData"])({
+    collection: true
+  }, "posts");
   return Object(_Utils_VCache__WEBPACK_IMPORTED_MODULE_1__["CachedTransform"])("GetPosts", [], postsMap, function () {
     return postsMap ? postsMap.VValues(true) : [];
   });
@@ -10375,8 +10383,10 @@ function GetUpdates(oldData, newData) {
 var GetData_Options = function GetData_Options() {
   _classCallCheck(this, GetData_Options);
 
+  this.inVersionRoot = true;
   this.makeRequest = true;
-  this.useUndefinedForInProgress = false;
+  this.collection = false;
+  this.useUndefinedForInProgress = false; //queries?: any;
 };
 function GetData() {
   var pathSegments, options;

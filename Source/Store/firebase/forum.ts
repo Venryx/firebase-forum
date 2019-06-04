@@ -24,7 +24,7 @@ export function GetSection(id: number): Section {
 	return GetData("sections", id);
 }
 export function GetSections(): Section[] {
-	let sectionMap = GetData("sections");
+	let sectionMap = GetData({collection: true}, "sections");
 	return CachedTransform("GetSections", [], sectionMap, ()=>sectionMap ? sectionMap.VValues(true) : []);
 }
 
@@ -33,7 +33,7 @@ export function GetSubforum(id: number): Subforum {
 	return GetData("subforums", id);
 }
 export function GetSubforums(): Subforum[] {
-	let subforumMap = GetData("subforums");
+	let subforumMap = GetData({collection: true}, "subforums");
 	return CachedTransform("GetSubforums", [], subforumMap, ()=>subforumMap ? subforumMap.VValues(true) : []);
 }
 export function GetSectionSubforums(section: Section): Subforum[] {
@@ -50,7 +50,7 @@ export function GetThread(id: number): Thread {
 	return GetData("threads", id);
 }
 export function GetThreads(): Thread[] {
-	let threadMap = GetData("threads");
+	let threadMap = GetData({collection: true}, "threads");
 	return CachedTransform("GetThreads", [], threadMap, ()=>threadMap ? threadMap.VValues(true) : []);
 }
 export function GetSubforumThreads(subforumID: number): Thread[] {
@@ -71,7 +71,7 @@ export function GetPost(id: number): Post {
 	return GetData("posts", id);
 }
 export function GetPosts(): Post[] {
-	let postsMap = GetData("posts");
+	let postsMap = GetData({collection: true}, "posts");
 	return CachedTransform("GetPosts", [], postsMap, ()=>postsMap ? postsMap.VValues(true) : []);
 }
 export function GetThreadPosts(thread: Thread): Post[] {
