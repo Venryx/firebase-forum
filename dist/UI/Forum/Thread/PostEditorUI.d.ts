@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { BaseComponent } from "react-vextensions";
 import { Post } from "../../../Store/firebase/forum/@Post";
 export declare class PostEditorUI extends BaseComponent<{

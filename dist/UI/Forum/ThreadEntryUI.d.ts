@@ -1,7 +1,8 @@
+/// <reference types="react" />
 import { BaseComponent } from "react-vextensions";
 import { Thread } from "../../Store/firebase/forum/@Thread";
 import { Post } from "../../Store/firebase/forum/@Post";
-declare const ThreadEntryUI_base: new (..._: any[]) => BaseComponent<{
+declare const ThreadEntryUI_base: (new (..._: any[]) => BaseComponent<{
     index: number;
     last: boolean;
     thread: Thread;
@@ -13,7 +14,10 @@ declare const ThreadEntryUI_base: new (..._: any[]) => BaseComponent<{
 }>, {
     editing: boolean;
     dataError: string;
-}>;
+}, {}>) & {
+    renderCount: number;
+    lastRenderTime: number;
+};
 export declare class ThreadEntryUI extends ThreadEntryUI_base {
     render(): JSX.Element;
 }

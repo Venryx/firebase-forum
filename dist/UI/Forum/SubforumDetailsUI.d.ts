@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { BaseComponent } from "react-vextensions";
 import { Subforum } from "../../Store/firebase/forum/@Subforum";
 export declare type SubforumDetailsUI_Props = {

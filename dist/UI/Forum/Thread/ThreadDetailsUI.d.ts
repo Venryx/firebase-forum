@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { BaseComponent } from "react-vextensions";
 import { Thread } from "../../../Store/firebase/forum/@Thread";
 export declare type ThreadDetailsUI_Props = {

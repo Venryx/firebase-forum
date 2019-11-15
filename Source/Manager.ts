@@ -15,7 +15,6 @@ export type Link_Props = {
 	actions?: Action<any>[], //updateURLOnActions?: boolean, // action-based
 } & React.HTMLProps<HTMLAnchorElement>;
 
-export type Omit<T, K extends keyof T> = Pick<T, ({ [P in keyof T]: P } & { [P in K]: never })[keyof T]>;
 export class Manager {
 	Populate(data: Omit<Manager, "Populate" | "store">) {
 		this.Extend(data);
